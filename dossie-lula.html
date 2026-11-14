@@ -162,8 +162,6 @@ h1.masthead-title{font:700 clamp(30px,5.5vw,42px)/1.05 Newsreader,Georgia,serif;
 
 @media (max-width:600px){
   .info-grid{grid-template-columns:1fr}
-  .teia-cta{flex-direction:column;align-items:stretch}
-  .btn-cta{justify-content:center}
   .chapter-head{gap:14px;padding:18px 18px}
   .chapter-num{width:60px;height:60px;font-size:32px}
   .chapter-num::after{left:calc(100% + 3px);width:8px}
@@ -222,7 +220,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
     linear-gradient(to bottom,color-mix(in srgb,var(--ink) 4%,transparent) 1px,transparent 1px);
   background-size:28px 28px;
 }
-.view, .teia-overlay, .float {position:relative;z-index:1}
+.view, .float {position:relative;z-index:1}
 main{padding:24px 0}
 .chapter{margin:0 0 56px;scroll-margin-top:80px}
 .chapter-head{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;padding:22px 26px;margin-bottom:16px;background:linear-gradient(135deg,color-mix(in srgb,var(--chapter-accent,var(--V)) 12%,var(--card)),var(--card) 70%);border:1px solid var(--line);border-radius:14px;position:relative;overflow:hidden}
@@ -446,8 +444,6 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
 .cta-dossie-botoes{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .btn-dossie{background:var(--V);color:#fff;border:none;border-radius:999px;padding:14px 24px;font:600 14px/1 "IBM Plex Sans",sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .15s}
 .btn-dossie:hover{transform:translateY(-2px);box-shadow:0 8px 20px color-mix(in srgb,var(--V) 35%,transparent)}
-.btn-teia-resumo{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:14px 24px;font:500 14px/1 "IBM Plex Sans",sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .15s}
-.btn-teia-resumo:hover{border-color:var(--ink);transform:translateY(-2px)}
 
 /* Botão de voltar ao resumo (no dossiê completo) */
 .btn-voltar-resumo{
@@ -488,7 +484,7 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
   .desfecho-list li::before{left:5.5px}
   .desfecho-list li::after{left:15px;width:8px}
   .cta-dossie-botoes{flex-direction:column;align-items:stretch}
-  .btn-dossie,.btn-teia-resumo{justify-content:center}
+  .btn-dossie{justify-content:center}
 }
 
 </style>
@@ -567,7 +563,6 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
       <p>O dossiê completo tem 30 eventos, cada um com data, status e as matérias originais. Leva mais tempo. Mas cada linha é verificável.</p>
       <div class="cta-dossie-botoes">
         <button class="btn-dossie" onclick="showView('completo')">Ler o dossiê completo (30 eventos) →</button>
-        <button class="btn-teia-resumo" onclick="openTeia()">Ver a teia →</button>
       </div>
     </section>
 
@@ -644,16 +639,6 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
   <p class="lead-closing">O que segue é uma linha do tempo. A eleição já passou. O que você lê aqui não muda o voto que você deu — mas pode mudar o que você entende sobre o que aconteceu. Leia como quem aplica os três critérios, não como quem espera uma confirmação. Se ao final você ainda achar que tudo não passa de perseguição, essa é uma conclusão legítima — mas que seja uma conclusão sua, não um reflexo. E se em algum ponto você hesitar, não pare na dúvida. Vá atrás dela.</p>
 </section>
 
-<div class="teia-cta">
-  <div class="teia-cta-left">
-    <div class="teia-cta-icon">🕸️</div>
-    <div>
-      <h3>A teia: quem se conecta com quem</h3>
-      <p>Sem opinião. Só linha, nome e documento.</p>
-    </div>
-  </div>
-  <button class="btn-cta" id="teia-btn">Abrir teia →</button>
-</div>
 
 <div class="info-grid">
   <details class="info-panel" style="--pc:var(--V)">
@@ -742,34 +727,6 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
 <button class="float theme" id="theme" aria-label="Alternar tema">🌙</button>
 <button class="float top" id="top" aria-label="Voltar ao topo">↑</button>
 
-<div class="teia-overlay" id="teia-modal" role="dialog" aria-modal="true" aria-label="A teia: conexões entre personagens">
-  <div class="teia-shell">
-    <div class="teia-main">
-      <div class="teia-topbar">
-        <div class="teia-title" id="teia-modal-title">🕸️ A teia<small>15 nós · clique nos nós ou nas linhas</small></div>
-      </div>
-      <button class="teia-close" id="teia-close" aria-label="Fechar">✕</button>
-      <div class="teia-canvas" id="teia-canvas"></div>
-      <div class="teia-legend">
-        <span><span class="line"></span> Documentado</span>
-        <span><span class="line dash"></span> Investigação</span>
-        <span>·</span>
-        <span>Clique num nó ou numa linha</span>
-      </div>
-    </div>
-    <aside class="teia-sidebar">
-      <div class="teia-sidebar-empty" id="teia-empty">
-        <h4>Explore a teia</h4>
-        <p>Clique num nó para ver quem é a pessoa, ou clique na linha entre dois nós para entender o que os conecta.</p>
-        <div class="hint">
-          <b>Linha cheia</b> = relação documentada.<br>
-          <b>Linha tracejada</b> = alegação, suspeita ou investigação em curso.
-        </div>
-      </div>
-      <div class="teia-info" id="teia-info"></div>
-    </aside>
-  </div>
-</div>
 
 <script>
 var P={
@@ -1172,481 +1129,6 @@ function onScroll(){
 window.addEventListener('scroll',onScroll,{passive:true});
 topBtn.onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
 
-/* ==================== TEIA ==================== */
-function shadeColor(color, percent) {
-  var num = parseInt(color.replace('#',''), 16);
-  var r = Math.max(0, Math.min(255, (num >> 16) + percent));
-  var g = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + percent));
-  var b = Math.max(0, Math.min(255, (num & 0x0000FF) + percent));
-  return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
-}
-function makeAvatar(name, color) {
-  var canvas = document.createElement('canvas');
-  canvas.width = 160;
-  canvas.height = 160;
-  var ctx = canvas.getContext('2d');
-  var cx = 80, cy = 80;
-  
-  // Anel externo tracejado (selo)
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 3;
-  ctx.setLineDash([6, 6]);
-  ctx.beginPath();
-  ctx.arc(cx, cy, 76, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  
-  // Círculo interno com gradiente
-  var grad = ctx.createLinearGradient(0, 0, 40, 160);
-  grad.addColorStop(0, color);
-  grad.addColorStop(1, shadeColor(color, -50));
-  ctx.fillStyle = grad;
-  ctx.beginPath();
-  ctx.arc(cx, cy, 68, 0, Math.PI * 2);
-  ctx.fill();
-  
-  // Anel branco sutil
-  ctx.strokeStyle = 'rgba(255,255,255,0.35)';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.arc(cx, cy, 66, 0, Math.PI * 2);
-  ctx.stroke();
-  
-  // Iniciais
-  var parts = name.trim().split(/\s+/);
-  var initials = (parts[0][0] + (parts.length > 1 ? parts[parts.length-1][0] : '')).toUpperCase();
-  ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 52px Georgia, serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(initials, cx, cy + 6);
-  
-  return canvas.toDataURL();
-}
-
-// Paleta alinhada: V (Vorcaro) e MASTER (Banco Master) em teal institucional
-// (--lane-master #0f766e / #5eead4), consistente com a lane no documento.
-// W (Willer), K (Kássio), Z (Zettel), etc. mantêm suas cores pessoais.
-var TEIA_NOS = [
-  {id:"L", label:"Lula", color:"#0d9488", size:44, x:0, y:0, title:"Presidente · 39º e 41º mandatos"},
-  {id:"B", label:"Lulinha", color:"#9a3412", size:32, x:-280, y:0, title:"Filho de Lula · investigado no STF"},
-  {id:"M", label:"Sergio Moro", color:"#4338ca", size:30, x:-280, y:-200, title:"Ex-juiz da Lava Jato · ex-ministro · senador"},
-  {id:"D", label:"Flávio Dino", color:"#6d28d9", size:28, x:-120, y:240, title:"Ministro do STF · relator dos inquéritos do Lulinha"},
-  {id:"J", label:"Rodrigo Janot", color:"#78350f", size:26, x:-420, y:-100, title:"Ex-procurador-geral da República"},
-  {id:"S", label:"STF", color:"#047857", size:32, x:160, y:-180, title:"Supremo Tribunal Federal"},
-  {id:"C", label:"Careca do INSS", color:"#dc2626", size:26, x:-420, y:120, title:"Apontado como centro do esquema do INSS"},
-  {id:"W", label:"Willer Tomaz", color:"#be123c", size:28, x:-420, y:-20, title:"Advogado · investigado pela PF"},
-  {id:"V", label:"Daniel Vorcaro", color:"#0f766e", size:30, x:220, y:80, title:"Dono do Banco Master · preso"},
-  {id:"F", label:"Flávio Bolsonaro", color:"#1d4ed8", size:32, x:420, y:0, title:"Senador (PL-RJ) · adversário em 2026"},
-  {id:"A", label:"André Valadão", color:"#7c3aed", size:26, x:420, y:240, title:"Pastor da Lagoinha"},
-  {id:"Z", label:"Fabiano Zettel", color:"#ea580c", size:26, x:220, y:300, title:"Pastor · cunhado de Vorcaro"},
-  {id:"K", label:"Kássio Nunes", color:"#65a30d", size:26, x:420, y:-220, title:"Ministro do STF · presidente do TSE"},
-  {id:"MASTER", label:"Banco Master", color:"#0f766e", size:26, x:220, y:-140, title:"Banco liquidado pelo BC em 2025"},
-  {id:"E", label:"Eduardo Bolsonaro", color:"#b45309", size:24, x:580, y:-100, title:"Ex-deputado · condenado pelo STF"}
-];
-
-var TEIA_ARESTAS = [
-  {from:"L", to:"B", rel:"Pai e filho", why:"Lulinha é filho de Lula. O presidente disse que o filho deve voltar ao Brasil para prestar esclarecimentos.", status:"doc", color:"#9a3412", width:2.5},
-  {from:"L", to:"M", rel:"Condenação e suspeição", why:"Moro condenou Lula no caso do triplex em 2017. Em 2021, o STF declarou Moro suspeito e anulou as condenações.", status:"doc", color:"#4338ca", width:2},
-  {from:"L", to:"S", rel:"Anulação das condenações", why:"O STF anulou as condenações de Lula em 2021 por suspeição de Moro e incompetência da Vara de Curitiba — não por inocência.", status:"doc", color:"#047857", width:2.5},
-  {from:"L", to:"J", rel:"Acusações da PGR", why:"Rodrigo Janot, então procurador-geral, denunciou Lula ao STF no âmbito do Petrolão, mas a denúncia não foi aceita.", status:"alleged", color:"#78350f", width:2, dashes:true},
-  {from:"L", to:"D", rel:"Inquéritos do Lulinha", why:"Flávio Dino, ministro do STF, é o relator dos inquéritos contra o filho de Lula.", status:"doc", color:"#6d28d9", width:1.5},
-  {from:"L", to:"F", rel:"Adversários em 2026", why:"Lula derrotou Flávio Bolsonaro no 2º turno de 2026 (51,79% a 48,21%).", status:"doc", color:"#1d4ed8", width:2},
-  {from:"B", to:"C", rel:"Investigação INSS", why:"A PF investiga a relação de Lulinha com Antônio Carlos Camilo Antunes, o Careca do INSS, incluindo uma viagem a Portugal em 2024.", status:"alleged", color:"#dc2626", width:2, dashes:true},
-  {from:"B", to:"W", rel:"Tráfico de influência", why:"Lulinha é investigado por suspeita de usar a proximidade com o pai para intermediar interesses privados, em contratos da 3Structure IT.", status:"alleged", color:"#be123c", width:2, dashes:true},
-  {from:"C", to:"W", rel:"Esquema INSS", why:"A PF aponta Willer Tomaz como engrenagem central do esquema do INSS, que tem o Careca como centro.", status:"alleged", color:"#be123c", width:2, dashes:true},
-  {from:"W", to:"V", rel:"Caso Master", why:"O advogado Willer Tomaz aparece nas investigações do caso Master / Compliance Zero, ligado a Vorcaro.", status:"alleged", color:"#0f766e", width:1.8, dashes:true},
-  {from:"V", to:"MASTER", rel:"Dono", why:"Daniel Vorcaro era dono e controlador do Banco Master, liquidado pelo BC em novembro de 2025.", status:"doc", color:"#0f766e", width:3},
-  {from:"V", to:"F", rel:"Financiou Dark Horse", why:"Vorcaro negociou com Flávio Bolsonaro cerca de US$ 24 milhões para financiar o filme Dark Horse, sobre Jair Bolsonaro.", status:"doc", color:"#1d4ed8", width:2.5},
-  {from:"V", to:"K", rel:"Mensagens", why:"Mensagens apreendidas pela PF citam pagamentos do Master a uma consultoria ligada ao filho de Kássio Nunes Marques.", status:"alleged", color:"#65a30d", width:1.8, dashes:true},
-  {from:"V", to:"A", rel:"Lagoinha / doações", why:"A família Vorcaro doava recursos para a Lagoinha e apoiou a Rede Super.", status:"doc", color:"#7c3aed", width:1.2},
-  {from:"V", to:"Z", rel:"Cunhados", why:"Zettel é casado com a irmã de Vorcaro.", status:"doc", color:"#ea580c", width:1.8},
-  {from:"A", to:"Z", rel:"Igreja Lagoinha", why:"Zettel é pastor da Lagoinha, unidade Belvedere.", status:"doc", color:"#7c3aed", width:1.2},
-  {from:"F", to:"W", rel:"Amigo / Usuário master", why:"A PF encontrou Flávio como usuário master da conta da empresa de Willer, a Alcazar Holdings.", status:"alleged", color:"#be123c", width:2.5, dashes:true},
-  {from:"F", to:"K", rel:"Articulou indicação STF", why:"Flávio e Willer articularam a indicação de Kássio ao STF em 2020.", status:"alleged", color:"#65a30d", width:1.5, dashes:true},
-  {from:"F", to:"E", rel:"Irmãos", why:"Eduardo é irmão de Flávio e foi condenado pelo STF a 4 anos e 2 meses por coação.", status:"doc", color:"#b45309", width:1.5},
-  {from:"D", to:"S", rel:"Ministro do STF", why:"Flávio Dino é ministro do STF desde 2024.", status:"doc", color:"#6d28d9", width:1.2},
-  {from:"K", to:"S", rel:"Ministro do STF", why:"Kássio Nunes Marques é ministro do STF desde 2020.", status:"doc", color:"#65a30d", width:1.2},
-  {from:"M", to:"S", rel:"Suspeição", why:"O STF declarou Sergio Moro suspeito para julgar Lula em 2021.", status:"doc", color:"#4338ca", width:1.5}
-];
-
-var TEIA_INFO = {
-  L: { full:"Luiz Inácio Lula da Silva", role:"Presidente da República · 39º e 41º mandatos", desc:"Fundador do PT. Condenado no caso do triplex em 2017, preso por 580 dias, e anulado pelo STF em 2021 por suspeição de Moro. Reeleito em 2026." },
-  B: { full:"Fábio Luís Lula da Silva (Lulinha)", role:"Filho de Lula · investigado no STF", desc:"Alvo de três inquéritos no STF por suspeita de tráfico de influência. Movimentou R$ 19,5 milhões entre 2022 e 2025, segundo a quebra de sigilo aprovada pela CPMI do INSS." },
-  M: { full:"Sergio Moro", role:"Ex-juiz da 13ª Vara de Curitiba · ex-ministro da Justiça · senador", desc:"Condenou Lula no caso do triplex em 2017. Em 2021, o STF o declarou suspeito e anulou as condenações." },
-  D: { full:"Flávio Dino", role:"Ministro do STF desde 2024 · ex-ministro da Justiça", desc:"Relator dos inquéritos contra Lulinha no STF. Autorizou o terceiro inquérito em agosto de 2026." },
-  J: { full:"Rodrigo Janot", role:"Procurador-geral da República (2013-2017)", desc:"Denunciou Lula ao STF no âmbito do Petrolão. A denúncia não foi aceita pelo STF." },
-  S: { full:"Supremo Tribunal Federal", role:"Corte constitucional", desc:"Anulou as condenações de Lula em 2021 por suspeição de Moro e incompetência da Vara de Curitiba. Julga os inquéritos contra Lulinha." },
-  C: { full:"Antônio Carlos Camilo Antunes (Careca do INSS)", role:"Apontado como centro do esquema do INSS · preso", desc:"Lobista apontado pela PF como articulador do desvio de recursos de aposentados do INSS." },
-  W: { full:"Willer Tomaz", role:"Advogado em Brasília · investigado pela PF", desc:"Amigo de Flávio Bolsonaro. Apontado como engrenagem central do esquema do INSS. Movimentou R$ 5 bilhões em bets em 2025." },
-  V: { full:"Daniel Vorcaro", role:"Dono do Banco Master · preso", desc:"Preso em novembro de 2025 na operação que apura fraudes no Master. Negociou o financiamento do filme Dark Horse com Flávio Bolsonaro." },
-  F: { full:"Flávio Bolsonaro", role:"Senador (PL-RJ) · adversário de Lula em 2026", desc:"Perdeu a eleição para Lula no 2º turno (48,21% a 51,79%) e deixou o país após a derrota. Investigado no STF por financiamento do Dark Horse e por suspeita de participação societária de fato na Alcazar Holdings." },
-  A: { full:"André Valadão", role:"Pastor global da Lagoinha · cantor gospel", desc:"Comanda a rede Lagoinha. Ligado à família Vorcaro há décadas." },
-  Z: { full:"Fabiano Zettel", role:"Pastor · cunhado de Vorcaro · preso", desc:"Administrava a unidade Belvedere da Lagoinha. Preso em março de 2026 na operação Compliance Zero." },
-  K: { full:"Kássio Nunes Marques", role:"Ministro do STF · presidente do TSE", desc:"Indicado ao STF em 2020. Citado em mensagens de Vorcaro sobre pagamentos a uma consultoria ligada ao filho dele." },
-  E: { full:"Eduardo Bolsonaro", role:"Ex-deputado federal · condenado pelo STF", desc:"Irmão de Flávio. Condenado em junho de 2026 a 4 anos e 2 meses por coação no curso do processo." },
-  MASTER: { full:"Banco Master", role:"Banco liquidado pelo BC em nov/2025", desc:"Banco de Vorcaro, liquidado após revelação de fraudes. Prejuízo estimado em R$ 40,6 bilhões." }
-};
-
-var teiaNetwork=null;
-var teiaOverlay=$('teia-modal');
-var teiaInfo=$('teia-info'),teiaEmpty=$('teia-empty');
-var teiaLastFocus=null;
-
-function openTeia(){
-  teiaLastFocus = document.activeElement;
-  teiaOverlay.classList.add('open');
-  document.body.style.overflow='hidden';
-  setTimeout(function(){
-    var closeBtn = document.getElementById('teia-close');
-    if(closeBtn) closeBtn.focus();
-  }, 80);
-  if(!teiaNetwork){
-    setTimeout(initTeia,50);
-  } else {
-    setTimeout(function(){teiaNetwork.redraw();teiaNetwork.fit({animation:{duration:400}})},100);
-  }
-}
-function closeTeia(){
-  teiaOverlay.classList.remove('open');
-  document.body.style.overflow='';
-  if(teiaLastFocus && typeof teiaLastFocus.focus === 'function'){
-    teiaLastFocus.focus();
-    teiaLastFocus = null;
-  }
-}
-$('teia-btn').onclick=openTeia;
-$('teia-close').onclick=closeTeia;
-teiaOverlay.addEventListener('click',function(e){if(e.target===teiaOverlay)closeTeia()});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&teiaOverlay.classList.contains('open'))closeTeia()});
-document.addEventListener('keydown',function(e){
-  if(e.key !== 'Tab') return;
-  if(!teiaOverlay.classList.contains('open')) return;
-  var focusables = getFocusable(teiaOverlay);
-  if(!focusables.length) return;
-  var first = focusables[0];
-  var last = focusables[focusables.length - 1];
-  if(e.shiftKey && document.activeElement === first){
-    e.preventDefault();
-    last.focus();
-  } else if(!e.shiftKey && document.activeElement === last){
-    e.preventDefault();
-    first.focus();
-  }
-});
-
-function isDarkMode(){
-  var a=document.documentElement.getAttribute('data-theme');
-  if(a==='dark')return true;
-  if(a==='light')return false;
-  return matchMedia('(prefers-color-scheme: dark)').matches;
-}
-
-function getFocusable(container){
-  return Array.prototype.slice.call(container.querySelectorAll(
-    'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  )).filter(function(el){return el.offsetParent !== null});
-}
-
-function initTeia(){
-  var container=$('teia-canvas');
-  var dark=isDarkMode();
-  var labelColor = dark?'#ede6dc':'#1c1814';
-
-  var nodes=new vis.DataSet(TEIA_NOS.map(function(n){
-    var imageSrc = n.image ? n.image : makeAvatar(n.label, n.color);
-    return {
-      id:n.id,
-      label:n.label,
-      title:n.title,
-      shape: 'circularImage',
-      image: imageSrc,
-      size: n.size,
-      color:{
-        background:n.color,
-        border: n.color,
-        highlight:{background:n.color,border:dark?'#fff':'#000'},
-        hover:{background:n.color,border:dark?'#fff':'#000'}
-      },
-      font:{
-        color:labelColor,
-        size: window.innerWidth <= 820 ? 16 : 12,
-        face:'IBM Plex Sans',
-        vadjust: 10,
-        strokeWidth: 3,
-        strokeColor: dark?'#1a160f':'#faf5ec',
-        bold:{color:labelColor,size: window.innerWidth <= 820 ? 14 : 12, face:'IBM Plex Sans',mod:'bold',strokeWidth:3,strokeColor: dark?'#1a160f':'#faf5ec'}
-      },
-      borderWidth: 3,
-      borderWidthSelected: 5,
-      shadow:{enabled:false},
-      x:n.x, y:n.y,
-      fixed:{x:true, y:true}
-    };
-  }));
-
-  var edges=new vis.DataSet(TEIA_ARESTAS.map(function(e){
-    return {
-      id: e.from + '-' + e.to,
-      from:e.from, to:e.to,
-      color:{color:e.color+'99', highlight:e.color, hover:e.color},
-      width:e.width||1.5,
-      dashes:e.dashes ? [4, 4] : false
-    };
-  }));
-
-  var data={nodes:nodes,edges:edges};
-  var isMobile = window.innerWidth <= 820;
-  var options={
-    nodes:{borderWidth:0, font:{multi:false}},
-    edges:{smooth:{enabled:false}},
-    physics:{ enabled: false },
-    interaction:{
-      hover: !isMobile,
-      hoverConnectedEdges: !isMobile,
-      tooltipDelay:200,
-      navigationButtons:false,
-      keyboard:false,
-      zoomView:true,
-      dragView:true,
-      multiselect:false,
-      selectConnectedEdges:false
-    }
-  };
-
-  teiaNetwork=new vis.Network(container,data,options);
-  setTimeout(function(){teiaNetwork.fit({ animation: false });}, 100);
-
-  teiaNetwork.on('click',function(params){
-    if(params.nodes.length > 0){
-      showNodeInfo(params.nodes[0]);
-    }
-    else if(params.edges.length > 0){
-      showEdgeInfo(params.edges[0]);
-    }
-    else {
-      resetTeia();
-    }
-  });
-
-  teiaNetwork.on('doubleClick',function(params){
-    if(params.nodes.length>0){
-      teiaNetwork.focus(params.nodes[0],{scale:1.4,animation:{duration:500,easingFunction:'easeInOutQuad'}});
-    }
-  });
-}
-
-function showEdgeInfo(edgeId){
-  var edge = teiaNetwork.body.data.edges.get(edgeId);
-  if(!edge) return;
-  var eOriginal = TEIA_ARESTAS.find(function(e){return (e.from===edge.from&&e.to===edge.to)||(e.from===edge.to&&e.to===edge.from)});
-  if(!eOriginal) return;
-
-  var nodeFrom = TEIA_NOS.find(function(n){return n.id===eOriginal.from});
-  var nodeTo = TEIA_NOS.find(function(n){return n.id===eOriginal.to});
-  var isAlleged = eOriginal.dashes;
-  var statusText = isAlleged ? 'Investigação' : 'Documentado';
-  var statusClass = isAlleged ? 'alleged' : '';
-
-  var avFrom = nodeFrom.image ? nodeFrom.image : makeAvatar(nodeFrom.label, nodeFrom.color);
-  var avTo = nodeTo.image ? nodeTo.image : makeAvatar(nodeTo.label, nodeTo.color);
-
-  var html =
-    '<button class="teia-back-btn" onclick="resetTeia()">← Voltar à visão geral</button>'+
-    '<div class="teia-info-header-edge">'+
-      '<div class="edge-visual">'+
-        '<div class="edge-node-mini" data-target="'+nodeFrom.id+'" style="--c:'+nodeFrom.color+'">'+
-          '<div class="av"><img src="'+avFrom+'"></div>'+
-          '<b>'+nodeFrom.label+'</b>'+
-        '</div>'+
-        '<div class="edge-arrow">↔</div>'+
-        '<div class="edge-node-mini" data-target="'+nodeTo.id+'" style="--c:'+nodeTo.color+'">'+
-          '<div class="av"><img src="'+avTo+'"></div>'+
-          '<b>'+nodeTo.label+'</b>'+
-        '</div>'+
-      '</div>'+
-      '<h3>'+eOriginal.rel+'</h3>'+
-      '<div class="badge"><span class="teia-conn-badge '+statusClass+'">'+statusText+'</span></div>'+
-    '</div>'+
-    '<div class="edge-why" style="--c:'+eOriginal.color+'">'+
-      '<strong>Por que estão conectados?</strong>'+
-      eOriginal.why+
-    '</div>'+
-    '<div class="edge-actions">'+
-      '<button class="btn-edge" data-target="'+nodeFrom.id+'" style="--c:'+nodeFrom.color+'">'+
-        '<span class="dot" style="background:'+nodeFrom.color+'"></span>Ir para '+nodeFrom.label+
-      '</button>'+
-      '<button class="btn-edge" data-target="'+nodeTo.id+'" style="--c:'+nodeTo.color+'">'+
-        '<span class="dot" style="background:'+nodeTo.color+'"></span>Ir para '+nodeTo.label+
-      '</button>'+
-    '</div>';
-
-  teiaInfo.innerHTML = html;
-  teiaInfo.classList.add('active');
-  teiaEmpty.style.display='none';
-  var sidebarEl = document.querySelector('.teia-sidebar');
-  sidebarEl.style.pointerEvents = 'none';
-  document.querySelector('.teia-shell').classList.add('has-selection');
-
-  setTimeout(function(){
-      if(teiaNetwork) {
-          var canvasEl = document.getElementById('teia-canvas');
-          if(canvasEl) teiaNetwork.setSize(canvasEl.clientWidth, canvasEl.clientHeight);
-          teiaNetwork.redraw();
-          teiaNetwork.fit({nodes: [nodeFrom.id, nodeTo.id], animation:{duration:400}});
-      }
-      sidebarEl.style.pointerEvents = 'auto';
-  }, 120);
-
-  var allNodes = TEIA_NOS.map(function(n){return n.id});
-  var keepNodes = [nodeFrom.id, nodeTo.id];
-  var dim = allNodes.filter(function(x){return keepNodes.indexOf(x)===-1});
-  var updates = dim.map(function(x){return {id:x, opacity:0.15}});
-  updates.push({id:nodeFrom.id, opacity:1});
-  updates.push({id:nodeTo.id, opacity:1});
-  teiaNetwork.body.data.nodes.update(updates);
-
-  teiaInfo.querySelectorAll('[data-target]').forEach(function(el){
-    el.onclick = function(e){
-      if(window.getSelection().toString()) return;
-      var target = el.getAttribute('data-target');
-      showNodeInfo(target);
-    };
-  });
-}
-
-function showNodeInfo(id){
-  var node=TEIA_NOS.find(function(n){return n.id===id});
-  if(!node)return;
-  var info=TEIA_INFO[id];
-  if(!info)return;
-
-  var connected=teiaNetwork.getConnectedNodes(id);
-  var edges=teiaNetwork.getConnectedEdges(id);
-  var edgesData=edges.map(function(eid){return teiaNetwork.body.data.edges.get(eid)});
-
-  var connHtml='';
-  connected.forEach(function(cid){
-    var cnode=TEIA_NOS.find(function(n){return n.id===cid});
-    if(!cnode)return;
-    var edge=edgesData.find(function(e){return (e.from===id&&e.to===cid)||(e.from===cid&&e.to===id)});
-    if(!edge)return;
-    var eOriginal=TEIA_ARESTAS.find(function(ee){return (ee.from===edge.from&&ee.to===edge.to)||(ee.from===edge.to&&ee.to===edge.from)});
-    var rel=eOriginal ? eOriginal.rel : 'Conexão';
-    var why=eOriginal ? eOriginal.why : '';
-    var isAlleged=eOriginal && eOriginal.dashes;
-    var statusText=eOriginal ? (isAlleged?'investigação':'documentado') : '';
-
-    connHtml+=
-      '<li class="teia-conn" data-target="'+cid+'" style="--c:'+cnode.color+'">'+
-        '<span class="teia-conn-dot" style="background:'+cnode.color+'"></span>'+
-        '<div class="teia-conn-body">'+
-          '<div class="teia-conn-name">'+cnode.label+'</div>'+
-          '<div class="teia-conn-rel">'+rel+'</div>'+
-          (why?'<div class="teia-conn-why">'+why+'</div>':'')+
-        '</div>'+
-        (statusText?'<span class="teia-conn-badge'+(isAlleged?' alleged':'')+'">'+statusText+'</span>':'')+
-      '</li>';
-  });
-
-  var avatarHTML = (function(){
-    if(node.image) return '<img src="'+node.image+'">';
-    var parts = info.full.trim().split(/\s+/);
-    var initials = (parts[0][0] + (parts.length > 1 ? parts[parts.length-1][0] : '')).toUpperCase();
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">' +
-      '<defs><linearGradient id="g" x1="0" y1="0" x2="0.3" y2="1">' +
-      '<stop offset="0%" stop-color="'+node.color+'"/>' +
-      '<stop offset="100%" stop-color="'+shadeColor(node.color,-50)+'"/>' +
-      '</linearGradient></defs>' +
-      '<circle cx="50" cy="50" r="48" fill="url(#g)"/>' +
-      '<text x="50" y="64" text-anchor="middle" font-family="Georgia, serif" font-size="38" font-weight="700" fill="white">'+initials+'</text>' +
-      '</svg>';
-    return '<img src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'">';
-  })();
-
-  teiaInfo.innerHTML=
-    '<button class="teia-back-btn" onclick="resetTeia()">← Voltar à visão geral</button>'+
-    '<div class="teia-info-header" style="--c:'+node.color+'">'+
-      '<div class="avatar">'+avatarHTML+'</div>'+
-      '<h3>'+info.full+'</h3>'+
-      '<span class="tag">'+node.id+'</span>'+
-      '<p>'+info.role+'</p>'+
-    '</div>'+
-    '<h4>Sobre</h4>'+
-    '<p style="font-size:12.5px;color:var(--mute);line-height:1.55;margin:0 0 18px">'+info.desc+'</p>'+
-    '<h4>Conexões ('+connected.length+')</h4>'+
-    '<ul class="teia-conn-list">'+connHtml+'</ul>';
-
-  teiaInfo.classList.add('active');
-  teiaEmpty.style.display='none';
-  var sidebarEl = document.querySelector('.teia-sidebar');
-  sidebarEl.style.pointerEvents = 'none';
-  document.querySelector('.teia-shell').classList.add('has-selection');
-
-  setTimeout(function(){
-      if(teiaNetwork) {
-          var canvasEl = document.getElementById('teia-canvas');
-          if(canvasEl) teiaNetwork.setSize(canvasEl.clientWidth, canvasEl.clientHeight);
-          teiaNetwork.redraw();
-          teiaNetwork.fit({nodes: [id].concat(connected), animation:{duration:400}});
-      }
-      sidebarEl.style.pointerEvents = 'auto';
-  }, 120);
-
-  teiaInfo.querySelectorAll('.teia-conn').forEach(function(el){
-    el.onclick=function(e){
-      if(window.getSelection().toString()) return;
-      var target=el.dataset.target;
-      showNodeInfo(target);
-    };
-  });
-
-  var allNodes=TEIA_NOS.map(function(n){return n.id});
-  var dim=allNodes.filter(function(x){return x!==id && connected.indexOf(x)===-1});
-  var updates=dim.map(function(x){return {id:x, opacity:0.15}});
-  updates.push({id:id, opacity:1});
-  connected.forEach(function(x){updates.push({id:x, opacity:1})});
-  teiaNetwork.body.data.nodes.update(updates);
-
-  // Edges: manter as conectadas em destaque, atenuar as demais
-  var edgeUpdates = TEIA_ARESTAS.map(function(e){
-    var isConnected = (e.from === id || e.to === id);
-    return {
-      id: e.from + '-' + e.to,
-      color: isConnected
-        ? {color: e.color+'99', highlight: e.color, hover: e.color}
-        : {color: 'rgba(150,150,150,0.12)'},
-      width: isConnected ? (e.width || 1.5) : 1
-    };
-  });
-  teiaNetwork.body.data.edges.update(edgeUpdates);
-}
-
-function resetTeia(){
-  hideNodeInfo();
-  setTimeout(function(){
-    if(teiaNetwork) {
-      teiaNetwork.redraw();
-      teiaNetwork.fit({animation:{duration:400}});
-    }
-  }, 100);
-}
-
-function hideNodeInfo(){
-  teiaInfo.classList.remove('active');
-  teiaEmpty.style.display='flex';
-  document.querySelector('.teia-shell').classList.remove('has-selection');
-  TEIA_NOS.forEach(function(n){
-    teiaNetwork.body.data.nodes.update({id:n.id, opacity:1});
-  });
-  TEIA_ARESTAS.forEach(function(e){
-    teiaNetwork.body.data.edges.update({
-      id: e.from + '-' + e.to,
-      color: {color: e.color+'99', highlight: e.color, hover: e.color},
-      width: e.width || 1.5
-    });
-  });
-}
 
 render();
 renderPropostas();
