@@ -487,6 +487,37 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
   .btn-dossie{justify-content:center}
 }
 
+/* ==================== SEÇÃO RÉGUA ==================== */
+.regua-section{margin:40px 0 56px;padding:0}
+.regua-header{text-align:center;margin-bottom:32px}
+.regua-kicker{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--V);margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px}
+.regua-kicker:before,.regua-kicker:after{content:"";width:26px;height:1px;background:var(--V)}
+.regua-title{font:700 26px/1.15 Newsreader,Georgia,serif;margin:0 0 12px;letter-spacing:-.01em}
+.regua-desc{font:400 15.5px/1.55 Newsreader,Georgia,serif;color:var(--mute);margin:0 auto;max-width:60ch;font-style:italic}
+
+.regua-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:768px){.regua-grid{grid-template-columns:repeat(3,1fr)}}
+
+.regua-col{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.regua-col::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--rc)}
+.regua-col.meritocracia{--rc:var(--lente-meritocracia)}
+.regua-col.corrupcao{--rc:var(--lente-corrupcao)}
+.regua-col.familia{--rc:var(--lente-familia)}
+
+.regua-col-head{padding:20px 20px 16px;border-bottom:1px solid var(--line);text-align:center}
+.regua-col-title{font:700 18px/1.2 Newsreader,Georgia,serif;color:var(--ink);margin:0}
+.regua-col-subtitle{font:500 11px/1.4 "IBM Plex Sans",sans-serif;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;margin-top:4px;display:block}
+
+.regua-cards{padding:16px;display:flex;flex-direction:column;gap:16px;flex:1}
+.regua-card{position:relative;padding-left:14px;border-left:2px solid color-mix(in srgb,var(--rc) 30%,transparent)}
+.regua-card-label{font:700 10px/1 "IBM Plex Sans",sans-serif;color:var(--rc);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}
+.regua-card-label .st{font-size:9px;padding:2px 6px;letter-spacing:.04em}
+.regua-card-text{font:400 13.5px/1.55 Newsreader,Georgia,serif;color:var(--ink);margin:0}
+
+.regua-col-foot{padding:12px 16px;background:var(--soft);border-top:1px solid var(--line);text-align:center}
+.regua-col-foot p{font:italic 400 12.5px/1.5 Newsreader,Georgia,serif;color:var(--mute);margin:0}
+.regua-col-foot strong{font-style:normal;font-weight:700;color:var(--ink)}
+
 </style>
 </head>
 <body>
@@ -639,6 +670,75 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
   <p class="lead-closing">O que segue é uma linha do tempo. A eleição já passou. O que você lê aqui não muda o voto que você deu — mas pode mudar o que você entende sobre o que aconteceu. Leia como quem aplica os três critérios, não como quem espera uma confirmação. Se ao final você ainda achar que tudo não passa de perseguição, essa é uma conclusão legítima — mas que seja uma conclusão sua, não um reflexo. E se em algum ponto você hesitar, não pare na dúvida. Vá atrás dela.</p>
 </section>
 
+<section class="regua-section" id="regua">
+  <div class="regua-header">
+    <div class="regua-kicker">A régua</div>
+    <h2 class="regua-title">A mesma régua para os dois lados</h2>
+    <p class="regua-desc">Se você aplicou as réguas ao Flávio, aplique ao Lula. O resultado é o mesmo? A decisão é sua.</p>
+  </div>
+
+  <div class="regua-grid">
+    <div class="regua-col meritocracia">
+      <div class="regua-col-head">
+        <h3 class="regua-col-title">Meritocracia</h3>
+        <span class="regua-col-subtitle">O que a pessoa tem, ela conquistou?</span>
+      </div>
+      <div class="regua-cards">
+        <div class="regua-card">
+          <div class="regua-card-label">Flávio Bolsonaro <span class="st sd">Documentado</span></div>
+          <p class="regua-card-text">Aos 19 anos, ganhou cargo de 40h em Brasília do partido do pai enquanto cursava faculdade no Rio. Patrimônio saltou de R$ 1,7 mi para R$ 8,2 mi.</p>
+        </div>
+        <div class="regua-card">
+          <div class="regua-card-label">Lula <span class="st sd">Documentado</span></div>
+          <p class="regua-card-text">Saiu do ABC para a presidência. O filho, sem cargo público, movimentou R$ 19,5 milhões em três anos — e é alvo de três inquéritos no STF.</p>
+        </div>
+      </div>
+      <div class="regua-col-foot">
+        <p>Se fosse o <strong>filho de um político que você não apoia</strong>, você chamaria isso de quê?</p>
+      </div>
+    </div>
+
+    <div class="regua-col corrupcao">
+      <div class="regua-col-head">
+        <h3 class="regua-col-title">Combate à corrupção</h3>
+        <span class="regua-col-subtitle">Corrupção não tem lado?</span>
+      </div>
+      <div class="regua-cards">
+        <div class="regua-card">
+          <div class="regua-card-label">Flávio Bolsonaro <span class="st sd">Documentado</span></div>
+          <p class="regua-card-text">Negociou US$ 24 milhões com Daniel Vorcaro (Banco Master) para financiar o filme Dark Horse. Relatório da PF aponta Flávio como "usuário master" da conta de Willer Tomaz.</p>
+        </div>
+        <div class="regua-card">
+          <div class="regua-card-label">Lula <span class="st sd">Documentado</span></div>
+          <p class="regua-card-text">Condenado no caso do triplex, preso por 580 dias, e depois anulado pelo STF por suspeição do juiz — não por inocência. PGR o acusou no Petrolão, mas denúncia não foi aceita.</p>
+        </div>
+      </div>
+      <div class="regua-col-foot">
+        <p>Se um político que você não apoia tivesse sido <strong>condenado, preso e depois anulado</strong>, você chamaria isso de justiça ou de impunidade?</p>
+      </div>
+    </div>
+
+    <div class="regua-col familia">
+      <div class="regua-col-head">
+        <h3 class="regua-col-title">Família</h3>
+        <span class="regua-col-subtitle">A família é a base de tudo?</span>
+      </div>
+      <div class="regua-cards">
+        <div class="regua-card">
+          <div class="regua-card-label">Flávio Bolsonaro <span class="st sd">Documentado</span></div>
+          <p class="regua-card-text">Pôs a mãe como suplente de aliado depois preso pela PF. O irmão, Eduardo, foi condenado pelo STF a 4 anos por coação. O cunhado, Fabiano Zettel, preso como operador de Vorcaro.</p>
+        </div>
+        <div class="regua-card">
+          <div class="regua-card-label">Lula <span class="st sd">Documentado</span></div>
+          <p class="regua-card-text">O filho, Fábio Luís (Lulinha), é alvo de três inquéritos no STF por suspeita de tráfico de influência. Em 2024, viajou a Portugal com o Careca do INSS. O pai diz que o caso será tratado com seriedade.</p>
+        </div>
+      </div>
+      <div class="regua-col-foot">
+        <p>Se fosse a <strong>família de um político que você não apoia</strong>, você chamaria isso de quê?</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <div class="info-grid">
   <details class="info-panel" style="--pc:var(--V)">
