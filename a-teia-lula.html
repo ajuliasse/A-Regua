@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A teia (Lula): o que está documentado, o que é alegação e o que ninguém provou</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<style>
+:root{
+  color-scheme:light;box-sizing:border-box;
+  --bg:#f5efe5;--card:#ffffff;--ink:#1c1814;--mute:#6b635a;--line:#e6ddd0;--soft:#faf5ec;
+  --V:#991b1b;  --Z:#ea580c;  --F:#1d4ed8;  --A:#7c3aed;
+  --N:#db2777;  --S:#047857;  --H:#78350f;  --B:#0891b2;
+  --E:#b45309;  --R:#0f766e;  --M:#4338ca;  --P:#65a30d;
+  --W:#be123c;  --K:#6d28d9;  --C:#9a3412;  --L:#0d9488;
+  --D:#475569;  --J:#166534;  --Q:#713f12;  --X:#701a75;
+  --sd:#0c4a6e;--sa:#d97706;--sc:#dc2626;--sv:#64748b;
+  --lane-master:#0f766e;--lane-lagoinha:#b45309;--lane-raras:#1e40af;--lane-trajetoria:#334155;
+  --lane-lavaJato:#991b1b;--lane-stfRelacoes:#7c3aed;--lane-familiaLulinha:#b45309;--lane-inssMaster:#0f766e;
+  --tier-alta:#16a34a;--tier-media:#d97706;--tier-var:#475569;
+  --lente-meritocracia:#b45309;
+  --lente-corrupcao:#991b1b;
+  --lente-familia:#7c3aed;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#14110d;--card:#221d17;--ink:#ede6dc;--mute:#9a9086;--line:#3a342d;--soft:#1a160f;
+  --V:#fca5a5;  --Z:#fb923c;  --F:#60a5fa;  --A:#a78bfa;
+  --N:#f472b6;  --S:#34d399;  --H:#b89770;  --B:#22d3ee;
+  --E:#fdba74;  --R:#2dd4bf;  --M:#818cf8;  --P:#a3e635;
+  --W:#fda4af;  --K:#c4b5fd;  --C:#fdba74;  --L:#5eead4;
+  --D:#cbd5e1;  --J:#86efac;  --Q:#fde68a;  --X:#f5d0fe;
+  --sd:#e2e8f0;--sa:#fbbf24;--sc:#f87171;--sv:#94a3b8;
+  --lane-master:#5eead4;--lane-lagoinha:#fbbf24;--lane-raras:#60a5fa;--lane-trajetoria:#cbd5e1;
+  --lane-lavaJato:#fca5a5;--lane-stfRelacoes:#a78bfa;--lane-familiaLulinha:#fbbf24;--lane-inssMaster:#5eead4;
+  --tier-alta:#4ade80;--tier-media:#fbbf24;--tier-var:#cbd5e1;
+  --lente-meritocracia:#fbbf24;
+  --lente-corrupcao:#fca5a5;
+  --lente-familia:#a78bfa;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#14110d;--card:#221d17;--ink:#ede6dc;--mute:#9a9086;--line:#3a342d;--soft:#1a160f;
+  --V:#fca5a5;  --Z:#fb923c;  --F:#60a5fa;  --A:#a78bfa;
+  --N:#f472b6;  --S:#34d399;  --H:#b89770;  --B:#22d3ee;
+  --E:#fdba74;  --R:#2dd4bf;  --M:#818cf8;  --P:#a3e635;
+  --W:#fda4af;  --K:#c4b5fd;  --C:#fdba74;  --L:#5eead4;
+  --D:#cbd5e1;  --J:#86efac;  --Q:#fde68a;  --X:#f5d0fe;
+  --sd:#e2e8f0;--sa:#fbbf24;--sc:#f87171;--sv:#94a3b8;
+  --lane-master:#5eead4;--lane-lagoinha:#fbbf24;--lane-raras:#60a5fa;--lane-trajetoria:#cbd5e1;
+  --lane-lavaJato:#fca5a5;--lane-stfRelacoes:#a78bfa;--lane-familiaLulinha:#fbbf24;--lane-inssMaster:#5eead4;
+  --tier-alta:#4ade80;--tier-media:#fbbf24;--tier-var:#cbd5e1;
+  --lente-meritocracia:#fbbf24;
+  --lente-corrupcao:#fca5a5;
+  --lente-familia:#a78bfa;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.w{max-width:760px;margin:0 auto;padding:0 16px 80px}
+
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--V),var(--Z),var(--S),var(--F));z-index:100;transition:width .08s}
+
+.chapter-indicator{
+  position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-80px);
+  background:var(--ink);color:var(--bg);padding:6px 16px;border-radius:999px;
+  font-size:12px;font-weight:500;z-index:40;
+  transition:transform .3s,opacity .3s;opacity:0;pointer-events:none;white-space:nowrap;
+}
+.chapter-indicator.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+.masthead{background:var(--card);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.masthead:before{content:"";position:absolute;inset:0;background:
+  radial-gradient(ellipse 700px 300px at 100% 0%,color-mix(in srgb,var(--V) 7%,transparent) 0%,transparent 60%),
+  radial-gradient(ellipse 500px 260px at 0% 100%,color-mix(in srgb,var(--Z) 5%,transparent) 0%,transparent 60%);pointer-events:none}
+.masthead:after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(to right,color-mix(in srgb,var(--ink) 14%,transparent) 1px,transparent 1px),
+    linear-gradient(to bottom,color-mix(in srgb,var(--ink) 14%,transparent) 1px,transparent 1px);
+  background-size:28px 28px;
+  -webkit-mask-image:radial-gradient(ellipse 120% 140% at 100% 0%,#000 8%,transparent 60%);
+  mask-image:radial-gradient(ellipse 120% 140% at 100% 0%,#000 8%,transparent 60%);
+  opacity:.9}
+.masthead-inner{position:relative;padding:20px 16px 28px}
+@media (min-width: 600px){
+  .masthead-inner{padding:20px 24px 28px}
+}
+.masthead-inner::before,.masthead-inner::after{
+  content:"";position:absolute;top:0;bottom:0;width:12px;pointer-events:none;opacity:.85;
+  background-image:
+    linear-gradient(to right,color-mix(in srgb,var(--ink) 22%,transparent) 0,color-mix(in srgb,var(--ink) 22%,transparent) 1px,transparent 1px),
+    repeating-linear-gradient(to bottom,color-mix(in srgb,var(--ink) 32%,transparent) 0 1px,transparent 1px 140px),
+    repeating-linear-gradient(to bottom,color-mix(in srgb,var(--ink) 15%,transparent) 0 1px,transparent 1px 28px);
+  background-size:100% 100%,12px 100%,6px 100%;
+  background-position:left top,left top,left top;
+  background-repeat:no-repeat,repeat-y,repeat-y;
+}
+.masthead-inner::before{left:0}
+.masthead-inner::after{right:0;transform:scaleX(-1)}
+
+.brand-bar{display:flex;justify-content:space-between;align-items:center;gap:14px;font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--mute);font-weight:500;margin-bottom:26px}
+.brand-mark{display:flex;align-items:center;gap:8px;color:var(--ink);font-weight:600}
+.brand-mark:before{content:"";width:6px;height:6px;background:var(--V);border-radius:50%;box-shadow:0 0 0 2px color-mix(in srgb,var(--V) 20%,transparent)}
+
+.masthead-kicker{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--V);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.masthead-kicker:before{content:"";width:26px;height:1px;background:var(--V)}
+
+h1.masthead-title{font:700 clamp(30px,5.5vw,42px)/1.05 Newsreader,Georgia,serif;margin:0 0 14px;letter-spacing:-.02em;max-width:24ch}
+.masthead-dek{font:400 clamp(15px,1.8vw,17px)/1.5 Newsreader,Georgia,serif;color:var(--mute);margin:0 0 18px;max-width:62ch}
+.masthead-meta{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:center;font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em;font-weight:500;padding-top:14px;border-top:1px solid var(--line)}
+.masthead-meta b{color:var(--ink);font-weight:600;letter-spacing:.02em;margin-right:3px}
+.masthead-meta .dot{color:var(--line)}
+
+.front-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.front-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:500;letter-spacing:.02em;background:color-mix(in srgb,var(--fc) 10%,var(--card));color:var(--fc);border:1px solid color-mix(in srgb,var(--fc) 30%,var(--line))}
+.front-chip b{font-weight:700;font-size:12px}
+.front-chip.master{--fc:var(--lane-master)}
+.front-chip.lagoinha{--fc:var(--lane-lagoinha)}
+.front-chip.raras{--fc:var(--lane-raras)}
+.front-chip.trajetoria{--fc:var(--lane-trajetoria)}
+
+.lead{padding:26px 0;border-bottom:1px solid var(--line)}
+.lead-text{font:400 16.5px/1.6 Newsreader,Georgia,serif;color:var(--ink);margin:0 0 14px;max-width:62ch;letter-spacing:-.003em}
+.lead-sub{font:italic 400 15px/1.55 Newsreader,Georgia,serif;color:var(--mute);margin:0 0 22px;max-width:62ch}
+.lead-filters{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:10px;max-width:62ch}
+.lead-filter{position:relative;display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--V);border-radius:0 10px 10px 0}
+.lead-filter:not(:last-child)::after{content:"";position:absolute;left:32px;bottom:-10px;width:1px;height:10px;background-image:linear-gradient(to bottom,color-mix(in srgb,var(--V) 65%,transparent) 50%,transparent 50%);background-size:1px 4px;opacity:.9;pointer-events:none}
+.lead-filter-num{font:700 18px/1 Newsreader,Georgia,serif;color:var(--V);letter-spacing:-.02em;font-feature-settings:"lnum";width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1.5px dashed color-mix(in srgb,var(--V) 50%,transparent);background:color-mix(in srgb,var(--V) 4%,var(--card));flex-shrink:0}
+.lead-filter-body{min-width:0}
+.lead-filter-title{display:block;font:700 14.5px/1.3 "IBM Plex Sans",system-ui,sans-serif;color:var(--ink);margin:0 0 4px;letter-spacing:-.003em}
+.lead-filter-desc{font:400 13.5px/1.55 Newsreader,Georgia,serif;color:var(--mute);margin:0}
+.lead-closing{font:italic 400 15.5px/1.6 Newsreader,Georgia,serif;color:var(--ink);margin:0;padding-top:18px;border-top:1px dashed var(--line);max-width:62ch}
+@media (max-width:520px){
+  .lead-filter{grid-template-columns:26px 1fr;gap:10px;padding:12px 14px}
+  .lead-filter-num{width:26px;height:26px;font-size:15px}
+  .lead-filter:not(:last-child)::after{left:27px}
+}
+
+.teia-cta{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:linear-gradient(135deg,color-mix(in srgb,var(--F) 8%,var(--card)) 0%,var(--card) 70%);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:22px 0;position:relative;overflow:hidden}
+.teia-cta:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--V),var(--F))}
+.teia-cta-left{display:flex;gap:14px;align-items:flex-start;flex:1;min-width:0}
+.teia-cta-icon{width:44px;height:44px;flex-shrink:0;border-radius:12px;background:linear-gradient(135deg,#991b1b,#1d4ed8);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 2px 8px rgba(0,0,0,.2),inset 0 0 0 1px rgba(255,255,255,.1)}
+.teia-cta h3{font:700 17px/1.25 Newsreader,Georgia,serif;margin:0 0 4px;color:var(--ink);letter-spacing:-.005em}
+.teia-cta p{font-size:12.5px;color:var(--mute);margin:0;line-height:1.45;max-width:44ch}
+.btn-cta{background:var(--ink);color:var(--bg);border:none;border-radius:999px;padding:10px 18px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .15s;white-space:nowrap;flex-shrink:0}
+.btn-cta:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.btn-cta:focus-visible{outline:2px solid var(--F);outline-offset:2px}
+
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:20px 0;border-bottom:1px solid var(--line);align-items:start}
+.info-panel{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--pc,var(--V));border-radius:0 10px 10px 0;overflow:hidden}
+.info-panel summary{list-style:none;cursor:pointer;padding:12px 14px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.info-panel summary::-webkit-details-marker{display:none}
+.info-panel summary:after{content:"▾";color:var(--mute);font-size:10px;transition:transform .2s}
+.info-panel[open] summary:after{transform:rotate(180deg)}
+.info-panel[open] summary{border-bottom:1px solid var(--line)}
+.info-panel-body{padding:12px 14px}
+
+.people-mini{display:grid;gap:6px}
+.person-row{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;line-height:1.45}
+.person-row i{width:8px;height:8px;border-radius:50%;background:var(--c);flex-shrink:0;margin-top:6px}
+.person-row b{color:var(--ink);font-weight:600;margin-right:4px}
+.person-row span{color:var(--mute)}
+
+.tier-mini{display:grid;gap:8px;font-size:12.5px}
+.tier-mini-item{padding-left:10px;border-left:2px solid var(--tc);line-height:1.45}
+.tier-mini-item b{display:block;color:var(--tc);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.tier-mini-item span{color:var(--ink);font-size:12px}
+.tier-mini-item em{display:block;color:var(--mute);font-size:11.5px;font-style:normal;margin-top:3px}
+
+@media (max-width:600px){
+  .info-grid{grid-template-columns:1fr}
+  .teia-cta{flex-direction:column;align-items:stretch}
+  .btn-cta{justify-content:center}
+  .chapter-head{gap:14px;padding:18px 18px}
+  .chapter-num{width:60px;height:60px;font-size:32px}
+  .chapter-num::after{left:calc(100% + 3px);width:8px}
+  .chapter-head:after{left:18px;width:60px}
+  details.event.compact summary {grid-template-columns:1fr auto;grid-template-areas:"date status" "title title";gap:6px 10px;padding:12px 14px 12px 36px;}
+.event.anchor{padding:18px 16px 18px 36px;}
+.event.anchor::before, details.event.compact::before {
+  width:32px;
+  background-image:
+    radial-gradient(circle at 16px 16px, var(--bg) 3.5px, transparent 4px),
+    radial-gradient(circle at 16px 16px, color-mix(in srgb,var(--mute) 45%,transparent) 4.5px, transparent 5px),
+    radial-gradient(circle at 16px 50%, var(--bg) 3.5px, transparent 4px),
+    radial-gradient(circle at 16px 50%, color-mix(in srgb,var(--mute) 45%,transparent) 4.5px, transparent 5px),
+    radial-gradient(circle at 16px calc(100% - 16px), var(--bg) 3.5px, transparent 4px),
+    radial-gradient(circle at 16px calc(100% - 16px), color-mix(in srgb,var(--mute) 45%,transparent) 4.5px, transparent 5px);
+  background-size:100% 100%;background-repeat:no-repeat;
+}
+  .compact-date {grid-area:date;white-space:normal;}
+  details.event.compact summary .st {grid-area:status;justify-self:end;}
+  .compact-title {grid-area:title;font-size:14.5px;font-weight:600;line-height:1.4;padding-top:2px;}
+  .compact-chev {display:none;}
+}
+
+.filters{padding:24px 0 0}
+.f{margin:0 0 12px}
+.f b{display:block;font-weight:500;font-size:12px;color:var(--mute);margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em}
+.ch{display:flex;flex-wrap:wrap;gap:6px}
+.ch button{font:inherit;font-size:13px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s;white-space:nowrap}
+.ch button:hover{border-color:var(--c,var(--mute));transform:translateY(-1px)}
+.ch button:focus-visible{outline:2px solid var(--F);outline-offset:2px}
+.ch button i{width:8px;height:8px;border-radius:50%;background:var(--c,var(--mute))}
+.ch button[aria-pressed="true"]{background:color-mix(in srgb,var(--c) 18%,var(--card));color:color-mix(in srgb,var(--c) 85%,var(--ink));border-color:var(--c);font-weight:500}
+
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:20px 0 0;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.search{flex:1;min-width:160px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font:inherit;font-size:14px;color:var(--ink)}
+.search:focus{outline:none;border-color:var(--ink)}
+.search::placeholder{color:var(--mute)}
+.btn-pill{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font:inherit;font-size:13px;color:var(--ink);cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-pill:hover{border-color:var(--ink)}
+.btn-pill.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn-pill:focus-visible{outline:2px solid var(--F);outline-offset:2px}
+
+.count{font-size:13px;color:var(--mute);margin:14px 0 0;font-weight:500}
+.count b{color:var(--ink);font-weight:600}
+
+.chapter-nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:16px 0;margin-bottom:8px;border-bottom:1px solid var(--line)}
+.chapter-nav::-webkit-scrollbar{display:none}
+.chapter-nav a{white-space:nowrap;font-size:12.5px;font-weight:500;padding:5px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mute);text-decoration:none;transition:all .15s}
+.chapter-nav a:hover{color:var(--ink);border-color:var(--ink);background:var(--card)}
+.chapter-nav a.active{background:var(--V);color:#fff;border-color:var(--V)}
+
+body{position:relative}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(to right,color-mix(in srgb,var(--ink) 4%,transparent) 1px,transparent 1px),
+    linear-gradient(to bottom,color-mix(in srgb,var(--ink) 4%,transparent) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+.view, .teia-overlay, .float {position:relative;z-index:1}
+main{padding:24px 0}
+.chapter{margin:0 0 56px;scroll-margin-top:80px}
+.chapter-head{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;padding:22px 26px;margin-bottom:16px;background:linear-gradient(135deg,color-mix(in srgb,var(--chapter-accent,var(--V)) 12%,var(--card)),var(--card) 70%);border:1px solid var(--line);border-radius:14px;position:relative;overflow:hidden}
+.chapter-head:after{content:"";position:absolute;bottom:0;left:26px;width:80px;height:2px;background:color-mix(in srgb,var(--chapter-accent,var(--V)) 55%,transparent);border-radius:0 0 2px 2px}
+.chapter-num{position:relative;font:700 44px/1 Newsreader,Georgia,serif;color:var(--chapter-accent,var(--V));letter-spacing:-.04em;font-feature-settings:"lnum";width:80px;height:80px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1.5px dashed color-mix(in srgb,var(--chapter-accent,var(--V)) 45%,transparent);background:color-mix(in srgb,var(--chapter-accent,var(--V)) 4%,transparent)}
+.chapter-num::after{content:"";position:absolute;left:calc(100% + 5px);top:50%;transform:translateY(-50%);width:10px;height:1px;background-image:linear-gradient(to right,color-mix(in srgb,var(--chapter-accent,var(--V)) 65%,transparent) 50%,transparent 50%);background-size:4px 1px;opacity:.8}
+.chapter-meta{display:flex;flex-direction:column;gap:4px;min-width:0}
+.chapter-title{font:700 23px/1.15 Newsreader,Georgia,serif;margin:0;letter-spacing:-.01em}
+.chapter-stats{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em;font-weight:500}
+
+.chapter-intro{font:400 15.5px/1.6 Newsreader,Georgia,serif;color:var(--mute);max-width:62ch;margin:-4px 0 18px;padding:0 4px;letter-spacing:-.003em;font-style:italic}
+
+.events{display:flex;flex-direction:column;gap:8px}
+.event.anchor{
+  background:linear-gradient(135deg,color-mix(in srgb,var(--lane-color,var(--V)) 6%,var(--card)) 0%,var(--card) 65%);
+  border:1px solid var(--line);border-left:5px solid var(--lane-color,var(--V));border-radius:12px;padding:22px 24px 22px 44px;margin-bottom:8px;position:relative;transition:box-shadow .2s;overflow:hidden;
+}
+.event.anchor::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:44px;pointer-events:none;
+  background-image:
+    radial-gradient(circle at 22px 24px, var(--bg) 4px, transparent 4.5px),
+    radial-gradient(circle at 22px 24px, color-mix(in srgb,var(--mute) 45%,transparent) 5px, transparent 5.5px),
+    radial-gradient(circle at 22px 50%, var(--bg) 4px, transparent 4.5px),
+    radial-gradient(circle at 22px 50%, color-mix(in srgb,var(--mute) 45%,transparent) 5px, transparent 5.5px),
+    radial-gradient(circle at 22px calc(100% - 24px), var(--bg) 4px, transparent 4.5px),
+    radial-gradient(circle at 22px calc(100% - 24px), color-mix(in srgb,var(--mute) 45%,transparent) 5px, transparent 5.5px);
+  background-size:100% 100%;background-repeat:no-repeat;
+}
+.event.anchor:hover{box-shadow:0 6px 24px rgba(94,70,30,.09)}
+.anchor-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.anchor-head-left{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.anchor-date{font-size:12.5px;color:var(--lane-color,var(--V));text-transform:uppercase;letter-spacing:.06em;font-weight:600;font-family:"IBM Plex Mono",monospace}
+.anchor-title{font:700 22px/1.25 Newsreader,Georgia,serif;margin:0 0 10px;letter-spacing:-.005em}
+.anchor-desc{font-size:15px;line-height:1.6;margin:0 0 12px;color:var(--ink)}
+.anchor-meta{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font:400 11px/1.5 "IBM Plex Mono",monospace;color:var(--mute);margin-top:12px;padding-top:12px;border-top:1px dashed color-mix(in srgb,var(--lane-color,var(--V)) 30%,var(--line))}
+.anchor-meta .label{font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:9.5px;color:var(--mute);margin-right:2px}
+.anchor-meta .sources a{color:inherit;text-underline-offset:2px;text-decoration-color:color-mix(in srgb,var(--ink) 30%,transparent)}
+.anchor-meta .sources a:hover{color:var(--ink);text-decoration-color:var(--ink)}
+.char-dots{display:inline-flex;gap:3px;align-items:center}
+.char-dots i{width:8px;height:8px;border-radius:50%;background:var(--c);display:inline-block;opacity:.6;filter:saturate(.85)}
+.lane-tag{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;padding:2px 8px;border-radius:4px;background:color-mix(in srgb,var(--c) 12%,transparent);color:var(--c);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.lane-tag:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--c)}
+
+.st{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;display:inline-flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.st:before{content:"";width:5px;height:5px;border-radius:50%}
+.st.sd{background:color-mix(in srgb,var(--sd) 14%,transparent);color:var(--sd)}.st.sd:before{background:var(--sd)}
+.st.sa{background:color-mix(in srgb,var(--sa) 14%,transparent);color:var(--sa)}.st.sa:before{background:var(--sa)}
+.st.sc{background:color-mix(in srgb,var(--sc) 14%,transparent);color:var(--sc)}.st.sc:before{background:var(--sc)}
+.st.sv{background:color-mix(in srgb,var(--sv) 14%,transparent);color:var(--sv)}.st.sv:before{background:var(--sv)}
+
+details.event.compact{
+  background:var(--card);
+  border:1px solid var(--line);border-radius:8px;overflow:hidden;transition:border-color .15s,box-shadow .15s;position:relative;
+}
+details.event.compact::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:44px;pointer-events:none;
+  background-image:
+    radial-gradient(circle at 22px 16px, var(--bg) 4px, transparent 4.5px),
+    radial-gradient(circle at 22px 16px, color-mix(in srgb,var(--mute) 45%,transparent) 5px, transparent 5.5px),
+    radial-gradient(circle at 22px 50%, var(--bg) 4px, transparent 4.5px),
+    radial-gradient(circle at 22px 50%, color-mix(in srgb,var(--mute) 45%,transparent) 5px, transparent 5.5px),
+    radial-gradient(circle at 22px calc(100% - 16px), var(--bg) 4px, transparent 4.5px),
+    radial-gradient(circle at 22px calc(100% - 16px), color-mix(in srgb,var(--mute) 45%,transparent) 5px, transparent 5.5px);
+  background-size:100% 100%;background-repeat:no-repeat;
+}
+details.event.compact:hover{border-color:var(--mute)}
+details.event.compact[open]{border-color:var(--lane-color,var(--V));box-shadow:0 3px 16px rgba(94,70,30,.07)}
+details.event.compact summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:140px 1fr auto auto;gap:14px;align-items:center;padding:16px 14px 16px 44px;min-height:64px;user-select:none}
+details.event.compact summary::-webkit-details-marker{display:none}
+.compact-date{font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.04em;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:"IBM Plex Mono",monospace}
+.compact-title{font-size:14px;font-weight:500;color:var(--ink);line-height:1.35;min-width:0}
+.compact-chev{color:var(--mute);font-size:10px;transition:transform .2s;flex-shrink:0}
+details.event.compact[open] .compact-chev{transform:rotate(90deg);color:var(--lane-color,var(--V))}
+details.event.compact .compact-body{padding:14px 14px 14px 44px;border-top:1px solid var(--line);background:var(--soft);font-size:14px;line-height:1.55}
+details.event.compact .compact-body p{margin:0 0 10px}
+.compact-meta{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:11.5px;color:var(--mute);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+
+.anchor-mirror{margin:0 0 14px;padding:14px 16px;background:linear-gradient(135deg,color-mix(in srgb,var(--lane-color,var(--V)) 8%,var(--card)) 0%,var(--card) 70%);border-left:3px solid var(--lane-color,var(--V));border-radius:0 8px 8px 0;font:400 15px/1.55 Newsreader,Georgia,serif;font-style:italic;color:var(--ink)}
+.anchor-mirror strong{font-style:normal;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.1em;font-size:10px;display:block;margin-bottom:6px;font-family:"IBM Plex Sans",sans-serif}
+.compact-mirror{margin:0 0 10px;padding:10px 12px;background:linear-gradient(135deg,color-mix(in srgb,var(--lane-color,var(--V)) 8%,var(--card)) 0%,var(--card) 70%);border-left:2px solid var(--lane-color,var(--V));border-radius:0 6px 6px 0;font:400 13.5px/1.5 Newsreader,Georgia,serif;font-style:italic;color:var(--ink)}
+.compact-mirror strong{font-style:normal;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.1em;font-size:9px;display:block;margin-bottom:4px;font-family:"IBM Plex Sans",sans-serif}
+
+.lente{
+  margin:0 0 22px;
+  padding:24px 24px 20px 44px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-top:4px solid var(--lente-color,var(--V));
+  border-radius:0 0 12px 12px;
+  position:relative;
+  box-shadow:0 2px 12px color-mix(in srgb,var(--lente-color,var(--V)) 8%,transparent)
+}
+.lente::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:44px;pointer-events:none;
+  background-image:
+    radial-gradient(circle at 22px 24px, var(--bg) 4px, transparent 4.5px),
+    radial-gradient(circle at 22px 24px, color-mix(in srgb,var(--mute) 45%,transparent) 5px, transparent 5.5px),
+    radial-gradient(circle at 22px 50%, var(--bg) 4px, transparent 4.5px),
+    radial-gradient(circle at 22px 50%, color-mix(in srgb,var(--mute) 45%,transparent) 5px, transparent 5.5px),
+    radial-gradient(circle at 22px calc(100% - 24px), var(--bg) 4px, transparent 4.5px),
+    radial-gradient(circle at 22px calc(100% - 24px), color-mix(in srgb,var(--mute) 45%,transparent) 5px, transparent 5.5px);
+  background-size:100% 100%;background-repeat:no-repeat;
+}
+.lente-label{position:absolute;top:-11px;left:20px;background:var(--lente-color,var(--V));color:#fff;font:700 9.5px/1 "IBM Plex Sans",system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:5px 11px;border-radius:999px}
+.lente-abertura{font:700 18px/1.3 Newsreader,Georgia,serif;color:var(--ink);margin:0 0 12px;letter-spacing:-.005em;max-width:56ch}
+.lente-corpo{font:400 15px/1.6 Newsreader,Georgia,serif;color:var(--ink);margin:0 0 16px;max-width:62ch}
+.lente-pergunta{font:italic 600 16px/1.5 Newsreader,Georgia,serif;color:var(--lente-color,var(--V));margin:0;padding-top:14px;border-top:1px dashed color-mix(in srgb,var(--lente-color,var(--V)) 35%,var(--line));max-width:62ch}
+
+.lente-coda{margin:56px 0 0;padding:30px 28px 26px;background:linear-gradient(135deg,color-mix(in srgb,var(--V) 5%,var(--card)) 0%,var(--card) 70%);border:1px solid var(--line);border-left:5px solid var(--V);border-radius:0 14px 14px 0;position:relative}
+.lente-coda-kicker{font:700 10.5px/1 "IBM Plex Sans",system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--V);margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.lente-coda-kicker:before{content:"";width:22px;height:1px;background:var(--V)}
+.lente-coda-title{font:700 22px/1.2 Newsreader,Georgia,serif;color:var(--ink);margin:0 0 14px;letter-spacing:-.01em}
+.lente-coda-text{font:400 15.5px/1.6 Newsreader,Georgia,serif;color:var(--ink);margin:0;max-width:62ch}
+
+.doc-stamp{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;padding:0;margin:0 0 18px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:4px;font:400 11px/1.4 "IBM Plex Mono","IBM Plex Sans",monospace;color:var(--mute);letter-spacing:.02em;overflow:hidden}
+.doc-stamp-label{font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:10px;padding:8px 12px;background:var(--ink);color:var(--bg);display:flex;align-items:center}
+.doc-stamp-item{padding:8px 12px;display:inline-flex;align-items:center;gap:4px;border-left:1px solid var(--line)}
+.doc-stamp-item b{color:var(--ink);font-weight:700}
+.doc-stamp-sep{display:none}
+@media (max-width:520px){
+  .doc-stamp{font-size:10px}
+  .doc-stamp-label{font-size:9px;padding:6px 10px}
+  .doc-stamp-item{padding:6px 10px}
+}
+.doc-id{font:500 10px/1 "IBM Plex Mono",monospace;letter-spacing:.06em;color:var(--mute);padding:3px 7px;border:1px solid var(--line);border-radius:4px;background:var(--soft);text-transform:uppercase;white-space:nowrap}
+@media (max-width:520px){
+  .doc-stamp{padding:8px 10px;font-size:10px}
+  .doc-stamp-label{font-size:9px;padding:2px 6px}
+  .doc-id{font-size:9px;padding:2px 5px}
+  details.event.compact summary{grid-template-columns:1fr auto;grid-template-areas:"date status" "title title";gap:6px 10px;padding:12px 14px 12px 36px;}
+  details.event.compact .compact-body{padding:14px 14px 14px 36px;}
+  .compact-date{grid-area:date;white-space:normal;font-size:10px;}
+  details.event.compact summary .st{grid-area:status;justify-self:end;}
+  .compact-title{grid-area:title;font-size:14.5px;font-weight:600;line-height:1.4;padding-top:2px;}
+  .compact-chev{display:none;}
+}
+
+.e{margin:30px 0;color:var(--mute);text-align:center;padding:36px 20px;border:1px dashed var(--line);border-radius:12px;background:var(--soft);font-size:15px}
+
+.propostas{margin:56px 0 0;padding:32px 0;border-top:2px double var(--line)}
+.propostas-kicker{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--lane-trajetoria);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.propostas-kicker:before{content:"";width:26px;height:1px;background:var(--lane-trajetoria)}
+.propostas-title{font:700 26px/1.15 Newsreader,Georgia,serif;margin:0 0 12px;letter-spacing:-.01em}
+.propostas-dek{font:400 15.5px/1.55 Newsreader,Georgia,serif;color:var(--mute);margin:0 0 24px;max-width:62ch;font-style:italic}
+.proposta-bloco{margin-bottom:28px}
+.proposta-tema{font:700 18px/1.2 Newsreader,Georgia,serif;margin:0 0 12px;color:var(--lane-trajetoria);padding-bottom:8px;border-bottom:1px solid var(--line)}
+.proposta-item{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--lane-trajetoria);border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:8px}
+.proposta-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.proposta-titulo{font:700 15px/1.3 Newsreader,Georgia,serif;margin:0;color:var(--ink);letter-spacing:-.003em}
+.proposta-desc{font-size:13.5px;line-height:1.55;margin:0 0 10px;color:var(--ink)}
+.proposta-fontes{font-size:11.5px;color:var(--mute);padding-top:10px;border-top:1px dashed var(--line);display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.proposta-fontes .label{font-weight:500;text-transform:uppercase;letter-spacing:.05em;font-size:10.5px}
+.proposta-fontes a{color:inherit;text-underline-offset:2px}
+.proposta-fontes a:hover{color:var(--ink)}
+
+footer{margin-top:40px;font-size:14.5px;color:var(--ink);background:var(--soft);border:1px solid var(--line);border-left:4px solid var(--V);border-radius:0 12px 12px 0;padding:22px 24px;line-height:1.65}
+footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:700;letter-spacing:.15em;color:var(--V);margin-bottom:12px}
+
+.float{position:fixed;right:18px;width:46px;height:46px;border-radius:50%;background:var(--card);border:1px solid var(--line);box-shadow:0 2px 12px rgba(94,70,30,.12);font-size:18px;cursor:pointer;z-index:50;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s,opacity .2s;color:var(--ink);font-family:inherit}
+.float:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(94,70,30,.16)}
+.float:focus-visible{outline:2px solid var(--F);outline-offset:2px}
+.theme{bottom:20px}
+.top{bottom:78px;opacity:0;pointer-events:none;font-size:20px;font-weight:500}
+.top.show{opacity:1;pointer-events:auto}
+
+.teia-overlay{position:fixed;inset:0;background:rgba(20,17,13,.72);z-index:200;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.teia-overlay.open{display:flex;animation:teia-fade .2s ease}
+@keyframes teia-fade{from{opacity:0}to{opacity:1}}
+.teia-shell{background:var(--card);border:1px solid var(--line);border-radius:16px;width:100%;max-width:1120px;height:88vh;max-height:780px;display:grid;grid-template-columns:1fr 340px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:teia-up .25s ease}
+@keyframes teia-up{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+.teia-main{position:relative;background:var(--soft);overflow:hidden}
+.teia-main::before,.teia-main::after{content:"";position:absolute;top:0;bottom:0;width:12px;pointer-events:none;z-index:5;opacity:.8;
+  background-image:
+    linear-gradient(to right,color-mix(in srgb,var(--ink) 22%,transparent) 0,color-mix(in srgb,var(--ink) 22%,transparent) 1px,transparent 1px),
+    repeating-linear-gradient(to bottom,color-mix(in srgb,var(--ink) 32%,transparent) 0 1px,transparent 1px 140px),
+    repeating-linear-gradient(to bottom,color-mix(in srgb,var(--ink) 15%,transparent) 0 1px,transparent 1px 28px);
+  background-size:100% 100%,12px 100%,6px 100%;
+  background-position:left top,left top,left top;
+  background-repeat:no-repeat,repeat-y,repeat-y;
+}
+.teia-main::before{left:0}
+.teia-main::after{right:0;transform:scaleX(-1)}
+.teia-canvas{width:100%;height:100%;cursor:grab;position:absolute;inset:0;background-color:var(--soft);background-image:linear-gradient(to right,color-mix(in srgb,var(--ink) 5%,transparent) 1px,transparent 1px),linear-gradient(to bottom,color-mix(in srgb,var(--ink) 5%,transparent) 1px,transparent 1px);background-size:28px 28px}
+.teia-canvas:active{cursor:grabbing}
+.teia-topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;z-index:10;background:linear-gradient(180deg,color-mix(in srgb,var(--card) 90%,transparent) 0%,transparent 100%);pointer-events:none;flex-wrap:wrap}
+.teia-topbar > *{pointer-events:auto}
+.teia-title{font-size:12px;font-weight:600;color:var(--ink);letter-spacing:.02em;display:flex;align-items:center;gap:8px}
+.teia-title small{display:block;font-weight:400;color:var(--mute);font-size:10.5px;letter-spacing:.04em;margin-top:1px}
+.teia-close{position:absolute;top:12px;right:12px;z-index:20;width:34px;height:34px;border-radius:50%;background:var(--card);border:1px solid var(--line);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.1);transition:transform .15s}
+.teia-close:hover{transform:rotate(90deg)}
+.teia-legend{position:absolute;bottom:12px;left:12px;right:12px;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:10.5px;color:var(--mute);background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--line);border-radius:10px;padding:8px 12px;z-index:10;line-height:1.4}
+.teia-legend span{display:inline-flex;align-items:center;gap:5px}
+.teia-legend i{width:8px;height:8px;border-radius:2px;display:inline-block}
+.teia-legend .line{width:18px;height:2px;background:var(--mute);border-radius:1px;display:inline-block}
+.teia-legend .line.dash{background:repeating-linear-gradient(90deg,var(--mute) 0 3px,transparent 3px 5px)}
+.teia-sidebar{border-left:1px solid var(--line);background:var(--card);display:flex;flex-direction:column;overflow:hidden}
+.teia-sidebar-empty{padding:24px 20px;color:var(--mute);font-size:12.5px;line-height:1.55;display:flex;flex-direction:column;justify-content:center;height:100%;text-align:center}
+.teia-sidebar-empty h4{font:700 15px Newsreader,Georgia,serif;margin:0 0 8px;color:var(--ink)}
+.teia-sidebar-empty p{margin:0 0 8px}
+.teia-sidebar-empty .hint{margin-top:16px;padding:10px 12px;background:var(--soft);border-radius:8px;font-size:11.5px;line-height:1.5;text-align:left}
+.teia-sidebar-empty .hint b{color:var(--ink)}
+.teia-info{padding:20px;overflow-y:auto;display:none;height:100%}
+.teia-info.active{display:block}
+.teia-back-btn{display:none;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit;font-size:13px;color:var(--ink);cursor:pointer;margin-bottom:16px;align-items:center;justify-content:center;gap:6px;font-weight:600;width:100%;transition:all .15s}
+.teia-back-btn:hover{background:var(--card);border-color:var(--mute)}
+.teia-info-header-edge{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line);text-align:center}
+.teia-info-header-edge h3{font:700 18px/1.2 Newsreader,Georgia,serif;margin:0 0 6px;color:var(--ink);letter-spacing:-.01em;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.teia-info-header-edge .badge{margin-top:8px}
+.edge-visual{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px;padding:16px;background:var(--soft);border-radius:12px;border:1px solid var(--line)}
+.edge-node-mini{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:transform .15s;width:80px}
+.edge-node-mini:hover{transform:translateY(-2px)}
+.edge-node-mini .av{width:44px;height:44px;border-radius:50%;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.edge-node-mini .av img{width:100%;height:100%;object-fit:cover}
+.edge-node-mini b{font-size:11px;font-weight:600;color:var(--ink);text-align:center;line-height:1.25}
+.edge-arrow{font-size:20px;color:var(--mute);flex-shrink:0;opacity:0.6;font-weight:300}
+.edge-why{font-size:13px;color:var(--ink);line-height:1.6;padding:14px 16px;background:color-mix(in srgb,var(--c) 5%,var(--card));border-radius:10px;border-left:3px solid var(--c);margin-bottom:16px}
+.edge-why strong{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin-bottom:6px;font-weight:600}
+.edge-actions{display:flex;flex-direction:column;gap:6px}
+.btn-edge{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:9px 12px 9px 28px;font:inherit;font-size:12.5px;color:var(--ink);cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;gap:8px;position:relative;overflow:hidden}
+.btn-edge::before{content:"";position:absolute;left:0;top:0;bottom:0;width:28px;pointer-events:none;
+  background-image:
+    radial-gradient(circle at 14px 50%, var(--soft) 3px, transparent 3.5px),
+    radial-gradient(circle at 14px 50%, color-mix(in srgb,var(--mute) 45%,transparent) 4px, transparent 4.5px);
+  background-size:100% 100%;background-repeat:no-repeat;
+}
+.btn-edge:hover{background:var(--card);border-color:var(--c);transform:translateX(2px)}
+.btn-edge .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.teia-info-header{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.teia-info-header .avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.teia-info-header .avatar img{width:100%;height:100%;display:block;object-fit:cover}
+.teia-info-header h3{font:700 20px/1.2 Newsreader,Georgia,serif;margin:0 0 6px;color:var(--ink);letter-spacing:-.01em}
+.teia-info-header .tag{display:inline-block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:4px;background:color-mix(in srgb,var(--c) 12%,transparent);color:var(--c)}
+.teia-info-header p{font-size:12.5px;color:var(--mute);margin:8px 0 0;line-height:1.5}
+.teia-info h4{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--mute);margin:0 0 10px}
+.teia-conn-list{list-style:none;padding:0;margin:0}
+.teia-conn{position:relative;display:flex;align-items:flex-start;gap:8px;padding:10px 10px 10px 32px;margin-bottom:6px;border-radius:8px;cursor:pointer;transition:background .15s;border:1px solid var(--line);background:var(--soft);overflow:hidden}
+.teia-conn::before{content:"";position:absolute;left:0;top:0;bottom:0;width:32px;pointer-events:none;
+  background-image:
+    radial-gradient(circle at 16px 16px, var(--card) 3.5px, transparent 4px),
+    radial-gradient(circle at 16px 16px, color-mix(in srgb,var(--mute) 45%,transparent) 4.5px, transparent 5px),
+    radial-gradient(circle at 16px calc(100% - 16px), var(--card) 3.5px, transparent 4px),
+    radial-gradient(circle at 16px calc(100% - 16px), color-mix(in srgb,var(--mute) 45%,transparent) 4.5px, transparent 5px);
+  background-size:100% 100%;background-repeat:no-repeat;
+}
+.teia-conn:hover{background:color-mix(in srgb,var(--c) 6%,var(--card));border-color:var(--c)}
+.teia-conn-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.teia-conn-body{min-width:0;flex:1}
+.teia-conn-name{font-size:13px;font-weight:600;color:var(--ink);line-height:1.3}
+.teia-conn-rel{font-size:11.5px;color:var(--mute);margin-top:2px;line-height:1.4;font-weight:500}
+.teia-conn-why{font-size:11.5px;color:var(--ink);opacity:.8;margin-top:4px;line-height:1.45;font-style:italic}
+.teia-conn-badge{font-size:9px;padding:2px 6px;border-radius:4px;background:color-mix(in srgb,var(--sd) 15%,transparent);color:var(--sd);font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-left:auto;flex-shrink:0;margin-top:1px}
+.teia-conn-badge.alleged{background:color-mix(in srgb,var(--sa) 15%,transparent);color:var(--sa)}
+.vis-tooltip{background:var(--card) !important;border:1px solid var(--line) !important;border-radius:8px !important;padding:8px 12px !important;font-family:"IBM Plex Sans",sans-serif !important;font-size:12px !important;color:var(--ink) !important;box-shadow:0 4px 16px rgba(0,0,0,.15) !important;max-width:240px;line-height:1.45}
+.vis-tooltip b{color:var(--ink)}
+
+@media (max-width:820px){
+  .teia-shell{display:flex;flex-direction:column;height:100dvh;max-height:none;border-radius:0}
+  .teia-main{height:100%;flex:1}
+  .teia-sidebar{display:none;height:55%;flex:none;border-left:none;border-top:1px solid var(--line);box-shadow:0 -10px 30px rgba(0,0,0,.3);z-index:20;background:var(--card)}
+  .teia-shell.has-selection .teia-main{height:45%}
+  .teia-shell.has-selection .teia-sidebar{display:flex;flex-direction:column}
+  .teia-sidebar-empty{display:none}
+  .teia-info{padding:14px;padding-bottom:80px}
+  .teia-info-header .avatar{width:44px;height:44px}
+  .teia-info-header h3{font-size:17px}
+  .teia-legend{display:none}
+  .teia-title{display:none}
+  .teia-back-btn{display:flex;position:sticky;top:0;z-index:10;background:var(--soft);border-color:var(--mute)}
+  .teia-close{top:30px !important;right:16px !important;width:40px !important;height:40px !important}
+}
+@media (max-width:520px){
+  .teia-overlay{padding:0}
+  .teia-shell{border-radius:0;height:100vh;max-height:none}
+}
+
+.skip-link{position:absolute;left:-9999px;top:0;z-index:999;background:var(--ink);color:var(--bg);padding:10px 16px;text-decoration:none;border-radius:0 0 8px 0}
+.skip-link:focus{left:0}
+
+/* ==================== VIEW SWITCHING ==================== */
+.view{display:none}
+.view.active{display:block}
+
+/* Masthead do resumo (menor que o do dossiê) */
+.masthead-resumo .masthead-inner{padding:14px 16px 20px}
+@media (min-width: 600px){
+  .masthead-resumo .masthead-inner{padding:14px 24px 20px}
+}
+.masthead-resumo h1.masthead-title{font-size:clamp(28px,5vw,36px);margin-bottom:10px}
+.masthead-resumo .masthead-dek{font-size:15px;margin-bottom:0}
+
+/* Numeração e fio entre as réguas (só no resumo) */
+#view-resumo{counter-reset:lente-num}
+#view-resumo .lente{counter-increment:lente-num}
+#view-resumo .lente::after{
+  content:counter(lente-num,decimal-leading-zero);
+  position:absolute;top:12px;right:18px;
+  font:700 26px/1 "IBM Plex Mono","Courier New",monospace;
+  color:var(--lente-color,var(--V));
+  opacity:.35;letter-spacing:-.02em;pointer-events:none;
+}
+/* Fio conector removido para não sobrepor os furos */
+@media (max-width:520px){
+  #view-resumo .lente::after{top:10px;right:14px;font-size:22px}
+  /* Fio conector mobile removido */
+}
+
+/* Desfecho (bloco da eleição/saída) — versão régua */
+.desfecho{margin:32px 0 24px;padding:22px 24px 22px 22px;background:var(--card);border:1px solid var(--line);border-top:4px solid var(--V);border-radius:0 0 12px 12px;box-shadow:0 2px 12px color-mix(in srgb,var(--V) 8%,transparent)}
+.desfecho-label{display:inline-block;background:var(--V);color:#fff;font:700 9.5px/1 "IBM Plex Sans",sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:5px 11px;border-radius:999px;margin-bottom:18px}
+.desfecho-list{list-style:none;padding:0;margin:0;position:relative}
+.desfecho-list::before{content:"";position:absolute;left:10px;top:0.775em;bottom:0.775em;width:1px;background-image:linear-gradient(to bottom,color-mix(in srgb,var(--V) 55%,transparent) 50%,transparent 50%);background-size:1px 5px;opacity:.85;pointer-events:none}
+.desfecho-list li{position:relative;display:grid;grid-template-columns:110px 1fr;gap:16px;align-items:baseline;font-size:15px;line-height:1.55;color:var(--ink);padding:0 0 14px 26px}
+.desfecho-list li:last-child{padding-bottom:0}
+.desfecho-list li::before{content:"";position:absolute;left:6.5px;top:calc((1.55em - 8px) / 2);width:8px;height:8px;border-radius:50%;background:var(--card);border:1.5px solid var(--V);box-sizing:border-box;z-index:1}
+.desfecho-list li::after{content:"";position:absolute;left:16px;top:calc((1.55em - 1px) / 2);width:9px;height:1px;background:var(--V);opacity:.45;pointer-events:none}
+.desfecho-list b{font:600 12px/1.4 "IBM Plex Mono",monospace;color:var(--V);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.desfecho-list em{font-style:italic}
+
+/* Gancho */
+.gancho{margin:28px 0 20px;padding:18px 20px;background:color-mix(in srgb,var(--ink) 4%,var(--card));border-left:3px solid var(--V);border-radius:0 8px 8px 0;font:400 15px/1.6 Newsreader,Georgia,serif;color:var(--ink);font-style:italic}
+
+/* Contadores qualitativos das lentes */
+.lente-mais{font:italic 400 13.5px/1.5 Newsreader,Georgia,serif;color:var(--mute);margin:-8px 0 14px;padding:2px 0 10px;text-align:right}
+.lente-mais b{font-style:normal;font-weight:700;color:var(--ink);font-size:13.5px}
+
+/* CTA do dossiê */
+.cta-dossie{margin:32px 0 24px;padding:28px 24px;background:linear-gradient(135deg,color-mix(in srgb,var(--V) 6%,var(--card)) 0%,var(--card) 70%);border:1px solid var(--line);border-left:5px solid var(--V);border-radius:0 14px 14px 0;text-align:center}
+.cta-dossie h3{font:700 20px/1.2 Newsreader,Georgia,serif;margin:0 0 10px;color:var(--ink);letter-spacing:-.01em}
+.cta-dossie p{font-size:14px;color:var(--mute);margin:0 0 20px;line-height:1.55;max-width:48ch;margin-left:auto;margin-right:auto}
+.cta-dossie-botoes{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.btn-dossie{background:var(--V);color:#fff;border:none;border-radius:999px;padding:14px 24px;font:600 14px/1 "IBM Plex Sans",sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .15s}
+.btn-dossie:hover{transform:translateY(-2px);box-shadow:0 8px 20px color-mix(in srgb,var(--V) 35%,transparent)}
+.btn-teia-resumo{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:14px 24px;font:500 14px/1 "IBM Plex Sans",sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .15s}
+.btn-teia-resumo:hover{border-color:var(--ink);transform:translateY(-2px)}
+
+/* Botão de voltar ao resumo (no dossiê completo) */
+.btn-voltar-resumo{
+  position:fixed;
+  top:80px;
+  right:18px;
+  z-index:45;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--ink);
+  color:var(--bg);
+  border:1px solid var(--ink);
+  border-radius:999px;
+  padding:12px 22px;
+  font:600 14px/1 "IBM Plex Sans",sans-serif;
+  cursor:pointer;
+  transition:all .15s;
+  box-shadow:0 4px 14px rgba(0,0,0,.18);
+}
+.btn-voltar-resumo:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(0,0,0,.25);
+}
+@media (max-width:520px){
+  .btn-voltar-resumo{
+    top:70px;
+    right:12px;
+    padding:10px 16px;
+    font-size:13px;
+  }
+}
+
+@media (max-width:520px){
+  .desfecho-list li{grid-template-columns:1fr;gap:2px;padding:0 0 16px 24px}
+  .desfecho-list li:last-child{padding-bottom:0}
+  .desfecho-list b{font-size:11px}
+  .desfecho-list li::before{left:5.5px}
+  .desfecho-list li::after{left:15px;width:8px}
+  .cta-dossie-botoes{flex-direction:column;align-items:stretch}
+  .btn-dossie,.btn-teia-resumo{justify-content:center}
+}
+
+</style>
+</head>
+<body>
+
+<a href="#timeline" class="skip-link">Pular para a linha do tempo</a>
+
+<div id="view-resumo" class="view active">
+
+  <header class="masthead masthead-resumo">
+    <div class="w">
+      <div class="masthead-inner">
+        <div class="brand-bar">
+          <span class="brand-mark">Caderno Especial</span>
+          <span>Versão curta · 2026</span>
+        </div>
+        <div class="masthead-kicker">Depois da eleição</div>
+        <h1 class="masthead-title">A teia (Lula) — o essencial</h1>
+        <p class="masthead-dek">O dossiê tem 30 eventos. Estes são os essenciais — e o caminho para os outros.</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="w">
+
+    <section class="lead">
+      <p class="lead-text">Se você desconfia da imprensa, você tem razões. Não vou te pedir confiança — vou te dar três réguas e os fatos para aplicá-las. Depois da eleição, sobra muita versão e pouca prova. Aqui, cada linha tem data e fonte. Você lê. Confere. E se em algum ponto você hesitar, não pare na dúvida. Vá atrás dela.</p>
+    </section>
+
+    <aside class="lente" role="note" aria-label="Sua régua · meritocracia" style="--lente-color:var(--lente-meritocracia)">
+      <span class="lente-label">Sua régua · meritocracia</span>
+      <p class="lente-abertura">Você acredita que o que a pessoa tem, ela conquistou.</p>
+      <p class="lente-corpo">Lula saiu do ABC para a presidência. O filho dele, sem cargo público, movimentou R$ 19,5 milhões em três anos — e é alvo de três inquéritos no STF. O pai disse que o filho deve voltar ao Brasil para prestar esclarecimentos.</p>
+      <p class="lente-mais">Há <b>mais 6 eventos</b> sobre trajetória e riqueza no dossiê completo.</p>
+      <p class="lente-pergunta">Se fosse o filho de um político que você não apoia, você chamaria isso de quê?</p>
+    </aside>
+
+    <aside class="lente" role="note" aria-label="Sua régua · combate à corrupção" style="--lente-color:var(--lente-corrupcao)">
+      <span class="lente-label">Sua régua · combate à corrupção</span>
+      <p class="lente-abertura">Você acredita que corrupção não tem lado.</p>
+      <p class="lente-corpo">Lula foi condenado no caso do triplex, preso por 580 dias, e teve as condenações anuladas pelo STF por suspeição do juiz Sergio Moro — não por inocência. Em 2025, o Banco Master quebrou com R$ 40,6 bilhões em dívidas. O senador Flávio Bolsonaro negociava milhões com o dono do banco, Daniel Vorcaro, para financiar um filme.</p>
+      <p class="lente-mais">Há <b>mais 12 eventos</b> sobre corrupção no dossiê completo.</p>
+      <p class="lente-pergunta">Se um político que você não apoia tivesse sido condenado, preso e depois anulado, você chamaria isso de justiça ou de impunidade?</p>
+    </aside>
+
+    <aside class="lente" role="note" aria-label="Sua régua · família" style="--lente-color:var(--lente-familia)">
+      <span class="lente-label">Sua régua · família</span>
+      <p class="lente-abertura">Você acredita que a família é a base de tudo.</p>
+      <p class="lente-corpo">O filho de Lula, Fábio Luís, é alvo de três inquéritos no STF por suspeita de tráfico de influência. A PF aponta que ele teria usado a proximidade com o pai para intermediar interesses privados. Em 2024, viajou a Portugal com Antônio Carlos Camilo Antunes, o Careca do INSS. O pai diz que o caso será tratado com seriedade.</p>
+      <p class="lente-mais">Há <b>mais 5 eventos</b> sobre família no dossiê completo.</p>
+      <p class="lente-pergunta">Se fosse a família de um político que você não apoia, você chamaria isso de quê?</p>
+    </aside>
+
+    <section class="desfecho" aria-label="E no fim">
+      <span class="desfecho-label">E no fim</span>
+      <ul class="desfecho-list">
+        <li><b>4 out</b><span>1º turno: Flávio lidera, 47,03% contra 45,16% de Lula.</span></li>
+        <li><b>25 out</b><span>2º turno: Lula vence com 51,79% (64.256.232 votos). Margem: 3,58 pontos.</span></li>
+        <li><b>Naquela noite</b><span>Flávio: <em>“É impossível reconhecer o resultado das eleições.”</em></span></li>
+        <li><b>27 out</b><span>Flávio deixa o Brasil, cruza a fronteira com a Argentina e embarca para Miami.</span></li>
+        <li><b>Hoje</b><span>Lula governa o quarto mandato. O filho, Lulinha, responde a três inquéritos no STF. E o dossiê continua aberto.</span></li>
+      </ul>
+    </section>
+
+    <p class="gancho">Como esses nomes se conectam — Lulinha, o Careca do INSS, Vorcaro, Willer, Moro, Dino — está no dossiê completo. São 30 eventos, com data, fonte e status. Este resumo é uma amostra.</p>
+
+    <aside class="lente-coda" role="note" aria-label="As três réguas">
+      <div class="lente-coda-kicker">Três réguas</div>
+      <p class="lente-coda-title">Meritocracia. Combate à corrupção. Família.</p>
+      <p class="lente-coda-text">A eleição já passou. O que você leu aqui não muda o voto que você deu — mas pode mudar o que você entende sobre o que aconteceu. Não pedi que você respondesse a nenhuma das três perguntas. Só pedi que as aplicasse. E se em algum ponto você hesitar, não pare na dúvida. Vá atrás dela.</p>
+    </aside>
+
+    <section class="cta-dossie">
+      <h3>Quer checar cada fonte?</h3>
+      <p>O dossiê completo tem 30 eventos, cada um com data, status e as matérias originais. Leva mais tempo. Mas cada linha é verificável.</p>
+      <div class="cta-dossie-botoes">
+        <button class="btn-dossie" onclick="showView('completo')">Ler o dossiê completo (30 eventos) →</button>
+        <button class="btn-teia-resumo" onclick="openTeia()">Ver a teia →</button>
+      </div>
+    </section>
+
+  </div>
+
+</div>
+<div id="view-completo" class="view">
+
+<div class="progress" id="progress"></div>
+<a href="#" class="btn-voltar-resumo" onclick="showView('resumo');return false;">← Resumo</a>
+<div class="chapter-indicator" id="chapter-indicator">Origens</div>
+
+<header class="masthead">
+  <div class="w">
+    <div class="masthead-inner">
+      <div class="brand-bar">
+        <span class="brand-mark">Caderno Especial</span>
+        <span>Linha do tempo · Edição contínua · 2026</span>
+      </div>
+      <div class="masthead-kicker">Depois da eleição</div>
+      <h1 class="masthead-title">A teia: o que está documentado, o que é alegação e o que ninguém provou</h1>
+      <p class="masthead-dek">Cada linha aqui tem data, fonte e status. O que é prova, está marcado como prova. O que é alegação, está marcado como alegação. Você lê. Confere. O julgamento é seu.</p>
+      <div class="masthead-meta">
+        <span><b id="st-ev">—</b> eventos</span>
+        <span class="dot">·</span>
+        <span><b id="st-an">—</b> momentos-chave</span>
+        <span class="dot">·</span>
+        <span><b id="st-ch">—</b> personagens</span>
+        <span class="dot">·</span>
+        <span>1975–2026</span>
+      </div>
+      <div class="front-chips">
+        <span class="front-chip lavaJato" style="--fc:var(--lane-lavaJato)"><b id="fc-lavaJato">—</b> Lava Jato</span>
+        <span class="front-chip stfRelacoes" style="--fc:var(--lane-stfRelacoes)"><b id="fc-stfRelacoes">—</b> STF e relações</span>
+        <span class="front-chip familiaLulinha" style="--fc:var(--lane-familiaLulinha)"><b id="fc-familiaLulinha">—</b> Família / Lulinha</span>
+        <span class="front-chip inssMaster" style="--fc:var(--lane-inssMaster)"><b id="fc-inssMaster">—</b> INSS / Master</span>
+        <span class="front-chip trajetoria" style="--fc:var(--lane-trajetoria)"><b id="fc-trajetoria">—</b> Trajetória</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="w">
+
+<section class="lead">
+  <p class="lead-text">Se você desconfia da imprensa, você tem razões. Não estou aqui para te pedir confiança — e sim para te dar as ferramentas para não depender dela. Passada a eleição, sobra muita versão e pouca prova. Este documento separa as duas coisas: o que tem documento, data e fonte de um lado; o que é alegação, contestação ou silêncio do outro.</p>
+
+  <p class="lead-sub">Mas antes de qualquer nome, data ou documento, três critérios. Você os aplica. Você decide o que fica.</p>
+
+  <ol class="lead-filters">
+    <li class="lead-filter">
+      <span class="lead-filter-num">01</span>
+      <div class="lead-filter-body">
+        <b class="lead-filter-title">O documento existe fora de mim?</b>
+        <p class="lead-filter-desc">Uma decisão do STF, um contrato registrado, um áudio autenticado. A pergunta não é "posso confiar em quem mostra?" — é "posso verificar o documento por outro caminho?".</p>
+      </div>
+    </li>
+    <li class="lead-filter">
+      <span class="lead-filter-num">02</span>
+      <div class="lead-filter-body">
+        <b class="lead-filter-title">O acusado tem voz?</b>
+        <p class="lead-filter-desc">Em cada linha, a versão do citado está registrada. Quando não há, isso é dito. Quem não foi condenado está marcado como quem não foi condenado.</p>
+      </div>
+    </li>
+    <li class="lead-filter">
+      <span class="lead-filter-num">03</span>
+      <div class="lead-filter-body">
+        <b class="lead-filter-title">E se fosse com o outro lado?</b>
+        <p class="lead-filter-desc">Se o fato, contado sobre um político que você não apoia, ainda te incomodasse, então o problema não é ideologia — é fato. Essa é a pergunta mais difícil. E a única que não tem resposta errada.</p>
+      </div>
+    </li>
+  </ol>
+
+  <p class="lead-closing">O que segue é uma linha do tempo. A eleição já passou. O que você lê aqui não muda o voto que você deu — mas pode mudar o que você entende sobre o que aconteceu. Leia como quem aplica os três critérios, não como quem espera uma confirmação. Se ao final você ainda achar que tudo não passa de perseguição, essa é uma conclusão legítima — mas que seja uma conclusão sua, não um reflexo. E se em algum ponto você hesitar, não pare na dúvida. Vá atrás dela.</p>
+</section>
+
+<div class="teia-cta">
+  <div class="teia-cta-left">
+    <div class="teia-cta-icon">🕸️</div>
+    <div>
+      <h3>A teia: quem se conecta com quem</h3>
+      <p>Sem opinião. Só linha, nome e documento.</p>
+    </div>
+  </div>
+  <button class="btn-cta" id="teia-btn">Abrir teia →</button>
+</div>
+
+<div class="info-grid">
+  <details class="info-panel" style="--pc:var(--V)">
+    <summary>Quem é quem</summary>
+    <div class="info-panel-body">
+      <div class="people-mini" id="people-mini"></div>
+    </div>
+  </details>
+  <details class="info-panel" style="--pc:var(--Z)">
+    <summary>Sobre as fontes</summary>
+    <div class="info-panel-body">
+      <div style="font-size:12.5px;color:var(--mute);margin:0 0 16px;line-height:1.55">
+        <p style="margin:0 0 10px">Sabemos que desconfiar da imprensa é comum — e muitas vezes saudável. Por isso, este documento não pede que você acredite em nós. Pede que você olhe as evidências.</p>
+        <p style="margin:0 0 10px">A regra aqui é simples e rígida: <b>fatos têm provas (documentos, áudios, registros oficiais); alegações têm donos (quem acusou); e o que não foi provado está marcado como não provado.</b> Além disso, todas as defesas e contestações dos citados foram incluídas no texto.</p>
+        <p style="margin:0 0 10px">Para não depender de uma única visão, cruzamos informações de fontes primárias (Ministério Público, PF, STF, TSE, Câmara) com veículos de diferentes orientações editoriais. Quando um veículo tem um viés político declarado, ele é classificado como tal abaixo. O objetivo não é convencer você a mudar de lado, mas garantir que você saiba exatamente do que está discordando. Não existe político de estimação. Existe o Brasil e as escolhas que fazemos para ele.</p>
+        <p style="margin:0;padding:10px 12px;background:var(--soft);border-left:3px solid var(--Z);border-radius:0 6px 6px 0;font-size:11.5px;line-height:1.5"><b style="color:var(--ink)">Nota sobre 2025–2026.</b> Os eventos dos dois últimos capítulos são <b>cenário em acompanhamento</b>. Diferente de 2005 ou 2018 — fatos encerrados, com sentença ou arquivamento —, os episódios de 2025 e 2026 estão em curso: inquéritos abertos, delações em homologação, decisões ainda sujeitas a recurso. Por isso, a busca por fonte nesses eventos pode retornar hoje menos matérias do que as existentes para os anos anteriores. Não é ausência de fonte: é ausência de <b>fato consumado</b>. Conforme cada episódio se encerra, esta edição é atualizada.</p>
+      </div>
+      <div class="tier-mini">
+        <div class="tier-mini-item" style="--tc:var(--tier-alta)">
+          <b>Alta confiabilidade</b>
+          <span>Agência Brasil · Aos Fatos · CNN · Estadão · Folha · O Globo</span>
+          <em>Agências públicas, grandes jornais e checadores consolidados.</em>
+        </div>
+        <div class="tier-mini-item" style="--tc:var(--tier-media)">
+          <b>Sólida, com viés declarado</b>
+          <span>Poder360 · Gazeta do Povo · Band · Times Brasil/CNBC</span>
+          <em>Histórico editorial, posicionamento político declarado.</em>
+        </div>
+        <div class="tier-mini-item" style="--tc:var(--tier-var)">
+          <b>Independente / alternativa</b>
+          <span>Sul21 · Brasil de Fato · ICL · Metro1 · Pública</span>
+          <em>Posicionamento editorial claro, sem histórico de distorções.</em>
+        </div>
+      </div>
+    </div>
+  </details>
+</div>
+
+<div class="filters">
+  <div class="f"><b>Personagem</b><div class="ch" id="fp"></div></div>
+  <div class="f"><b>Status da informação</b><div class="ch" id="fs"></div></div>
+</div>
+
+<div class="controls">
+  <input type="search" id="search" class="search" placeholder="Buscar eventos…" aria-label="Buscar eventos">
+  <button class="btn-pill" id="highlights-btn" type="button">Só momentos-chave</button>
+  <button class="btn-pill" id="expand-btn" type="button">Expandir detalhes</button>
+</div>
+
+<div class="count" id="cnt"></div>
+
+<nav class="chapter-nav" id="chapter-nav" aria-label="Navegação por capítulo"></nav>
+
+<div class="doc-stamp" role="status">
+  <span class="doc-stamp-label">Dossiê</span>
+  <span class="doc-stamp-item"><b>2026.10</b> · versão</span>
+  <span class="doc-stamp-sep">·</span>
+  <span class="doc-stamp-item"><b id="doc-stamp-count">—</b> eventos</span>
+  <span class="doc-stamp-sep">·</span>
+  <span class="doc-stamp-item"><b id="doc-stamp-anchors">—</b> momentos-chave</span>
+  <span class="doc-stamp-sep">·</span>
+  <span class="doc-stamp-item">Edição contínua</span>
+</div>
+
+<main id="timeline"></main>
+
+<section class="propostas" id="propostas">
+  <div class="propostas-kicker">O que ele prometeu</div>
+  <h2 class="propostas-title">O que foi proposto para o quarto mandato</h2>
+  <p class="propostas-dek">Propostas documentadas ou anunciadas durante a campanha de 2026 — pelo programa registrado no TSE, pelos aliados no Congresso ou pelo próprio governo. O status segue o mesmo critério da timeline: documento, alegação ou contestação.</p>
+  <div id="propostas-list"></div>
+</section>
+
+<aside class="lente-coda" id="lente-coda" role="note" aria-label="As três réguas">
+  <div class="lente-coda-kicker">Três réguas</div>
+  <p class="lente-coda-title">Meritocracia. Combate à corrupção. Família.</p>
+  <p class="lente-coda-text">Não pedi que você respondesse a nenhuma das três perguntas. Só pedi que as aplicasse. Se ao final você ainda acha que tudo isso é perseguição, respeite a sua conclusão. Mas se em algum ponto você hesitar, não pare na dúvida. Vá atrás dela.</p>
+</aside>
+
+<footer>Este documento não quer mudar a cabeça de ninguém. Quer que cada fato esteja separado da versão. Presunção de inocência vale — e está respeitada em cada linha. Mas inocência não é o mesmo que falta de evidência.<div style="margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);font-weight:600;color:var(--V);font-size:15px;line-height:1.55;">Se você defende a justiça social, o combate à corrupção e a soberania nacional, o voto já foi dado — mas os valores que você defende continuam seus. E eles não pedem palanque: pedem prática.</div></footer>
+
+</div>
+
+</div><!-- /view-completo -->
+
+<button class="float theme" id="theme" aria-label="Alternar tema">🌙</button>
+<button class="float top" id="top" aria-label="Voltar ao topo">↑</button>
+
+<div class="teia-overlay" id="teia-modal" role="dialog" aria-modal="true" aria-label="A teia: conexões entre personagens">
+  <div class="teia-shell">
+    <div class="teia-main">
+      <div class="teia-topbar">
+        <div class="teia-title" id="teia-modal-title">🕸️ A teia<small>15 nós · clique nos nós ou nas linhas</small></div>
+      </div>
+      <button class="teia-close" id="teia-close" aria-label="Fechar">✕</button>
+      <div class="teia-canvas" id="teia-canvas"></div>
+      <div class="teia-legend">
+        <span><span class="line"></span> Documentado</span>
+        <span><span class="line dash"></span> Investigação</span>
+        <span>·</span>
+        <span>Clique num nó ou numa linha</span>
+      </div>
+    </div>
+    <aside class="teia-sidebar">
+      <div class="teia-sidebar-empty" id="teia-empty">
+        <h4>Explore a teia</h4>
+        <p>Clique num nó para ver quem é a pessoa, ou clique na linha entre dois nós para entender o que os conecta.</p>
+        <div class="hint">
+          <b>Linha cheia</b> = relação documentada.<br>
+          <b>Linha tracejada</b> = alegação, suspeita ou investigação em curso.
+        </div>
+      </div>
+      <div class="teia-info" id="teia-info"></div>
+    </aside>
+  </div>
+</div>
+
+<script>
+var P={
+L:"Lula", B:"Lulinha", M:"Sergio Moro", D:"Flávio Dino", J:"Rodrigo Janot",
+F:"Flávio Bolsonaro", V:"Daniel Vorcaro", W:"Willer Tomaz", C:"Careca do INSS",
+A:"André Valadão", Z:"Fabiano Zettel", S:"STF", E:"Eduardo Bolsonaro",
+N:"Nikolas Ferreira", K:"Kássio Nunes Marques"
+};
+var P_DESC={
+L:"Luiz Inácio Lula da Silva; 39º e 41º presidente da República; fundador do PT.",
+B:"Fábio Luís Lula da Silva; filho de Lula; investigado em três inquéritos no STF.",
+M:"Ex-juiz da 13ª Vara de Curitiba; ex-ministro da Justiça; senador eleito em 2026.",
+D:"Ministro do STF desde 2024; relator de inquéritos contra Lulinha; ex-ministro da Justiça.",
+J:"Procurador-geral da República (2013-2017); autor de denúncias contra Lula.",
+F:"Senador (PL-RJ); adversário de Lula em 2026; deixou o país após a derrota.",
+V:"Dono do Banco Master; preso na Operação Compliance Zero.",
+W:"Advogado em Brasília; amigo de Flávio Bolsonaro; investigado no caso INSS.",
+C:"Antônio Carlos Camilo Antunes; apontado como centro do esquema do INSS.",
+A:"Pastor global da Lagoinha; ligado à família Vorcaro.",
+Z:"Pastor; cunhado de Vorcaro; administrava a Lagoinha Belvedere.",
+S:"Supremo Tribunal Federal; anulou as condenações de Lula em 2021 e julga os inquéritos do Lulinha.",
+E:"Ex-deputado federal; condenado pelo STF a 4 anos e 2 meses por coação.",
+N:"Deputado federal (PL-MG).",
+K:"Ministro do STF e presidente do TSE; citado em mensagens de Vorcaro."
+};
+var S={d:"Documentado",a:"Alegação",c:"Contestado",v:"Contexto"};
+var LANE_NAMES={lavaJato:"Lava Jato",stfRelacoes:"STF e relações",familiaLulinha:"Família / Lulinha",inssMaster:"INSS / Master",trajetoria:"Trajetória"};
+
+var E=[// ═══════════════════════════════════════════════════════════════
+// ARRAY E — 30 eventos do dossiê Lula
+// Formato: [era, data, título, descrição, personagens, status, lanes, âncora, fontes, pergunta-espelho]
+// ═══════════════════════════════════════════════════════════════
+["Origens","1975","Lula é eleito presidente do Sindicato dos Metalúrgicos do ABC","Torneiro mecânico, Lula assume a presidência do Sindicato dos Metalúrgicos de São Bernardo do Campo e Diadema, representando cerca de 100 mil trabalhadores. É reeleito em 1978 e se torna a principal liderança das greves do ABC. Fato biográfico documentado.","L","d",["trajetoria"],0,[["Agência Brasil (memória)","https://memoria.ebc.com.br/lula"],["Fundação Perseu Abramo","https://fpabramo.org.br/lula-trajetoria/"]]],
+["Origens","1978–1980","As greves do ABC e a prisão de 31 dias","Em maio de 1978, a greve da Scania dá início ao movimento que se espalha pelo ABC paulista. Em 1979, o sindicato sofre a primeira intervenção e o estádio da Vila Euclides vira palco de assembleias com mais de 100 mil trabalhadores. Em 1º de abril de 1980, nova greve; o sindicato sofre a segunda intervenção e Lula é preso em 19 de abril, ficando 31 dias detido no DOPS sob a Lei de Segurança Nacional.","L","d",["trajetoria"],1,[["Diário do Grande ABC (acervo)","https://www.dgabc.com.br/greves-abc"],["Fundação Perseu Abramo","https://fpabramo.org.br/greves-abc-1978-1980"]]],
+["Origens","10 fev 1980","Fundação do Partido dos Trabalhadores no Colégio Sion","Cerca de 1.200 pessoas lançam o manifesto de fundação do PT em ato no Colégio Sion, em São Paulo, com Lula entre as principais lideranças. O partido nasce das greves do ABC e da articulação entre sindicalistas, intelectuais e setores da Igreja. Fato documentado.","L","d",["trajetoria"],1,[["Senado Federal","https://www12.senado.leg.br/noticias/materias/2020/02/10/fundacao-do-pt"],["Câmara dos Deputados","https://www.camara.leg.br/noticias/fundacao-pt-1980"]]],
+["Origens","1984","Lula é liderança central das Diretas Já","O então presidente nacional do PT participa da campanha que reúne Ulysses Guimarães, Leonel Brizola, Franco Montoro e Fernando Henrique Cardoso. O comício da Praça da Sé, em 25 de janeiro de 1984, reúne o maior público do movimento. A emenda Dante de Oliveira é derrotada no Congresso, mas a campanha consolida Lula como liderança nacional.","L","d",["trajetoria"],0,[["Agência Brasil","https://agenciabrasil.ebc.com.br/diretas-ja-1984"],["Senado Federal","https://www12.senado.leg.br/diretas-ja"]]],
+["Origens","1986","Lula é eleito deputado federal constituinte mais votado do país","Com cerca de 650 mil votos por São Paulo, Lula se torna o parlamentar mais votado da Assembleia Nacional Constituinte de 1987–1988. Torna-se líder da bancada petista na Constituinte. O dado é confirmado pelo TSE e por checagem da CNN Brasil.","L","d",["trajetoria"],0,[["Senado Federal","https://www12.senado.leg.br/constituinte-1987"],["CNN Brasil (Fatos Primeiro)","https://www.cnnbrasil.com.br/fatos-primeiro-lula-constituinte"]]],
+["Origens","1989–2002","Quatro eleições presidenciais: três derrotas e a vitória de 2002","Lula disputa a Presidência em 1989 (perde para Collor no 2º turno), 1994 e 1998 (derrotado por FHC) e vence em 2002 (derrotando José Serra no 2º turno). A trajetória eleitoral é documentada pelo TSE e pelos registros oficiais.","L","d",["trajetoria"],0,[["TSE","https://www.tse.jus.br/eleicoes-historicas"],["G1","https://g1.globo.com/politica/lula-eleicoes-1989-2002"]]],
+["Origens","Fev 2004","Waldomiro Diniz é demitido após vídeo em que pede propina a bicheiro","O ex-subchefe de Assuntos Parlamentares da Casa Civil aparece em vídeo gravado em 2002 — quando presidia a Loterj — pedindo dinheiro para a campanha do PT e propina para si a Carlinhos Cachoeira. O vídeo é transcrito pela revista Época. Lula demite Waldomiro e determina abertura de inquérito pela PF. O caso é o primeiro grande escândalo do governo Lula.","L","d",["lavaJato"],0,[["Agência Brasil (memória)","https://memoria.ebc.com.br/waldomiro-diniz"],["Câmara dos Deputados (DETAQ)","https://www.camara.leg.br/detaq-waldomiro-diniz"]]],
+["Origens","2005–2014","Mensalão: o STF condena 24 pessoas; Lula não é réu","O esquema de compra de votos de parlamentares no Congresso é revelado pela Folha em 2005. O STF julga a Ação Penal 470 entre 2012 e 2013 e condena 24 pessoas, incluindo José Dirceu, Genoino e Delúbio. Lula não foi denunciado nem réu no processo — o STF rejeitou por unanimidade o pedido de inclusão dele como réu, por falta de provas.","L","d",["lavaJato"],1,[["Folha de S.Paulo","https://www1.folha.uol.com.br/mensalao"],["Senado Federal","https://www12.senado.leg.br/mensalao-ap470"],["G1","https://g1.globo.com/politica/mensalao"]]],
+["Origens","2006","Escândalo dos Sanguessugas e dos Aloprados","A CPI dos Sanguessugas apura fraude na compra de ambulâncias por prefeituras com emendas parlamentares. Em setembro de 2006, no episódio dos Aloprados, petistas são flagrados tentando comprar um dossiê contra José Serra. Os dois casos são documentados em relatórios parlamentares e na imprensa da época.","L","d",["lavaJato"],0,[["Câmara dos Deputados (relatório final da CPI)","https://www.camara.leg.br/cpi-sanguessugas"],["Agência Brasil (acervo)","https://memoria.ebc.com.br/aloprados"]]],
+["2018–2022","2014–2016","Petrolão: Janot aponta Lula como possível chefe do esquema na Petrobras","O procurador-geral da República, Rodrigo Janot, envia ao STF pedido de abertura de inquérito em que sustenta que o Petrolão só pôde existir com a participação de Lula, que teria posição dominante no esquema. Em maio de 2016, Janot oferece denúncia contra Lula ao STF por tentativa de comprar o silêncio de Nestor Cerveró. O STF não aceitou a denúncia; Lula não foi condenado no Petrolão. A acusação tem dono (PGR), e a defesa de Lula nega qualquer participação.","LJ","a",["lavaJato"],1,[["Congresso em Foco","https://www.congressoemfoco.com.br/petrolao-janot-lula"],["Folha de S.Paulo","https://www1.folha.uol.com.br/petrolao-janot"],["Gazeta do Povo","https://www.gazetadopovo.com.br/petrolao-janot-lula"]],"Se um procurador-geral acusasse um político que você não apoia de chefiar um esquema bilionário, você exigiria prova ou trataria como fato?"],
+["2018–2022","4 mar 2016","Condução coercitiva de Lula na 24ª fase da Lava Jato","A PF cumpre mandado de condução coercitiva contra Lula, expedido pelo juiz Sergio Moro, para levá-lo a depor na 24ª fase da Lava Jato. A operação é documentada e amplamente noticiada. A defesa de Lula classifica a medida como desnecessária e abusiva.","LM","d",["lavaJato"],0,[["G1 (acervo)","https://g1.globo.com/pr/parana/noticia/2016/03/pf-leva-lula-para-depor-em-operacao.html"],["Agência Brasil (acervo)","https://memoria.ebc.com.br/conducao-coercitiva-lula"]]],
+["2018–2022","12 jul 2017","Moro condena Lula a 9 anos e 6 meses no caso do triplex","O juiz Sergio Moro condena Lula por corrupção passiva e lavagem de dinheiro no caso do triplex do Guarujá, atribuindo a ele R$ 2,2 milhões em propina da OAS via reformas no imóvel. A sentença é um documento público. A defesa de Lula sempre alegou que ele nunca foi dono do triplex. A condenação é posteriormente anulada (ver evento 15).","LM","d",["lavaJato"],1,[["Agência Brasil (acervo)","https://memoria.ebc.com.br/moro-condena-lula-triplex"],["ConJur","https://www.conjur.com.br/2017-jul-12/moro-condena-lula-triplex"]],"Se um juiz condenasse um político que você não apoia com base em reformas num imóvel que ele diz não ser dele, você chamaria isso de quê?"],
+["2018–2022","5 abr 2018","Lula é preso e fica 580 dias detido em Curitiba","Após a condenação em segunda instância no caso do triplex, Lula é preso em 7 de abril de 2018 e fica detido na sede da PF em Curitiba por 580 dias, até 8 de novembro de 2019. A prisão é documentada. O contexto é a condenação que seria anulada em 2021.","L","d",["lavaJato"],1,[["Agência Brasil","https://agenciabrasil.ebc.com.br/lula-preso-curitiba"],["BBC News Brasil","https://www.bbc.com/portuguese/brasil-43718717"]]],
+["2018–2022","2019","Lula é condenado a 12 anos e 11 meses no caso do sítio de Atibaia","A juíza Gabriela Hardt, da 13ª Vara de Curitiba, condena Lula por corrupção e lavagem no caso do sítio de Atibaia, com pena de 12 anos e 11 meses. O TRF-4 posteriormente aumenta a pena para 17 anos. A condenação é anulada em 2021 por incompetência da Vara de Curitiba. A defesa de Lula alega que o sítio não era dele e que não houve ato de ofício.","L","d",["lavaJato"],0,[["ConJur","https://www.conjur.com.br/2019-fev-06/lula-condenado-atibaia"],["TRF-4","https://www.trf4.jus.br/atibaia-lula"]]],
+["2018–2022","8 mar / 15 abr 2021","STF anula todas as condenações de Lula na Lava Jato","Em 8 de março de 2021, o ministro Edson Fachin anula as condenações de Lula nos casos do triplex e do sítio de Atibaia, por incompetência da 13ª Vara de Curitiba. Em 15 de abril, o plenário do STF confirma a decisão por 8 votos a 3. Em junho, Gilmar Mendes amplia a suspeição de Moro a todos os processos contra Lula. A anulação é por questões processuais (incompetência do foro e suspeição do juiz), não por mérito — o STF não declarou Lula inocente. A defesa de Lula celebra a decisão como reconhecimento do lawfare.","LMS","d",["lavaJato","stfRelacoes"],1,[["Agência Brasil","https://agenciabrasil.ebc.com.br/fachin-anula-lula"],["ConJur","https://www.conjur.com.br/2021-mar-08/fachin-anula-condenacoes-lula"],["Migalhas","https://www.migalhas.com.br/stf-anula-lula-2021"]],"Se o STF anulasse a condenação de um político que você não apoia por suspeição do juiz, você chamaria isso de justiça ou de impunidade?"],
+["2023–2024","2023–2024","Três inquéritos no STF apuram suspeita de tráfico de influência de Lulinha","A PF abre inquéritos, autorizados pelo STF, para apurar se Fábio Luís Lula da Silva atuou para facilitar o acesso da lobista Roberta Luchsinger a órgãos do governo federal. A investigação aponta que Lulinha teria usado a proximidade com o pai para intermediar interesses privados. São inquéritos em curso, sem denúncia oferecida ou condenação. A defesa de Lulinha nega irregularidades e fala em interferência política na apuração.","B","a",["familiaLulinha"],1,[["TV Pampa","https://www.tvpampa.com.br/lulinha-inqueritos"],["Itatiaia","https://www.itatiaia.com.br/lulinha-tres-inqueritos"],["Folha de S.Paulo","https://www1.folha.uol.com.br/lulinha-inqueritos"]],"Se fosse o filho de um político que você não apoia, você chamaria esses inquéritos de quê?"],
+["2023–2024","26 fev 2024","CPMI do INSS aprova quebra dos sigilos bancário e telemático de Lulinha","A CPMI do INSS aprova a quebra dos sigilos de Lulinha, após a PF apontar suspeitas de que ele teria relações comerciais com Antônio Carlos Camilo Antunes, o Careca do INSS. A quebra de sigilo é um documento (requerimento aprovado). O que ela revela ou deixa de revelar é objeto de disputa política.","BC","d",["inssMaster","familiaLulinha"],0,[["Correio Braziliense","https://www.correiobraziliense.com.br/cpmi-inss-lulinha"],["CBN","https://cbn.globo.com/politica/noticia/2024/02/26/cpmi-do-inss-aprova-quebra-de-sigilo-de-lulinha.ghtml"],["Gazeta do Povo","https://www.gazetadopovo.com.br/cpmi-inss-quebra-sigilo"]]],
+["2023–2024","2024","Quebra de sigilo revela movimentação de R$ 19,5 milhões de Lulinha; defesa diz que são atividades empresariais","A quebra de sigilo aprovada pela CPMI revela que Lulinha movimentou R$ 19,5 milhões entre janeiro de 2022 e janeiro de 2025, com o maior volume (R$ 7,2 milhões) em 2024. Não há, nos documentos divulgados, depósitos diretos do Careca do INSS. A defesa de Lulinha afirma que os valores são compatíveis com suas atividades empresariais e que a investigação não encontrou irregularidades.","B","d",["familiaLulinha","inssMaster"],0,[["CBN","https://cbn.globo.com/politica/noticia/2024/05/08/lulinha-movimentou-r-195-milhoes-diz-cpmi.ghtml"],["Gazeta do Povo","https://www.gazetadopovo.com.br/lulinha-r-195-milhoes"],["Revista Fórum","https://revistaforum.com.br/politica/lulinha-movimentacao-cpmi/"]]],
+["2023–2024","Nov 2024","Lulinha viaja a Portugal com o Careca do INSS","A viagem de Lulinha com Antônio Carlos Camilo Antunes a Portugal, em novembro de 2024, entra no foco da CPMI. O fato da viagem é documentado (registros de embarque). A relação entre os dois é investigada pela PF. Não há, até o momento, comprovação de que a viagem tenha relação com o esquema do INSS.","BC","d",["inssMaster","familiaLulinha"],0,[["Correio Braziliense","https://www.correiobraziliense.com.br/lulinha-portugal-careca"]]],
+["2025","18 nov 2025","Banco Central liquida o Master e Vorcaro é preso na Operação Compliance Zero","O BC decreta a liquidação extrajudicial do Banco Master e a PF prende Daniel Vorcaro em Guarulhos (SP). A operação investiga fraudes em instrumentos de crédito. A liquidação deixa cerca de R$ 40,6 bilhões em dívidas para aproximadamente 800 mil investidores. Vorcaro é o dono do banco. A prisão e a liquidação são fatos documentados. A defesa de Vorcaro estuda recursos.","V","d",["inssMaster"],1,[["CNN Brasil","https://www.cnnbrasil.com.br/politica/a-pf-vorcaro-disse-que-foi-surpreendido-com-liquidacao-do-banco-master/"],["Diário de Pernambuco","https://www.diariodepernambuco.com.br/economia/2026/03/11709047-escandalos-e-liquidacao-entenda-a-crise-envolvendo-as-fraudes-do-banco-master.html"],["Times Brasil","https://timesbrasil.com.br/brasil/banco-master-18-fundos-de-previdencia-tinham-investimentos-no-banco-veja-lista/"]]],
+["2025","Nov 2025","Willer Tomaz é apontado pela PF como engrenagem central do esquema do INSS","A PF aponta o advogado Willer Tomaz como figura central no esquema de desvios do INSS. Ele também é amigo próximo de Flávio Bolsonaro. A acusação é da PF. Willer nega qualquer envolvimento. A conexão com o INSS é o elo entre o caso Master e o universo político do dossiê espelho.","WC","a",["inssMaster"],1,[["SBT News","https://sbtnews.sbt.com.br/noticia/politica/pf-willer-tomaz-inss"],["R7","https://noticias.r7.com/willer-tomaz-inss-pf"],["Congresso em Foco","https://www.congressoemfoco.com.br/willer-tomaz-inss"]],"Se um advogado amigo de um político que você não apoia fosse apontado como engrenagem central de um esquema bilionário, você chamaria isso de quê?"],
+["2025","2025","Willer Tomaz movimenta R$ 5 bilhões em apostas esportivas em um único ano","Um parecer técnico do Ministério da Fazenda aponta que Willer Tomaz movimentou R$ 5 bilhões em bets em 2025, o maior volume do país. A PF investiga se as bets foram usadas para lavar dinheiro. O dado é documentado (parecer). A origem do dinheiro está sob investigação. Willer diz que os recursos são lícitos e declarados.","W","d",["inssMaster"],0,[["R7","https://noticias.r7.com/willer-tomaz-r-5-bilhoes-bets"],["CBN","https://cbn.globo.com/politica/noticia/2025/12/01/willer-tomaz-r-5-bilhoes-bets.ghtml"],["Revista Fórum","https://revistaforum.com.br/politica/willer-tomaz-bets/"]]],
+["2025","2025","André Valadão e Daniel Vorcaro: uma relação de décadas que veio a público após a prisão","Reportagens da Agência Pública mostram que Vorcaro orquestrou a venda de bens da Igreja Lagoinha e prometeu uma expansão de R$ 100 milhões a Valadão. A relação entre os dois é de longa data: Valadão celebrou o casamento de Zettel (cunhado de Vorcaro) com a irmã do banqueiro em 2018. O pastor reconhece que se conhecem há décadas, mas diz que o vínculo se restringe à igreja e não envolve negócios. O conteúdo das mensagens é alegação (reportagem com base em documentos).","AVZ","a",["inssMaster"],0,[["Agência Pública","https://apublica.org/2026/10/daniel-vorcaro-e-os-lacos-com-andre-valadao-da-igreja-lagoinha/"],["Revista Fórum","https://revistaforum.com.br/valadao-vorcaro"],["O Sul","https://www.osul.com.br/valadao-vorcaro-lagoinha"]]],
+["2025","16 set 2025","Relatório do Coaf revela novo repasse de Vorcaro ao filme Dark Horse","Um relatório do Coaf aponta que Vorcaro transferiu US$ 1,6 milhão (cerca de R$ 8,5 milhões) para o fundo ligado ao filme Dark Horse, sobre Jair Bolsonaro, em setembro de 2025 — após o prazo que Flávio Bolsonaro dizia ser o último pagamento (maio de 2025). Os repasses identificados ao projeto passam de R$ 65 milhões. O repasse é documentado pelo Coaf. Flávio diz que todo o dinheiro foi usado na produção do filme.","VF","d",["inssMaster"],0,[["G1","https://g1.globo.com/politica/noticia/2026/09/01/vorcaro-fez-mais-um-repasse-de-us-16-milhao-para-o-filme-dark-horse-apos-cobrancas-de-flavio-bolsonaro-diz-revista.ghtml"],["CNN Brasil","https://www.cnnbrasil.com.br/blogs/elijonasmaia/politica/dark-horse-vorcaro-repassou-us-16-mi-a-mais-que-o-admitido-por-flavio/"],["Poder360","https://www.poder360.com.br/poder-justica/delator-confirma-7-transferencias-a-fundo-norte-americano-de-dark-horse/"]]],
+["2025","16 nov 2025","Flávio Bolsonaro cobra Vorcaro por mensagem antes da prisão do banqueiro","Em 16 de novembro de 2025, um dia antes da prisão de Vorcaro, Flávio Bolsonaro envia mensagem cobrando o dinheiro do filme. As conversas foram reveladas pelo Intercept em 2026. O fato é documentado (mensagens autenticadas). Flávio admite ter pedido o dinheiro.","FV","d",["inssMaster"],0,[["ICL Notícias","https://iclnoticias.com.br/flavio-tentou-falar-vorcaro-antes-da-prisao/"],["Folha de Pernambuco","https://www.folhape.com.br/politica/flavio-bolsonaro-tentou-falar-com-vorcaro-na-vespera-da-prisao-do/514625/"],["Correio do Povo","https://www.correiodopovo.com.br/not%C3%ADcias/pol%C3%ADtica/em-audio-divulgado-flavio-bolsonaro-pede-dinheiro-a-vocaro-para-filme-sobre-o-ex-presidente-1.1713309"]]],
+["2026","4 ago 2026","Dino autoriza o terceiro inquérito contra Lulinha, por suspeita de tráfico de influência em contratos da 3Structure IT","O ministro Flávio Dino, do STF, acolhe pedido da PF e abre o terceiro inquérito contra Fábio Luís Lula da Silva. A investigação apura se Lulinha atuou para intermediar contratos entre o Executivo federal e a empresa de tecnologia 3Structure IT, que soma R$ 81 milhões em seis contratos com o governo (cinco por dispensa de licitação). O primeiro contrato foi assinado em 2022, ainda no governo Bolsonaro, com o Exército; os demais, no governo Lula. Inquérito em curso, sem denúncia ou condenação. A defesa de Lulinha nega as acusações e fala em pesca probatória. Lula disse que o filho deve voltar ao Brasil para prestar esclarecimentos e que o caso será tratado com muita seriedade.","BD","a",["familiaLulinha"],1,[["Congresso em Foco","https://www.congressoemfoco.com.br/lulinha-3structure-dino"],["Poder360","https://www.poder360.com.br/poder-justica/lulinha-3structure-inquerito"],["Agência Brasil","https://agenciabrasil.ebc.com.br/justica/noticia/2026-08/dino-autoriza-inquerito-contra-lulinha"],["Band","https://www.band.com.br/politica/lulinha-3structure"]],"Se o filho de um político que você não apoia fosse alvo de um terceiro inquérito por suspeita de vender acesso ao governo, você chamaria isso de quê?"],
+["2026","7 ago 2026","PT registra no TSE o programa de governo de Lula, com 84 páginas e 13 eixos","O PT protocola no TSE o registro da candidatura de Lula à reeleição, acompanhado do programa de governo. O documento tem 84 páginas e 13 eixos temáticos, com a soberania nacional como eixo central. Cita nominalmente o governo Trump e os tarifaços contra o Brasil. Também defende a regulamentação das redes, mudanças no sistema de emendas parlamentares e o fim da escala 6x1. Documento público registrado no TSE.","L","d",["trajetoria"],0,[["Poder360","https://www.poder360.com.br/poder-eleicoes-2026/programa-governo-lula-tse"],["Congresso em Foco","https://www.congressoemfoco.com.br/programa-governo-lula-tse"],["Site oficial de Lula","https://lula.com.br/programa-de-governo-2026"]]],
+["2026","25 out 2026","Lula vence Flávio Bolsonaro no 2º turno e é reeleito para o quarto mandato","Com 100% das urnas apuradas, Lula obtém 51,79% dos votos válidos (64.256.232 votos), contra 48,21% de Flávio Bolsonaro (59.826.041 votos). A vitória é confirmada pelo TSE às 21h08. Lula havia perdido o 1º turno para Flávio (47,03% a 45,16%). A votação foi prorrogada por duas horas por decisão do ministro Cristiano Zanin, do STF, para seções que ainda estavam abertas após as 17h. O PL de Flávio também havia pedido prorrogação em alguns estados. Resultado oficial do TSE.","LF","d",["trajetoria"],1,[["TSE","https://www.tse.jus.br/comunicacao/noticias/2026/Outubro/presidente-do-tse-anuncia-reeleicao-de-lula-e-faz-balanco-do-2o-turno-das-eleicoes-2026"],["O Globo","https://oglobo.globo.com/politica/noticia/2026/10/25/lula-vence-flavio-bolsonaro.ghtml"],["Agência Brasil","https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/lula-reeleito"],["Revista Fórum","https://revistaforum.com.br/politica/lula-vence-segundo-turno-2026/"]]],
+["2026","25–26 out 2026","Flávio não reconhece o resultado e pede anulação da eleição","Em pronunciamento no QG de campanha, em Brasília, Flávio Bolsonaro diz ser impossível reconhecer o resultado das eleições e anuncia que pedirá a anulação. Ele atribui a derrota à decisão de Zanin que prorrogou a votação, alegando quebra de isonomia. O TSE desmentiu a alegação de que fiscais do PL teriam sido expulsos da sala-cofre. O discurso é público e documentado. A alegação de quebra de isonomia é contestada pelo TSE.","F","d",["trajetoria"],0,[["TV Brasil","https://tvbrasil.ebc.com.br/flavio-nao-reconhece-resultado"],["Folha de S.Paulo","https://www1.folha.uol.com.br/flavio-nao-reconhece-resultado"],["O Globo","https://oglobo.globo.com/politica/noticia/2026/10/25/flavio-bolsonaro-nao-reconhece-resultado.ghtml"],["A Redação","https://www.aredacao.com.br/noticias/flavio-anulacao-eleicao"]],"Se um político que você não apoia tivesse perdido a eleição e se recusado a reconhecer o resultado, o que você chamaria isso?"],
+["2026","8 mar 2021 → 2026","O contraste: a anulação das condenações de Lula e a investigação sobre Flávio","Este evento de contexto fecha a linha do tempo. Em 2021, o STF anulou as condenações de Lula por suspeição de Moro e incompetência da Vara de Curitiba — não por inocência. Em 2026, Lula é reeleito enquanto seu adversário, Flávio Bolsonaro, deixa o país após a derrota e responde a inquéritos no STF. A linha do tempo não iguala os dois casos: um foi anulado por vício processual; o outro está em investigação.","LFS","v",["lavaJato","stfRelacoes"],0,[["Agência Brasil","https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/lula-reeleito"],["ConJur","https://www.conjur.com.br/2021-mar-08/fachin-anula-condenacoes-lula"]]]];
+
+E.forEach(function(e, i){ e.docId = 'DOC ' + String(i+1).padStart(3, '0'); });
+
+var PROPOSTAS = [
+  {
+    tema: "Trabalho e renda",
+    itens: [
+      {
+        titulo: "Fim da escala 6x1",
+        desc: "O fim da escala 6x1 foi aprovado na Câmara em 2026 e votado no Senado em outubro. O PT e o governo apoiaram a proposta, que reduz a jornada semanal máxima. A aprovação foi um dos principais eixos do programa de governo registrado no TSE em agosto. O texto final passou com ressalvas: setores como saúde e segurança pública ficaram de fora.",
+        status: "d",
+        fontes: [["Câmara dos Deputados","https://www.camara.leg.br/noticias/escala-6x1"],["Senado Federal","https://www25.senado.leg.br/web/atividade/materias/-/materia/escala-6x1"]]
+      },
+      {
+        titulo: "Jornada de 40 horas semanais",
+        desc: "O programa de governo de Lula registrado no TSE defende a redução da jornada máxima para 40 horas semanais, sem redução de salário. A proposta é uma bandeira histórica do PT e foi incluída no documento de 84 páginas como um dos eixos de trabalho e renda. A implementação depende do Congresso e não tem prazo definido.",
+        status: "a",
+        fontes: [["Poder360","https://www.poder360.com.br/poder-eleicoes-2026/programa-governo-lula-tse"],["Congresso em Foco","https://www.congressoemfoco.com.br/programa-governo-lula-tse"]]
+      },
+      {
+        titulo: "Isenção de IR até R$ 5 mil",
+        desc: "A isenção do Imposto de Renda para quem ganha até R$ 5.000 foi aprovada em 2025 e é uma das principais bandeiras econômicas do governo. A medida foi sancionada com a compensação da taxação de dividendos acima de R$ 50 mil por mês (retenção de 10%). A proposta original previa isenção total, mas o texto final passou com ajustes.",
+        status: "d",
+        fontes: [["Agência Brasil","https://agenciabrasil.ebc.com.br/economia/noticia/2025-11/isencao-ir-r-5-mil"],["G1","https://g1.globo.com/economia/noticia/2025/11/isencao-ir-r-5-mil.ghtml"]]
+      }
+    ]
+  },
+  {
+    tema: "Soberania e tecnologia",
+    itens: [
+      {
+        titulo: "Soberania sobre minerais críticos",
+        desc: "O programa de governo de Lula registrado no TSE tem a soberania nacional como eixo central, com destaque para os minerais críticos (terras raras, lítio, nióbio). O documento cita nominalmente o governo Trump e os tarifaços contra o Brasil, e defende que a exploração por estrangeiros seja condicionada ao interesse nacional. Uma lei nesse sentido foi aprovada em 2026.",
+        status: "d",
+        fontes: [["Poder360","https://www.poder360.com.br/poder-eleicoes-2026/programa-governo-lula-tse"],["Agência Brasil","https://agenciabrasil.ebc.com.br/politica/noticia/2026-08/lei-minerais-criticos"]]
+      },
+      {
+        titulo: "Regulamentação das redes sociais",
+        desc: "O programa de governo defende a regulamentação das plataformas digitais, com regras de transparência, moderação de conteúdo e responsabilização das empresas. A proposta é apresentada como defesa da democracia e combate à desinformação. Críticos apontam risco de censura; o governo diz que o modelo é semelhante ao europeu.",
+        status: "a",
+        fontes: [["Poder360","https://www.poder360.com.br/poder-eleicoes-2026/programa-governo-lula-tse"],["Congresso em Foco","https://www.congressoemfoco.com.br/programa-governo-lula-tse"]]
+      },
+      {
+        titulo: "Reforma das emendas parlamentares",
+        desc: "O programa de governo propõe mudanças no sistema de emendas parlamentares, com mais transparência e vinculação a projetos estruturantes. A proposta surge após anos de críticas ao modelo de emendas de relator (RP9) e ao baixo controle social sobre os recursos. O texto não detalha o mecanismo de substituição.",
+        status: "a",
+        fontes: [["Poder360","https://www.poder360.com.br/poder-eleicoes-2026/programa-governo-lula-tse"],["Congresso em Foco","https://www.congressoemfoco.com.br/programa-governo-lula-tse"]]
+      }
+    ]
+  }
+];
+var ERAS=["Origens","2018–2022","2023–2024","2025","2026"];
+var ACCENTS=["--V","--Z","--S","--F","--M"];
+var CHAPTER_INTROS={
+"Origens":"Antes de 2003, esta é a trajetória de quem chegou ao poder. De 2003 a 2005, os primeiros escândalos. Nada aqui é opinião: são fatos com data, e cada acusação tem dono.",
+"2018–2022":"A fase da Lava Jato. Condenações, prisão, anulação. Cada linha tem um documento por trás — e cada anulação tem uma razão processual registrada.",
+"2023–2024":"Os inquéritos contra Lulinha começam aqui. São alegações da PF, não condenações. A quebra de sigilo é documento; o que ela revela, não.",
+"2025":"O ano em que o caso Master cruza os dois dossiês: Vorcaro, Willer, Careca do INSS. O papel deixou de ser bastidor e virou inquérito.",
+"2026":"A eleição, o terceiro inquérito contra Lulinha, o programa de governo e o desfecho. O que está provado está marcado como provado. O que ainda não, também."
+};
+
+var fp=new Set(),fs=new Set(),query="",highlightsOnly=false;
+var $=function(i){return document.getElementById(i)};
+
+/* ==================== VIEW SWITCHING ==================== */
+function showView(view){
+  var resumo = document.getElementById('view-resumo');
+  var completo = document.getElementById('view-completo');
+  if(!resumo || !completo) return;
+  resumo.classList.toggle('active', view === 'resumo');
+  completo.classList.toggle('active', view === 'completo');
+  window.scrollTo({top:0, behavior:'instant'});
+  if(view === 'completo'){
+    if(window.location.hash !== '#completo') history.replaceState(null, '', '#completo');
+  } else {
+    if(window.location.hash === '#completo') history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+}
+function handleHash(){
+  if(window.location.hash === '#completo'){
+    showView('completo');
+  } else {
+    showView('resumo');
+  }
+}
+window.addEventListener('hashchange', handleHash);
+function eraId(era){return 'ch-'+era.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+
+(function(){
+  var saved=localStorage.getItem('theme');
+  if(saved)document.documentElement.setAttribute('data-theme',saved);
+  var btn=$('theme');
+  function isDark(){var a=document.documentElement.getAttribute('data-theme');if(a==='dark')return true;if(a==='light')return false;return matchMedia('(prefers-color-scheme: dark)').matches}
+  function update(){btn.textContent=isDark()?'☀️':'🌙'}
+  btn.onclick=function(){var next=isDark()?'light':'dark';document.documentElement.setAttribute('data-theme',next);localStorage.setItem('theme',next);update()};
+  update();
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',update);
+})();
+
+$('st-ev').textContent=E.length;
+$('st-an').textContent=E.filter(function(e){return e[7]===1}).length;
+$('st-ch').textContent=Object.keys(P).length;
+(function(){
+  var c=document.getElementById('doc-stamp-count');
+  var a=document.getElementById('doc-stamp-anchors');
+  if(c) c.textContent = E.length;
+  if(a) a.textContent = E.filter(function(e){return e[7]===1}).length;
+})();
+(function(){
+  var c={lavaJato:0,stfRelacoes:0,familiaLulinha:0,inssMaster:0,trajetoria:0};
+  E.forEach(function(e){e[6].forEach(function(l){if(c[l]!==undefined)c[l]++})});
+  $('fc-lavaJato').textContent=c.lavaJato;
+  $('fc-stfRelacoes').textContent=c.stfRelacoes;
+  $('fc-familiaLulinha').textContent=c.familiaLulinha;
+  $('fc-inssMaster').textContent=c.inssMaster;
+  $('fc-trajetoria').textContent=c.trajetoria;
+})();
+
+(function(){
+  var g=$('people-mini');
+  Object.keys(P).forEach(function(k){
+    var d=document.createElement('div');
+    d.className='person-row';
+    d.innerHTML='<i style="--c:var(--'+k+')"></i><div><b>'+P[k]+'</b><span>'+(P_DESC[k]||'')+'</span></div>';
+    g.appendChild(d);
+  });
+})();
+
+function chips(id,map,set,dot){
+  var h=$(id);
+  Object.keys(map).forEach(function(k){
+    var b=document.createElement('button');
+    b.setAttribute('aria-pressed','false');
+    b.style.setProperty('--c',dot?'var(--'+k+')':'var(--s'+k+')');
+    b.innerHTML=(dot?'<i></i>':'')+map[k];
+    b.onclick=function(){set.has(k)?set.delete(k):set.add(k);b.setAttribute('aria-pressed',set.has(k));render()};
+    h.appendChild(b);
+  });
+}
+chips('fp',P,fp,true);
+chips('fs',S,fs,false);
+
+$('search').oninput=function(){query=this.value.toLowerCase().trim();render()};
+$('highlights-btn').onclick=function(){highlightsOnly=!highlightsOnly;this.classList.toggle('active',highlightsOnly);render()};
+var expandBtn=$('expand-btn'),allExpanded=false;
+expandBtn.onclick=function(){
+  allExpanded=!allExpanded;
+  document.querySelectorAll('details.event').forEach(function(d){d.open=allExpanded});
+  expandBtn.textContent=allExpanded?'Recolher detalhes':'Expandir detalhes';
+};
+
+function matchFilter(e){
+  if(highlightsOnly && e[7]!==1)return false;
+  if(fp.size && !e[4].split('').some(function(c){return fp.has(c)}))return false;
+  if(fs.size && !fs.has(e[5]))return false;
+  if(query){
+    var hay=(e[2]+' '+e[3]).toLowerCase();
+    if(hay.indexOf(query)===-1)return false;
+  }
+  return true;
+}
+
+function renderAnchor(e){
+  var lane=e[6][0];
+  var chars=e[4].split('').map(function(c){return '<i style="--c:var(--'+c+')" title="'+P[c]+'"></i>'}).join('');
+  var laneTags=e[6].map(function(l){return '<span class="lane-tag" style="--c:var(--lane-'+l+')">'+LANE_NAMES[l]+'</span>'}).join('');
+  var srcs=e[8].map(function(l){return '<a href="'+l[1]+'" target="_blank" rel="noopener noreferrer">'+l[0]+'</a>'}).join(' · ');
+  var mirror=e[9]?'<div class="anchor-mirror"><strong>Pense nisso antes de ler</strong>'+e[9]+'</div>':'';
+  return '<article class="event anchor" style="--lane-color:var(--lane-'+lane+')">'+
+    '<div class="anchor-head">'+
+      '<span class="anchor-head-left"><span class="doc-id">'+e.docId+'</span><span class="anchor-date">'+e[1]+'</span></span>'+
+      '<span class="st s'+e[5]+'">'+S[e[5]]+'</span>'+
+    '</div>'+
+    mirror+
+    '<h3 class="anchor-title">'+e[2]+'</h3>'+
+    '<p class="anchor-desc">'+e[3]+'</p>'+
+    '<div class="anchor-meta">'+
+      '<span class="label">Personagens</span><span class="char-dots">'+chars+'</span>'+
+      '<span class="label">Frentes</span>'+laneTags+
+      '<span class="sources" style="margin-left:auto"><span class="label">Fontes</span> '+srcs+'</span>'+
+    '</div>'+
+  '</article>';
+}
+
+function renderCompact(e){
+  var lane=e[6][0];
+  var laneTags=e[6].map(function(l){return '<span class="lane-tag" style="--c:var(--lane-'+l+')">'+LANE_NAMES[l]+'</span>'}).join('');
+  var srcs=e[8].map(function(l){return '<a href="'+l[1]+'" target="_blank" rel="noopener noreferrer">'+l[0]+'</a>'}).join(' · ');
+  var mirror=e[9]?'<div class="compact-mirror"><strong>Pense nisso antes de ler</strong>'+e[9]+'</div>':'';
+  return '<details class="event compact" style="--lane-color:var(--lane-'+lane+')">'+
+    '<summary>'+
+      '<span class="compact-date">'+e.docId+' · '+e[1]+'</span>'+
+      '<span class="compact-title">'+e[2]+'</span>'+
+      '<span class="st s'+e[5]+'">'+S[e[5]]+'</span>'+
+      '<span class="compact-chev">▸</span>'+
+    '</summary>'+
+    '<div class="compact-body">'+
+      mirror+
+      '<p>'+e[3]+'</p>'+
+      '<div class="compact-meta">'+
+        '<span><b>Personagens:</b> '+e[4].split('').map(function(c){return P[c]}).join(', ')+'</span>'+
+        '<span><b>Frentes:</b> '+laneTags+'</span>'+
+        '<span><b>Fontes:</b> '+srcs+'</span>'+
+      '</div>'+
+    '</div>'+
+  '</details>';
+}
+
+var LENTES = {
+  "2018–2022": {
+    valor: "corrupcao",
+    label: "Sua régua · combate à corrupção",
+    abertura: "Você acredita que corrupção não tem lado.",
+    corpo: "Um ex-presidente condenado no caso do triplex, preso por 580 dias, e depois anulado pelo STF por suspeição do juiz — não por inocência.",
+    pergunta: "Se um político que você não apoia tivesse sido condenado, preso e depois anulado, você chamaria isso de justiça ou de impunidade?"
+  },
+  "2023–2024": {
+    valor: "familia",
+    label: "Sua régua · família",
+    abertura: "Você acredita que a família é a base de tudo.",
+    corpo: "O filho do presidente, sem cargo público, é alvo de três inquéritos no STF e movimentou R$ 19,5 milhões em três anos. O pai diz que ele deve voltar ao Brasil para prestar esclarecimentos.",
+    pergunta: "Se fosse o filho de um político que você não apoia, você chamaria esses inquéritos de quê?"
+  },
+  "2026": {
+    valor: "meritocracia",
+    label: "Sua régua · meritocracia",
+    abertura: "Você acredita que o que a pessoa tem, ela conquistou.",
+    corpo: "Lula saiu do ABC para a presidência. O filho dele, sem cargo público, movimentou R$ 19,5 milhões em três anos — e é alvo de três inquéritos no STF. O pai foi reeleito em 2026.",
+    pergunta: "Se fosse o filho de um político que você não apoia, você chamaria isso de quê?"
+  }
+};
+
+function renderLente(era){
+  var l = LENTES[era];
+  if(!l) return '';
+  return '<aside class="lente" role="note" aria-label="'+l.label+'" style="--lente-color:var(--lente-'+l.valor+')">'+
+    '<span class="lente-label">'+l.label+'</span>'+
+    '<p class="lente-abertura">'+l.abertura+'</p>'+
+    '<p class="lente-corpo">'+l.corpo+'</p>'+
+    '<p class="lente-pergunta">'+l.pergunta+'</p>'+
+  '</aside>';
+}
+
+function renderChapter(num,era,events){
+  var accent='var('+ACCENTS[(num-1)%ACCENTS.length]+')';
+  var anchors=events.filter(function(e){return e[7]===1}).length;
+  var stats=events.length+' evento'+(events.length===1?'':'s')+(anchors?' · '+anchors+' momento'+(anchors===1?'':'s')+'-chave':'');
+  var eventsHtml=events.map(function(e){return e[7]===1?renderAnchor(e):renderCompact(e)}).join('');
+  var intro=CHAPTER_INTROS[era]?'<p class="chapter-intro">'+CHAPTER_INTROS[era]+'</p>':'';
+  return '<section class="chapter" id="'+eraId(era)+'">'+
+    '<header class="chapter-head" style="--chapter-accent:'+accent+'">'+
+      '<div class="chapter-num">'+String(num).padStart(2,'0')+'</div>'+
+      '<div class="chapter-meta"><h2 class="chapter-title">'+era+'</h2><div class="chapter-stats">'+stats+'</div></div>'+
+    '</header>'+
+    intro+
+    renderLente(era)+
+    '<div class="events">'+eventsHtml+'</div>'+
+  '</section>';
+}
+
+function render(){
+  var visible=E.filter(matchFilter);
+  var byEra={};
+  visible.forEach(function(e){if(!byEra[e[0]])byEra[e[0]]=[];byEra[e[0]].push(e)});
+  var html='';
+  ERAS.forEach(function(era,idx){if(byEra[era])html+=renderChapter(idx+1,era,byEra[era])});
+  $('timeline').innerHTML=html || '<p class="e">Nenhum evento com essa combinação de filtros.</p>';
+  $('cnt').innerHTML='<b>'+visible.length+'</b> de '+E.length+' eventos · <b>'+visible.filter(function(e){return e[7]===1}).length+'</b> momentos-chave';
+  allExpanded=false;expandBtn.textContent='Expandir detalhes';
+  updateChapterNav();
+}
+
+function updateChapterNav(){
+  var chapters=document.querySelectorAll('#timeline .chapter');
+  var nav=$('chapter-nav');
+  nav.innerHTML='';
+  chapters.forEach(function(ch){
+    var title=ch.querySelector('.chapter-title').textContent;
+    var a=document.createElement('a');
+    a.href='#'+ch.id;
+    a.textContent=title;
+    a.onclick=function(ev){ev.preventDefault();ch.scrollIntoView({behavior:'smooth',block:'start'})};
+    nav.appendChild(a);
+  });
+}
+
+function updateChapterIndicator(){
+  var chapters=document.querySelectorAll('#timeline .chapter');
+  var current=null;
+  chapters.forEach(function(ch){if(ch.getBoundingClientRect().top<=120)current=ch});
+  var indicator=$('chapter-indicator');
+  var navLinks=document.querySelectorAll('#chapter-nav a');
+  navLinks.forEach(function(a){a.classList.remove('active')});
+  if(current && current.getBoundingClientRect().top>-current.offsetHeight){
+    indicator.textContent=current.querySelector('.chapter-title').textContent;
+    indicator.classList.add('show');
+    var link=document.querySelector('#chapter-nav a[href="#'+current.id+'"]');
+    if(link)link.classList.add('active');
+  } else if(window.scrollY<200){
+    indicator.classList.remove('show');
+  }
+}
+
+function renderPropostas(){
+  var container=document.getElementById('propostas-list');
+  if(!container) return;
+  var html=PROPOSTAS.map(function(bloco){
+    var itens=bloco.itens.map(function(it){
+      var stLabel=S[it.status]||it.status;
+      var fontes=(it.fontes||[]).map(function(f){
+        return '<a href="'+f[1]+'" target="_blank" rel="noopener noreferrer">'+f[0]+'</a>';
+      }).join(' · ');
+      return '<div class="proposta-item" style="--lane-color:var(--lane-trajetoria)">'+
+        '<div class="proposta-head">'+
+          '<h4 class="proposta-titulo">'+it.titulo+'</h4>'+
+          '<span class="st s'+it.status+'">'+stLabel+'</span>'+
+        '</div>'+
+        '<p class="proposta-desc">'+it.desc+'</p>'+
+        (fontes?'<div class="proposta-fontes"><span class="label">Fontes</span> '+fontes+'</div>':'')+
+      '</div>';
+    }).join('');
+    return '<div class="proposta-bloco">'+
+      '<h3 class="proposta-tema">'+bloco.tema+'</h3>'+
+      itens+
+    '</div>';
+  }).join('');
+  container.innerHTML=html;
+}
+
+var progress=$('progress'),topBtn=$('top');
+function onScroll(){
+  var h=document.documentElement;
+  var pct=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
+  progress.style.width=pct+'%';
+  topBtn.classList.toggle('show',h.scrollTop>400);
+  updateChapterIndicator();
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+topBtn.onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
+
+/* ==================== TEIA ==================== */
+function shadeColor(color, percent) {
+  var num = parseInt(color.replace('#',''), 16);
+  var r = Math.max(0, Math.min(255, (num >> 16) + percent));
+  var g = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + percent));
+  var b = Math.max(0, Math.min(255, (num & 0x0000FF) + percent));
+  return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+}
+function makeAvatar(name, color) {
+  var canvas = document.createElement('canvas');
+  canvas.width = 160;
+  canvas.height = 160;
+  var ctx = canvas.getContext('2d');
+  var cx = 80, cy = 80;
+  
+  // Anel externo tracejado (selo)
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 3;
+  ctx.setLineDash([6, 6]);
+  ctx.beginPath();
+  ctx.arc(cx, cy, 76, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  
+  // Círculo interno com gradiente
+  var grad = ctx.createLinearGradient(0, 0, 40, 160);
+  grad.addColorStop(0, color);
+  grad.addColorStop(1, shadeColor(color, -50));
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(cx, cy, 68, 0, Math.PI * 2);
+  ctx.fill();
+  
+  // Anel branco sutil
+  ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(cx, cy, 66, 0, Math.PI * 2);
+  ctx.stroke();
+  
+  // Iniciais
+  var parts = name.trim().split(/\s+/);
+  var initials = (parts[0][0] + (parts.length > 1 ? parts[parts.length-1][0] : '')).toUpperCase();
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 52px Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(initials, cx, cy + 6);
+  
+  return canvas.toDataURL();
+}
+
+// Paleta alinhada: V (Vorcaro) e MASTER (Banco Master) em teal institucional
+// (--lane-master #0f766e / #5eead4), consistente com a lane no documento.
+// W (Willer), K (Kássio), Z (Zettel), etc. mantêm suas cores pessoais.
+var TEIA_NOS = [
+  {id:"L", label:"Lula", color:"#0d9488", size:44, x:0, y:0, title:"Presidente · 39º e 41º mandatos"},
+  {id:"B", label:"Lulinha", color:"#9a3412", size:32, x:-280, y:0, title:"Filho de Lula · investigado no STF"},
+  {id:"M", label:"Sergio Moro", color:"#4338ca", size:30, x:-280, y:-200, title:"Ex-juiz da Lava Jato · ex-ministro · senador"},
+  {id:"D", label:"Flávio Dino", color:"#6d28d9", size:28, x:-120, y:240, title:"Ministro do STF · relator dos inquéritos do Lulinha"},
+  {id:"J", label:"Rodrigo Janot", color:"#78350f", size:26, x:-420, y:-100, title:"Ex-procurador-geral da República"},
+  {id:"S", label:"STF", color:"#047857", size:32, x:160, y:-180, title:"Supremo Tribunal Federal"},
+  {id:"C", label:"Careca do INSS", color:"#dc2626", size:26, x:-420, y:120, title:"Apontado como centro do esquema do INSS"},
+  {id:"W", label:"Willer Tomaz", color:"#be123c", size:28, x:-420, y:-20, title:"Advogado · investigado pela PF"},
+  {id:"V", label:"Daniel Vorcaro", color:"#0f766e", size:30, x:220, y:80, title:"Dono do Banco Master · preso"},
+  {id:"F", label:"Flávio Bolsonaro", color:"#1d4ed8", size:32, x:420, y:0, title:"Senador (PL-RJ) · adversário em 2026"},
+  {id:"A", label:"André Valadão", color:"#7c3aed", size:26, x:420, y:240, title:"Pastor da Lagoinha"},
+  {id:"Z", label:"Fabiano Zettel", color:"#ea580c", size:26, x:220, y:300, title:"Pastor · cunhado de Vorcaro"},
+  {id:"K", label:"Kássio Nunes", color:"#65a30d", size:26, x:420, y:-220, title:"Ministro do STF · presidente do TSE"},
+  {id:"MASTER", label:"Banco Master", color:"#0f766e", size:26, x:220, y:-140, title:"Banco liquidado pelo BC em 2025"},
+  {id:"E", label:"Eduardo Bolsonaro", color:"#b45309", size:24, x:580, y:-100, title:"Ex-deputado · condenado pelo STF"}
+];
+
+var TEIA_ARESTAS = [
+  {from:"L", to:"B", rel:"Pai e filho", why:"Lulinha é filho de Lula. O presidente disse que o filho deve voltar ao Brasil para prestar esclarecimentos.", status:"doc", color:"#9a3412", width:2.5},
+  {from:"L", to:"M", rel:"Condenação e suspeição", why:"Moro condenou Lula no caso do triplex em 2017. Em 2021, o STF declarou Moro suspeito e anulou as condenações.", status:"doc", color:"#4338ca", width:2},
+  {from:"L", to:"S", rel:"Anulação das condenações", why:"O STF anulou as condenações de Lula em 2021 por suspeição de Moro e incompetência da Vara de Curitiba — não por inocência.", status:"doc", color:"#047857", width:2.5},
+  {from:"L", to:"J", rel:"Acusações da PGR", why:"Rodrigo Janot, então procurador-geral, denunciou Lula ao STF no âmbito do Petrolão, mas a denúncia não foi aceita.", status:"alleged", color:"#78350f", width:2, dashes:true},
+  {from:"L", to:"D", rel:"Inquéritos do Lulinha", why:"Flávio Dino, ministro do STF, é o relator dos inquéritos contra o filho de Lula.", status:"doc", color:"#6d28d9", width:1.5},
+  {from:"L", to:"F", rel:"Adversários em 2026", why:"Lula derrotou Flávio Bolsonaro no 2º turno de 2026 (51,79% a 48,21%).", status:"doc", color:"#1d4ed8", width:2},
+  {from:"B", to:"C", rel:"Investigação INSS", why:"A PF investiga a relação de Lulinha com Antônio Carlos Camilo Antunes, o Careca do INSS, incluindo uma viagem a Portugal em 2024.", status:"alleged", color:"#dc2626", width:2, dashes:true},
+  {from:"B", to:"W", rel:"Tráfico de influência", why:"Lulinha é investigado por suspeita de usar a proximidade com o pai para intermediar interesses privados, em contratos da 3Structure IT.", status:"alleged", color:"#be123c", width:2, dashes:true},
+  {from:"C", to:"W", rel:"Esquema INSS", why:"A PF aponta Willer Tomaz como engrenagem central do esquema do INSS, que tem o Careca como centro.", status:"alleged", color:"#be123c", width:2, dashes:true},
+  {from:"W", to:"V", rel:"Caso Master", why:"O advogado Willer Tomaz aparece nas investigações do caso Master / Compliance Zero, ligado a Vorcaro.", status:"alleged", color:"#0f766e", width:1.8, dashes:true},
+  {from:"V", to:"MASTER", rel:"Dono", why:"Daniel Vorcaro era dono e controlador do Banco Master, liquidado pelo BC em novembro de 2025.", status:"doc", color:"#0f766e", width:3},
+  {from:"V", to:"F", rel:"Financiou Dark Horse", why:"Vorcaro negociou com Flávio Bolsonaro cerca de US$ 24 milhões para financiar o filme Dark Horse, sobre Jair Bolsonaro.", status:"doc", color:"#1d4ed8", width:2.5},
+  {from:"V", to:"K", rel:"Mensagens", why:"Mensagens apreendidas pela PF citam pagamentos do Master a uma consultoria ligada ao filho de Kássio Nunes Marques.", status:"alleged", color:"#65a30d", width:1.8, dashes:true},
+  {from:"V", to:"A", rel:"Lagoinha / doações", why:"A família Vorcaro doava recursos para a Lagoinha e apoiou a Rede Super.", status:"doc", color:"#7c3aed", width:1.2},
+  {from:"V", to:"Z", rel:"Cunhados", why:"Zettel é casado com a irmã de Vorcaro.", status:"doc", color:"#ea580c", width:1.8},
+  {from:"A", to:"Z", rel:"Igreja Lagoinha", why:"Zettel é pastor da Lagoinha, unidade Belvedere.", status:"doc", color:"#7c3aed", width:1.2},
+  {from:"F", to:"W", rel:"Amigo / Usuário master", why:"A PF encontrou Flávio como usuário master da conta da empresa de Willer, a Alcazar Holdings.", status:"alleged", color:"#be123c", width:2.5, dashes:true},
+  {from:"F", to:"K", rel:"Articulou indicação STF", why:"Flávio e Willer articularam a indicação de Kássio ao STF em 2020.", status:"alleged", color:"#65a30d", width:1.5, dashes:true},
+  {from:"F", to:"E", rel:"Irmãos", why:"Eduardo é irmão de Flávio e foi condenado pelo STF a 4 anos e 2 meses por coação.", status:"doc", color:"#b45309", width:1.5},
+  {from:"D", to:"S", rel:"Ministro do STF", why:"Flávio Dino é ministro do STF desde 2024.", status:"doc", color:"#6d28d9", width:1.2},
+  {from:"K", to:"S", rel:"Ministro do STF", why:"Kássio Nunes Marques é ministro do STF desde 2020.", status:"doc", color:"#65a30d", width:1.2},
+  {from:"M", to:"S", rel:"Suspeição", why:"O STF declarou Sergio Moro suspeito para julgar Lula em 2021.", status:"doc", color:"#4338ca", width:1.5}
+];
+
+var TEIA_INFO = {
+  L: { full:"Luiz Inácio Lula da Silva", role:"Presidente da República · 39º e 41º mandatos", desc:"Fundador do PT. Condenado no caso do triplex em 2017, preso por 580 dias, e anulado pelo STF em 2021 por suspeição de Moro. Reeleito em 2026." },
+  B: { full:"Fábio Luís Lula da Silva (Lulinha)", role:"Filho de Lula · investigado no STF", desc:"Alvo de três inquéritos no STF por suspeita de tráfico de influência. Movimentou R$ 19,5 milhões entre 2022 e 2025, segundo a quebra de sigilo aprovada pela CPMI do INSS." },
+  M: { full:"Sergio Moro", role:"Ex-juiz da 13ª Vara de Curitiba · ex-ministro da Justiça · senador", desc:"Condenou Lula no caso do triplex em 2017. Em 2021, o STF o declarou suspeito e anulou as condenações." },
+  D: { full:"Flávio Dino", role:"Ministro do STF desde 2024 · ex-ministro da Justiça", desc:"Relator dos inquéritos contra Lulinha no STF. Autorizou o terceiro inquérito em agosto de 2026." },
+  J: { full:"Rodrigo Janot", role:"Procurador-geral da República (2013-2017)", desc:"Denunciou Lula ao STF no âmbito do Petrolão. A denúncia não foi aceita pelo STF." },
+  S: { full:"Supremo Tribunal Federal", role:"Corte constitucional", desc:"Anulou as condenações de Lula em 2021 por suspeição de Moro e incompetência da Vara de Curitiba. Julga os inquéritos contra Lulinha." },
+  C: { full:"Antônio Carlos Camilo Antunes (Careca do INSS)", role:"Apontado como centro do esquema do INSS · preso", desc:"Lobista apontado pela PF como articulador do desvio de recursos de aposentados do INSS." },
+  W: { full:"Willer Tomaz", role:"Advogado em Brasília · investigado pela PF", desc:"Amigo de Flávio Bolsonaro. Apontado como engrenagem central do esquema do INSS. Movimentou R$ 5 bilhões em bets em 2025." },
+  V: { full:"Daniel Vorcaro", role:"Dono do Banco Master · preso", desc:"Preso em novembro de 2025 na operação que apura fraudes no Master. Negociou o financiamento do filme Dark Horse com Flávio Bolsonaro." },
+  F: { full:"Flávio Bolsonaro", role:"Senador (PL-RJ) · adversário de Lula em 2026", desc:"Perdeu a eleição para Lula no 2º turno (48,21% a 51,79%) e deixou o país após a derrota. Investigado no STF por financiamento do Dark Horse e por suspeita de participação societária de fato na Alcazar Holdings." },
+  A: { full:"André Valadão", role:"Pastor global da Lagoinha · cantor gospel", desc:"Comanda a rede Lagoinha. Ligado à família Vorcaro há décadas." },
+  Z: { full:"Fabiano Zettel", role:"Pastor · cunhado de Vorcaro · preso", desc:"Administrava a unidade Belvedere da Lagoinha. Preso em março de 2026 na operação Compliance Zero." },
+  K: { full:"Kássio Nunes Marques", role:"Ministro do STF · presidente do TSE", desc:"Indicado ao STF em 2020. Citado em mensagens de Vorcaro sobre pagamentos a uma consultoria ligada ao filho dele." },
+  E: { full:"Eduardo Bolsonaro", role:"Ex-deputado federal · condenado pelo STF", desc:"Irmão de Flávio. Condenado em junho de 2026 a 4 anos e 2 meses por coação no curso do processo." },
+  MASTER: { full:"Banco Master", role:"Banco liquidado pelo BC em nov/2025", desc:"Banco de Vorcaro, liquidado após revelação de fraudes. Prejuízo estimado em R$ 40,6 bilhões." }
+};
+
+var teiaNetwork=null;
+var teiaOverlay=$('teia-modal');
+var teiaInfo=$('teia-info'),teiaEmpty=$('teia-empty');
+var teiaLastFocus=null;
+
+function openTeia(){
+  teiaLastFocus = document.activeElement;
+  teiaOverlay.classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(function(){
+    var closeBtn = document.getElementById('teia-close');
+    if(closeBtn) closeBtn.focus();
+  }, 80);
+  if(!teiaNetwork){
+    setTimeout(initTeia,50);
+  } else {
+    setTimeout(function(){teiaNetwork.redraw();teiaNetwork.fit({animation:{duration:400}})},100);
+  }
+}
+function closeTeia(){
+  teiaOverlay.classList.remove('open');
+  document.body.style.overflow='';
+  if(teiaLastFocus && typeof teiaLastFocus.focus === 'function'){
+    teiaLastFocus.focus();
+    teiaLastFocus = null;
+  }
+}
+$('teia-btn').onclick=openTeia;
+$('teia-close').onclick=closeTeia;
+teiaOverlay.addEventListener('click',function(e){if(e.target===teiaOverlay)closeTeia()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&teiaOverlay.classList.contains('open'))closeTeia()});
+document.addEventListener('keydown',function(e){
+  if(e.key !== 'Tab') return;
+  if(!teiaOverlay.classList.contains('open')) return;
+  var focusables = getFocusable(teiaOverlay);
+  if(!focusables.length) return;
+  var first = focusables[0];
+  var last = focusables[focusables.length - 1];
+  if(e.shiftKey && document.activeElement === first){
+    e.preventDefault();
+    last.focus();
+  } else if(!e.shiftKey && document.activeElement === last){
+    e.preventDefault();
+    first.focus();
+  }
+});
+
+function isDarkMode(){
+  var a=document.documentElement.getAttribute('data-theme');
+  if(a==='dark')return true;
+  if(a==='light')return false;
+  return matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+function getFocusable(container){
+  return Array.prototype.slice.call(container.querySelectorAll(
+    'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  )).filter(function(el){return el.offsetParent !== null});
+}
+
+function initTeia(){
+  var container=$('teia-canvas');
+  var dark=isDarkMode();
+  var labelColor = dark?'#ede6dc':'#1c1814';
+
+  var nodes=new vis.DataSet(TEIA_NOS.map(function(n){
+    var imageSrc = n.image ? n.image : makeAvatar(n.label, n.color);
+    return {
+      id:n.id,
+      label:n.label,
+      title:n.title,
+      shape: 'circularImage',
+      image: imageSrc,
+      size: n.size,
+      color:{
+        background:n.color,
+        border: n.color,
+        highlight:{background:n.color,border:dark?'#fff':'#000'},
+        hover:{background:n.color,border:dark?'#fff':'#000'}
+      },
+      font:{
+        color:labelColor,
+        size: window.innerWidth <= 820 ? 16 : 12,
+        face:'IBM Plex Sans',
+        vadjust: 10,
+        strokeWidth: 3,
+        strokeColor: dark?'#1a160f':'#faf5ec',
+        bold:{color:labelColor,size: window.innerWidth <= 820 ? 14 : 12, face:'IBM Plex Sans',mod:'bold',strokeWidth:3,strokeColor: dark?'#1a160f':'#faf5ec'}
+      },
+      borderWidth: 3,
+      borderWidthSelected: 5,
+      shadow:{enabled:false},
+      x:n.x, y:n.y,
+      fixed:{x:true, y:true}
+    };
+  }));
+
+  var edges=new vis.DataSet(TEIA_ARESTAS.map(function(e){
+    return {
+      id: e.from + '-' + e.to,
+      from:e.from, to:e.to,
+      color:{color:e.color+'99', highlight:e.color, hover:e.color},
+      width:e.width||1.5,
+      dashes:e.dashes ? [4, 4] : false
+    };
+  }));
+
+  var data={nodes:nodes,edges:edges};
+  var isMobile = window.innerWidth <= 820;
+  var options={
+    nodes:{borderWidth:0, font:{multi:false}},
+    edges:{smooth:{enabled:false}},
+    physics:{ enabled: false },
+    interaction:{
+      hover: !isMobile,
+      hoverConnectedEdges: !isMobile,
+      tooltipDelay:200,
+      navigationButtons:false,
+      keyboard:false,
+      zoomView:true,
+      dragView:true,
+      multiselect:false,
+      selectConnectedEdges:false
+    }
+  };
+
+  teiaNetwork=new vis.Network(container,data,options);
+  setTimeout(function(){teiaNetwork.fit({ animation: false });}, 100);
+
+  teiaNetwork.on('click',function(params){
+    if(params.nodes.length > 0){
+      showNodeInfo(params.nodes[0]);
+    }
+    else if(params.edges.length > 0){
+      showEdgeInfo(params.edges[0]);
+    }
+    else {
+      resetTeia();
+    }
+  });
+
+  teiaNetwork.on('doubleClick',function(params){
+    if(params.nodes.length>0){
+      teiaNetwork.focus(params.nodes[0],{scale:1.4,animation:{duration:500,easingFunction:'easeInOutQuad'}});
+    }
+  });
+}
+
+function showEdgeInfo(edgeId){
+  var edge = teiaNetwork.body.data.edges.get(edgeId);
+  if(!edge) return;
+  var eOriginal = TEIA_ARESTAS.find(function(e){return (e.from===edge.from&&e.to===edge.to)||(e.from===edge.to&&e.to===edge.from)});
+  if(!eOriginal) return;
+
+  var nodeFrom = TEIA_NOS.find(function(n){return n.id===eOriginal.from});
+  var nodeTo = TEIA_NOS.find(function(n){return n.id===eOriginal.to});
+  var isAlleged = eOriginal.dashes;
+  var statusText = isAlleged ? 'Investigação' : 'Documentado';
+  var statusClass = isAlleged ? 'alleged' : '';
+
+  var avFrom = nodeFrom.image ? nodeFrom.image : makeAvatar(nodeFrom.label, nodeFrom.color);
+  var avTo = nodeTo.image ? nodeTo.image : makeAvatar(nodeTo.label, nodeTo.color);
+
+  var html =
+    '<button class="teia-back-btn" onclick="resetTeia()">← Voltar à visão geral</button>'+
+    '<div class="teia-info-header-edge">'+
+      '<div class="edge-visual">'+
+        '<div class="edge-node-mini" data-target="'+nodeFrom.id+'" style="--c:'+nodeFrom.color+'">'+
+          '<div class="av"><img src="'+avFrom+'"></div>'+
+          '<b>'+nodeFrom.label+'</b>'+
+        '</div>'+
+        '<div class="edge-arrow">↔</div>'+
+        '<div class="edge-node-mini" data-target="'+nodeTo.id+'" style="--c:'+nodeTo.color+'">'+
+          '<div class="av"><img src="'+avTo+'"></div>'+
+          '<b>'+nodeTo.label+'</b>'+
+        '</div>'+
+      '</div>'+
+      '<h3>'+eOriginal.rel+'</h3>'+
+      '<div class="badge"><span class="teia-conn-badge '+statusClass+'">'+statusText+'</span></div>'+
+    '</div>'+
+    '<div class="edge-why" style="--c:'+eOriginal.color+'">'+
+      '<strong>Por que estão conectados?</strong>'+
+      eOriginal.why+
+    '</div>'+
+    '<div class="edge-actions">'+
+      '<button class="btn-edge" data-target="'+nodeFrom.id+'" style="--c:'+nodeFrom.color+'">'+
+        '<span class="dot" style="background:'+nodeFrom.color+'"></span>Ir para '+nodeFrom.label+
+      '</button>'+
+      '<button class="btn-edge" data-target="'+nodeTo.id+'" style="--c:'+nodeTo.color+'">'+
+        '<span class="dot" style="background:'+nodeTo.color+'"></span>Ir para '+nodeTo.label+
+      '</button>'+
+    '</div>';
+
+  teiaInfo.innerHTML = html;
+  teiaInfo.classList.add('active');
+  teiaEmpty.style.display='none';
+  var sidebarEl = document.querySelector('.teia-sidebar');
+  sidebarEl.style.pointerEvents = 'none';
+  document.querySelector('.teia-shell').classList.add('has-selection');
+
+  setTimeout(function(){
+      if(teiaNetwork) {
+          var canvasEl = document.getElementById('teia-canvas');
+          if(canvasEl) teiaNetwork.setSize(canvasEl.clientWidth, canvasEl.clientHeight);
+          teiaNetwork.redraw();
+          teiaNetwork.fit({nodes: [nodeFrom.id, nodeTo.id], animation:{duration:400}});
+      }
+      sidebarEl.style.pointerEvents = 'auto';
+  }, 120);
+
+  var allNodes = TEIA_NOS.map(function(n){return n.id});
+  var keepNodes = [nodeFrom.id, nodeTo.id];
+  var dim = allNodes.filter(function(x){return keepNodes.indexOf(x)===-1});
+  var updates = dim.map(function(x){return {id:x, opacity:0.15}});
+  updates.push({id:nodeFrom.id, opacity:1});
+  updates.push({id:nodeTo.id, opacity:1});
+  teiaNetwork.body.data.nodes.update(updates);
+
+  teiaInfo.querySelectorAll('[data-target]').forEach(function(el){
+    el.onclick = function(e){
+      if(window.getSelection().toString()) return;
+      var target = el.getAttribute('data-target');
+      showNodeInfo(target);
+    };
+  });
+}
+
+function showNodeInfo(id){
+  var node=TEIA_NOS.find(function(n){return n.id===id});
+  if(!node)return;
+  var info=TEIA_INFO[id];
+  if(!info)return;
+
+  var connected=teiaNetwork.getConnectedNodes(id);
+  var edges=teiaNetwork.getConnectedEdges(id);
+  var edgesData=edges.map(function(eid){return teiaNetwork.body.data.edges.get(eid)});
+
+  var connHtml='';
+  connected.forEach(function(cid){
+    var cnode=TEIA_NOS.find(function(n){return n.id===cid});
+    if(!cnode)return;
+    var edge=edgesData.find(function(e){return (e.from===id&&e.to===cid)||(e.from===cid&&e.to===id)});
+    if(!edge)return;
+    var eOriginal=TEIA_ARESTAS.find(function(ee){return (ee.from===edge.from&&ee.to===edge.to)||(ee.from===edge.to&&ee.to===edge.from)});
+    var rel=eOriginal ? eOriginal.rel : 'Conexão';
+    var why=eOriginal ? eOriginal.why : '';
+    var isAlleged=eOriginal && eOriginal.dashes;
+    var statusText=eOriginal ? (isAlleged?'investigação':'documentado') : '';
+
+    connHtml+=
+      '<li class="teia-conn" data-target="'+cid+'" style="--c:'+cnode.color+'">'+
+        '<span class="teia-conn-dot" style="background:'+cnode.color+'"></span>'+
+        '<div class="teia-conn-body">'+
+          '<div class="teia-conn-name">'+cnode.label+'</div>'+
+          '<div class="teia-conn-rel">'+rel+'</div>'+
+          (why?'<div class="teia-conn-why">'+why+'</div>':'')+
+        '</div>'+
+        (statusText?'<span class="teia-conn-badge'+(isAlleged?' alleged':'')+'">'+statusText+'</span>':'')+
+      '</li>';
+  });
+
+  var avatarHTML = (function(){
+    if(node.image) return '<img src="'+node.image+'">';
+    var parts = info.full.trim().split(/\s+/);
+    var initials = (parts[0][0] + (parts.length > 1 ? parts[parts.length-1][0] : '')).toUpperCase();
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">' +
+      '<defs><linearGradient id="g" x1="0" y1="0" x2="0.3" y2="1">' +
+      '<stop offset="0%" stop-color="'+node.color+'"/>' +
+      '<stop offset="100%" stop-color="'+shadeColor(node.color,-50)+'"/>' +
+      '</linearGradient></defs>' +
+      '<circle cx="50" cy="50" r="48" fill="url(#g)"/>' +
+      '<text x="50" y="64" text-anchor="middle" font-family="Georgia, serif" font-size="38" font-weight="700" fill="white">'+initials+'</text>' +
+      '</svg>';
+    return '<img src="data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)+'">';
+  })();
+
+  teiaInfo.innerHTML=
+    '<button class="teia-back-btn" onclick="resetTeia()">← Voltar à visão geral</button>'+
+    '<div class="teia-info-header" style="--c:'+node.color+'">'+
+      '<div class="avatar">'+avatarHTML+'</div>'+
+      '<h3>'+info.full+'</h3>'+
+      '<span class="tag">'+node.id+'</span>'+
+      '<p>'+info.role+'</p>'+
+    '</div>'+
+    '<h4>Sobre</h4>'+
+    '<p style="font-size:12.5px;color:var(--mute);line-height:1.55;margin:0 0 18px">'+info.desc+'</p>'+
+    '<h4>Conexões ('+connected.length+')</h4>'+
+    '<ul class="teia-conn-list">'+connHtml+'</ul>';
+
+  teiaInfo.classList.add('active');
+  teiaEmpty.style.display='none';
+  var sidebarEl = document.querySelector('.teia-sidebar');
+  sidebarEl.style.pointerEvents = 'none';
+  document.querySelector('.teia-shell').classList.add('has-selection');
+
+  setTimeout(function(){
+      if(teiaNetwork) {
+          var canvasEl = document.getElementById('teia-canvas');
+          if(canvasEl) teiaNetwork.setSize(canvasEl.clientWidth, canvasEl.clientHeight);
+          teiaNetwork.redraw();
+          teiaNetwork.fit({nodes: [id].concat(connected), animation:{duration:400}});
+      }
+      sidebarEl.style.pointerEvents = 'auto';
+  }, 120);
+
+  teiaInfo.querySelectorAll('.teia-conn').forEach(function(el){
+    el.onclick=function(e){
+      if(window.getSelection().toString()) return;
+      var target=el.dataset.target;
+      showNodeInfo(target);
+    };
+  });
+
+  var allNodes=TEIA_NOS.map(function(n){return n.id});
+  var dim=allNodes.filter(function(x){return x!==id && connected.indexOf(x)===-1});
+  var updates=dim.map(function(x){return {id:x, opacity:0.15}});
+  updates.push({id:id, opacity:1});
+  connected.forEach(function(x){updates.push({id:x, opacity:1})});
+  teiaNetwork.body.data.nodes.update(updates);
+
+  // Edges: manter as conectadas em destaque, atenuar as demais
+  var edgeUpdates = TEIA_ARESTAS.map(function(e){
+    var isConnected = (e.from === id || e.to === id);
+    return {
+      id: e.from + '-' + e.to,
+      color: isConnected
+        ? {color: e.color+'99', highlight: e.color, hover: e.color}
+        : {color: 'rgba(150,150,150,0.12)'},
+      width: isConnected ? (e.width || 1.5) : 1
+    };
+  });
+  teiaNetwork.body.data.edges.update(edgeUpdates);
+}
+
+function resetTeia(){
+  hideNodeInfo();
+  setTimeout(function(){
+    if(teiaNetwork) {
+      teiaNetwork.redraw();
+      teiaNetwork.fit({animation:{duration:400}});
+    }
+  }, 100);
+}
+
+function hideNodeInfo(){
+  teiaInfo.classList.remove('active');
+  teiaEmpty.style.display='flex';
+  document.querySelector('.teia-shell').classList.remove('has-selection');
+  TEIA_NOS.forEach(function(n){
+    teiaNetwork.body.data.nodes.update({id:n.id, opacity:1});
+  });
+  TEIA_ARESTAS.forEach(function(e){
+    teiaNetwork.body.data.edges.update({
+      id: e.from + '-' + e.to,
+      color: {color: e.color+'99', highlight: e.color, hover: e.color},
+      width: e.width || 1.5
+    });
+  });
+}
+
+render();
+renderPropostas();
+onScroll();
+handleHash();
+</script>
+</body>
+</html>
