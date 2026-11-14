@@ -518,6 +518,19 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
 .regua-col-foot p{font:italic 400 12.5px/1.5 Newsreader,Georgia,serif;color:var(--mute);margin:0}
 .regua-col-foot strong{font-style:normal;font-weight:700;color:var(--ink)}
 
+/* ==================== SEÇÃO PONTE ==================== */
+.ponte-section{margin:56px 0;padding:32px 24px;background:color-mix(in srgb,var(--lane-inssMaster) 4%,var(--card));border:1px solid var(--line);border-top:4px solid var(--lane-inssMaster);border-radius:0 0 12px 12px;position:relative;box-shadow:0 2px 12px color-mix(in srgb,var(--lane-inssMaster) 8%,transparent)}
+.ponte-kicker{font:700 10.5px/1 "IBM Plex Sans",system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--lane-inssMaster);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ponte-kicker:before{content:"";width:22px;height:1px;background:var(--lane-inssMaster)}
+.ponte-title{font:700 24px/1.15 Newsreader,Georgia,serif;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em}
+.ponte-desc{font:400 15.5px/1.55 Newsreader,Georgia,serif;color:var(--mute);margin:0 0 24px;max-width:62ch;font-style:italic}
+.ponte-list{list-style:none;padding:0;margin:0;display:grid;gap:16px}
+@media(min-width:600px){.ponte-list{grid-template-columns:1fr 1fr}}
+.ponte-item{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--lane-inssMaster);border-radius:0 8px 8px 0;padding:16px}
+.ponte-item b{display:block;font:700 15px/1.3 "IBM Plex Sans",sans-serif;color:var(--ink);margin-bottom:4px}
+.ponte-item span{display:block;font:400 13.5px/1.5 Newsreader,Georgia,serif;color:var(--ink)}
+.ponte-item em{font-style:normal;font-weight:600;color:var(--lane-inssMaster);font-size:12px;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+
 </style>
 </head>
 <body>
@@ -804,6 +817,35 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
 </div>
 
 <main id="timeline"></main>
+
+<section class="ponte-section" id="ponte">
+  <div class="ponte-kicker">Onde os casos se cruzam</div>
+  <h2 class="ponte-title">A mesma teia, os mesmos nomes</h2>
+  <p class="ponte-desc">Os dois lados não estão isolados. Os nomes abaixo aparecem tanto nas investigações sobre um lado quanto no outro. A régua é a mesma, e a teia também.</p>
+  
+  <ul class="ponte-list">
+    <li class="ponte-item">
+      <em>Amigo de um, operador do outro</em>
+      <b>Willer Tomaz</b>
+      <span>Advogado em Brasília. Amigo próximo do senador Flávio Bolsonaro, investigado no caso Master. A PF o aponta como engrenagem central do esquema de desvios do INSS — o mesmo esquema que investiga o Careca.</span>
+    </li>
+    <li class="ponte-item">
+      <em>O banqueiro que financiou o filme</em>
+      <b>Daniel Vorcaro (Banco Master)</b>
+      <span>Negociou US$ 24 milhões com Flávio Bolsonaro para o filme "Dark Horse". Teve o banco liquidado com R$ 40,6 bilhões em dívidas. Relatórios do Coaf mostram repasses ligados a Vorcaro que aparecem nas apurações sobre o INSS.</span>
+    </li>
+    <li class="ponte-item">
+      <em>O centro do esquema</em>
+      <b>Careca do INSS</b>
+      <span>Antônio Carlos Camilo Antunes. Apontado pela PF como centro do desvio de recursos de aposentados. Investigado em conexão com o filho do presidente Lula (Lulinha), que movimentou R$ 19,5 milhões em três anos.</span>
+    </li>
+    <li class="ponte-item">
+      <em>O ministro indicado por um, citado pelo outro</em>
+      <b>Kássio Nunes Marques</b>
+      <span>Indicado ao STF em 2020 com articulação de Flávio Bolsonaro e Willer Tomaz. Citado em mensagens de Vorcaro sobre pagamentos a uma consultoria ligada ao filho dele. Negou irregularidades.</span>
+    </li>
+  </ul>
+</section>
 
 <section class="propostas" id="propostas">
   <div class="propostas-kicker">O que ele prometeu</div>
