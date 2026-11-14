@@ -495,10 +495,23 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
 .regua-title{font:700 26px/1.15 Newsreader,Georgia,serif;margin:0 0 12px;letter-spacing:-.01em}
 .regua-desc{font:400 15.5px/1.55 Newsreader,Georgia,serif;color:var(--mute);margin:0 auto;max-width:60ch;font-style:italic}
 
-.regua-grid{display:grid;grid-template-columns:1fr;gap:16px}
-@media(min-width:768px){.regua-grid{grid-template-columns:repeat(3,1fr)}}
+/* Abas do Fichário */
+.regua-tabs{display:flex;gap:6px;margin-bottom:-1px;position:relative;z-index:2;overflow-x:auto;scrollbar-width:none}
+.regua-tabs::-webkit-scrollbar{display:none}
+.regua-tab{background:var(--soft);border:1px solid var(--line);border-bottom:none;border-radius:8px 8px 0 0;padding:12px 20px;font:600 13px/1.4 "IBM Plex Sans",sans-serif;color:var(--mute);cursor:pointer;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:8px;flex:1;justify-content:center}
+.regua-tab:hover{background:var(--card);color:var(--ink)}
+.regua-tab.active{background:var(--card);color:var(--ink);border-top:3px solid var(--rc);padding-top:10px;z-index:2;font-weight:700;box-shadow:0 -4px 10px rgba(0,0,0,.02)}
+.regua-tab.active .tab-icon{color:var(--rc)}
 
-.regua-col{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.regua-content{background:var(--card);border:1px solid var(--line);border-radius:0 0 12px 12px;padding:24px;position:relative;z-index:1}
+.regua-panel{display:none;animation:reguaFade .3s ease}
+.regua-panel.active{display:block}
+@keyframes reguaFade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+.regua-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:768px){.regua-grid{grid-template-columns:1fr 1fr}}
+
+.regua-col{background:var(--soft);border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative;display:flex;flex-direction:column}
 .regua-col::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--rc)}
 .regua-col.meritocracia{--rc:var(--lente-meritocracia)}
 .regua-col.corrupcao{--rc:var(--lente-corrupcao)}
@@ -690,64 +703,82 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
     <p class="regua-desc">Se você aplicou as três réguas a um dos lados, aplique ao outro. O resultado é o mesmo? A decisão é sua.</p>
   </div>
 
-  <div class="regua-grid">
-    <div class="regua-col meritocracia">
-      <div class="regua-col-head">
-        <h3 class="regua-col-title">Meritocracia</h3>
-        <span class="regua-col-subtitle">O que a pessoa tem, ela conquistou?</span>
-      </div>
-      <div class="regua-cards">
-        <div class="regua-card">
-          <div class="regua-card-label">Flávio Bolsonaro <span class="st sd">Documentado</span></div>
-          <p class="regua-card-text">Aos 19 anos, ganhou cargo de 40h em Brasília do partido do pai enquanto cursava faculdade no Rio. Patrimônio saltou de R$ 1,7 mi para R$ 8,2 mi.</p>
+  <div class="regua-tabs" role="tablist">
+    <button class="regua-tab active" data-target="panel-meritocracia" role="tab" style="--rc:var(--lente-meritocracia)"><span class="tab-icon">⚖️</span> Meritocracia</button>
+    <button class="regua-tab" data-target="panel-corrupcao" role="tab" style="--rc:var(--lente-corrupcao)"><span class="tab-icon">🛡️</span> Corrupção</button>
+    <button class="regua-tab" data-target="panel-familia" role="tab" style="--rc:var(--lente-familia)"><span class="tab-icon">🏠</span> Família</button>
+  </div>
+
+  <div class="regua-content">
+    <!-- Painel Meritocracia -->
+    <div class="regua-panel active" id="panel-meritocracia">
+      <div class="regua-grid">
+        <div class="regua-col meritocracia" style="--rc:var(--lente-meritocracia)">
+          <div class="regua-col-head">
+            <h3 class="regua-col-title">O que a pessoa tem, ela conquistou?</h3>
+          </div>
+          <div class="regua-cards">
+            <div class="regua-card">
+              <div class="regua-card-label">Caso A <span class="st sd">Documentado</span></div>
+              <p class="regua-card-text">Aos 19 anos, ganhou cargo de 40h em Brasília do partido do pai enquanto cursava faculdade no Rio. Patrimônio saltou de R$ 1,7 mi para R$ 8,2 mi.</p>
+            </div>
+            <div class="regua-card">
+              <div class="regua-card-label">Caso B <span class="st sd">Documentado</span></div>
+              <p class="regua-card-text">Saiu do ABC para a presidência. O filho, sem cargo público, movimentou R$ 19,5 milhões em três anos — e é alvo de três inquéritos no STF.</p>
+            </div>
+          </div>
+          <div class="regua-col-foot">
+            <p>Se fosse o <strong>filho de um político que você não apoia</strong>, você chamaria isso de quê?</p>
+          </div>
         </div>
-        <div class="regua-card">
-          <div class="regua-card-label">Lula <span class="st sd">Documentado</span></div>
-          <p class="regua-card-text">Saiu do ABC para a presidência. O filho, sem cargo público, movimentou R$ 19,5 milhões em três anos — e é alvo de três inquéritos no STF.</p>
-        </div>
-      </div>
-      <div class="regua-col-foot">
-        <p>Se fosse o <strong>filho de um político que você não apoia</strong>, você chamaria isso de quê?</p>
       </div>
     </div>
 
-    <div class="regua-col corrupcao">
-      <div class="regua-col-head">
-        <h3 class="regua-col-title">Combate à corrupção</h3>
-        <span class="regua-col-subtitle">Corrupção não tem lado?</span>
-      </div>
-      <div class="regua-cards">
-        <div class="regua-card">
-          <div class="regua-card-label">Flávio Bolsonaro <span class="st sd">Documentado</span></div>
-          <p class="regua-card-text">Negociou US$ 24 milhões com Daniel Vorcaro (Banco Master) para financiar o filme Dark Horse. Relatório da PF aponta Flávio como "usuário master" da conta de Willer Tomaz.</p>
+    <!-- Painel Corrupção -->
+    <div class="regua-panel" id="panel-corrupcao">
+      <div class="regua-grid">
+        <div class="regua-col corrupcao" style="--rc:var(--lente-corrupcao)">
+          <div class="regua-col-head">
+            <h3 class="regua-col-title">Corrupção não tem lado?</h3>
+          </div>
+          <div class="regua-cards">
+            <div class="regua-card">
+              <div class="regua-card-label">Caso A <span class="st sd">Documentado</span></div>
+              <p class="regua-card-text">Negociou US$ 24 milhões com Daniel Vorcaro (Banco Master) para financiar um filme. Relatório da PF aponta "usuário master" da conta de Willer Tomaz.</p>
+            </div>
+            <div class="regua-card">
+              <div class="regua-card-label">Caso B <span class="st sd">Documentado</span></div>
+              <p class="regua-card-text">Condenado no caso do triplex, preso por 580 dias, e depois anulado pelo STF por suspeição do juiz — não por inocência. PGR o acusou no Petrolão, mas denúncia não foi aceita.</p>
+            </div>
+          </div>
+          <div class="regua-col-foot">
+            <p>Se um político que você não apoia tivesse sido <strong>condenado, preso e depois anulado</strong>, você chamaria isso de justiça ou de impunidade?</p>
+          </div>
         </div>
-        <div class="regua-card">
-          <div class="regua-card-label">Lula <span class="st sd">Documentado</span></div>
-          <p class="regua-card-text">Condenado no caso do triplex, preso por 580 dias, e depois anulado pelo STF por suspeição do juiz — não por inocência. PGR o acusou no Petrolão, mas denúncia não foi aceita.</p>
-        </div>
-      </div>
-      <div class="regua-col-foot">
-        <p>Se um político que você não apoia tivesse sido <strong>condenado, preso e depois anulado</strong>, você chamaria isso de justiça ou de impunidade?</p>
       </div>
     </div>
 
-    <div class="regua-col familia">
-      <div class="regua-col-head">
-        <h3 class="regua-col-title">Família</h3>
-        <span class="regua-col-subtitle">A família é a base de tudo?</span>
-      </div>
-      <div class="regua-cards">
-        <div class="regua-card">
-          <div class="regua-card-label">Flávio Bolsonaro <span class="st sd">Documentado</span></div>
-          <p class="regua-card-text">Pôs a mãe como suplente de aliado depois preso pela PF. O irmão, Eduardo, foi condenado pelo STF a 4 anos por coação. O cunhado, Fabiano Zettel, preso como operador de Vorcaro.</p>
+    <!-- Painel Família -->
+    <div class="regua-panel" id="panel-familia">
+      <div class="regua-grid">
+        <div class="regua-col familia" style="--rc:var(--lente-familia)">
+          <div class="regua-col-head">
+            <h3 class="regua-col-title">A família é a base de tudo?</h3>
+          </div>
+          <div class="regua-cards">
+            <div class="regua-card">
+              <div class="regua-card-label">Caso A <span class="st sd">Documentado</span></div>
+              <p class="regua-card-text">Pôs a mãe como suplente de aliado depois preso pela PF. O irmão condenado pelo STF a 4 anos por coação. O cunhado preso como operador do banco.</p>
+            </div>
+            <div class="regua-card">
+              <div class="regua-card-label">Caso B <span class="st sd">Documentado</span></div>
+              <p class="regua-card-text">O filho, sem cargo público, é alvo de três inquéritos no STF por suspeita de tráfico de influência. Em 2024, viajou a Portugal com o Careca do INSS. O pai diz que o caso será tratado com seriedade.</p>
+            </div>
+          </div>
+          <div class="regua-col-foot">
+            <p>Se fosse a <strong>família de um político que você não apoia</strong>, você chamaria isso de quê?</p>
+          </div>
         </div>
-        <div class="regua-card">
-          <div class="regua-card-label">Lula <span class="st sd">Documentado</span></div>
-          <p class="regua-card-text">O filho, Fábio Luís (Lulinha), é alvo de três inquéritos no STF por suspeita de tráfico de influência. Em 2024, viajou a Portugal com o Careca do INSS. O pai diz que o caso será tratado com seriedade.</p>
-        </div>
-      </div>
-      <div class="regua-col-foot">
-        <p>Se fosse a <strong>família de um político que você não apoia</strong>, você chamaria isso de quê?</p>
       </div>
     </div>
   </div>
@@ -1276,6 +1307,23 @@ render();
 renderPropostas();
 onScroll();
 handleHash();
+
+// Lógica das Abas da Régua (Fichário)
+document.querySelectorAll('.regua-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    // Remove active de todas as abas e painéis
+    document.querySelectorAll('.regua-tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.regua-panel').forEach(function(p){ p.classList.remove('active'); });
+    
+    // Adiciona active na aba clicada e no painel correspondente
+    this.classList.add('active');
+    var targetId = this.getAttribute('data-target');
+    var targetPanel = document.getElementById(targetId);
+    if(targetPanel){
+      targetPanel.classList.add('active');
+    }
+  });
+});
 </script>
 </body>
 </html>
