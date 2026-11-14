@@ -543,7 +543,7 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
   <div class="w">
 
     <section class="lead">
-      <p class="lead-text">Se você desconfia da imprensa, você tem razões. Não vou te pedir confiança — vou te dar três réguas e os fatos para aplicá-las. Depois da eleição, sobra muita versão e pouca prova. Aqui, cada linha tem data e fonte. Você lê. Confere. E se em algum ponto você hesitar, não pare na dúvida. Vá atrás dela.</p>
+      <p class="lead-text">Se você desconfia da imprensa, você tem razões. Não vou te pedir confiança — vou te dar três réguas e os fatos para aplicá-las. Você já viu os fatos sobre um lado; agora vai ver os do outro. Aqui, cada linha tem data e fonte. Você lê. Confere. E se em algum ponto você hesitar, não pare na dúvida. Vá atrás dela.</p>
     </section>
 
     <aside class="lente" role="note" aria-label="Sua régua · meritocracia" style="--lente-color:var(--lente-meritocracia)">
@@ -661,20 +661,20 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
     <li class="lead-filter">
       <span class="lead-filter-num">03</span>
       <div class="lead-filter-body">
-        <b class="lead-filter-title">E se fosse com o outro lado?</b>
-        <p class="lead-filter-desc">Se o fato, contado sobre um político que você não apoia, ainda te incomodasse, então o problema não é ideologia — é fato. Essa é a pergunta mais difícil. E a única que não tem resposta errada.</p>
+        <b class="lead-filter-title">A régua é a mesma?</b>
+        <p class="lead-filter-desc">O fato, contado sobre um político que você não apoia, ainda te incomodaria? Se a resposta for sim, o problema não é ideologia — é fato. Se for não, tudo bem. Mas a régua tem que ser a mesma para os dois lados.</p>
       </div>
     </li>
   </ol>
 
-  <p class="lead-closing">O que segue é uma linha do tempo. A eleição já passou. O que você lê aqui não muda o voto que você deu — mas pode mudar o que você entende sobre o que aconteceu. Leia como quem aplica os três critérios, não como quem espera uma confirmação. Se ao final você ainda achar que tudo não passa de perseguição, essa é uma conclusão legítima — mas que seja uma conclusão sua, não um reflexo. E se em algum ponto você hesitar, não pare na dúvida. Vá atrás dela.</p>
+  <p class="lead-closing">O que segue é uma linha do tempo. A eleição já passou. O que você lê aqui não muda o voto que você deu — mas pode mudar o que você entende sobre o que aconteceu. Leia como quem aplica os três critérios, não como quem espera uma confirmação. Você não precisa defender um político para ser leal ao seu campo. E não precisa defender o outro para ser honesto. Se ao final você ainda achar que tudo não passa de perseguição, essa é uma conclusão legítima — mas que seja uma conclusão sua, não um reflexo. E se em algum ponto você hesitar, não pare na dúvida. Vá atrás dela.</p>
 </section>
 
 <section class="regua-section" id="regua">
   <div class="regua-header">
     <div class="regua-kicker">A régua</div>
     <h2 class="regua-title">A mesma régua para os dois lados</h2>
-    <p class="regua-desc">Se você aplicou as réguas ao Flávio, aplique ao Lula. O resultado é o mesmo? A decisão é sua.</p>
+    <p class="regua-desc">Se você aplicou as três réguas a um dos lados, aplique ao outro. O resultado é o mesmo? A decisão é sua.</p>
   </div>
 
   <div class="regua-grid">
@@ -1056,7 +1056,7 @@ function renderAnchor(e){
   var chars=e[4].split('').map(function(c){return '<i style="--c:var(--'+c+')" title="'+P[c]+'"></i>'}).join('');
   var laneTags=e[6].map(function(l){return '<span class="lane-tag" style="--c:var(--lane-'+l+')">'+LANE_NAMES[l]+'</span>'}).join('');
   var srcs=e[8].map(function(l){return '<a href="'+l[1]+'" target="_blank" rel="noopener noreferrer">'+l[0]+'</a>'}).join(' · ');
-  var mirror=e[9]?'<div class="anchor-mirror"><strong>Pense nisso antes de ler</strong>'+e[9]+'</div>':'';
+  var mirror=e[9]?'<div class="anchor-mirror"><strong>Antes de ler, uma pergunta</strong>'+e[9]+'</div>':'';
   return '<article class="event anchor" style="--lane-color:var(--lane-'+lane+')">'+
     '<div class="anchor-head">'+
       '<span class="anchor-head-left"><span class="doc-id">'+e.docId+'</span><span class="anchor-date">'+e[1]+'</span></span>'+
@@ -1077,7 +1077,7 @@ function renderCompact(e){
   var lane=e[6][0];
   var laneTags=e[6].map(function(l){return '<span class="lane-tag" style="--c:var(--lane-'+l+')">'+LANE_NAMES[l]+'</span>'}).join('');
   var srcs=e[8].map(function(l){return '<a href="'+l[1]+'" target="_blank" rel="noopener noreferrer">'+l[0]+'</a>'}).join(' · ');
-  var mirror=e[9]?'<div class="compact-mirror"><strong>Pense nisso antes de ler</strong>'+e[9]+'</div>':'';
+  var mirror=e[9]?'<div class="compact-mirror"><strong>Antes de ler, uma pergunta</strong>'+e[9]+'</div>':'';
   return '<details class="event compact" style="--lane-color:var(--lane-'+lane+')">'+
     '<summary>'+
       '<span class="compact-date">'+e.docId+' · '+e[1]+'</span>'+
