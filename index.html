@@ -443,6 +443,8 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
 .cta-dossie p{font-size:14px;color:var(--mute);margin:0 0 20px;line-height:1.55;max-width:48ch;margin-left:auto;margin-right:auto}
 .cta-dossie-botoes{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .btn-dossie{background:var(--V);color:#fff;border:none;border-radius:999px;padding:14px 24px;font:600 14px/1 "IBM Plex Sans",sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .15s}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn-dossie{color:var(--bg)}}
+:root[data-theme="dark"] .btn-dossie{color:var(--bg)}
 .btn-dossie:hover{transform:translateY(-2px);box-shadow:0 8px 20px color-mix(in srgb,var(--V) 35%,transparent)}
 
 /* Botão de voltar ao resumo (no dossiê completo) */
@@ -1156,14 +1158,14 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
 <section class="propostas" id="propostas">
   <div class="propostas-kicker">O que foi proposto</div>
   <h2 class="propostas-title">O que foi proposto para o quarto mandato</h2>
-  <p class="propostas-dek">Propostas documentadas ou anunciadas durante a campanha de 2026 — pelo programa registrado no TSE, pelos aliados no Congresso ou pelo próprio governo. O status segue o mesmo critério da timeline: documento, alegação ou contestação.</p>
+  <p class="propostas-dek">Além dos escândalos, o que foi prometido para a economia e para o seu bolso? Abaixo, as propostas documentadas ou anunciadas durante a campanha de 2026 — pelo programa registrado no TSE, pelos aliados no Congresso ou pelo próprio governo. O status segue o mesmo critério da timeline: documento, alegação ou contestação.</p>
   <div id="propostas-list"></div>
 </section>
 
 <aside class="lente-coda" id="lente-coda" role="note" aria-label="As três réguas">
   <div class="lente-coda-kicker">Três réguas</div>
   <p class="lente-coda-title">Meritocracia. Combate à corrupção. Família.</p>
-  <p class="lente-coda-text">Não pedi que você respondesse a nenhuma das três perguntas. Só pedi que as aplicasse. Você não precisa defender um político para ser leal ao seu campo. E não precisa defender o outro para ser honesto. A régua é sua. Se ao final você ainda achar que tudo não passa de perseguição, essa é uma conclusão legítima — mas que seja uma conclusão sua, não um reflexo.</p>
+  <p class="lente-coda-text">Você chegou ao fim. Viu os fatos, as alegações e as defesas. Não pedi que você respondesse a nenhuma das três perguntas. Só pedi que as aplicasse. Você não precisa defender um político para ser leal ao seu campo. E não precisa defender o outro para ser honesto. A régua é sua. Se ao final você ainda achar que tudo não passa de perseguição ou de armação, essa é uma conclusão legítima — mas que seja uma conclusão sua, não um reflexo.</p>
 </aside>
 
 <footer>Este documento não quer mudar a cabeça de ninguém. Quer que cada fato esteja separado da versão. Presunção de inocência vale — e está respeitada em cada linha. Mas inocência não é o mesmo que falta de evidência.<div style="margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);font-weight:600;color:var(--V);font-size:15px;line-height:1.55;">Se você defende a família, a meritocracia e o combate à corrupção, o voto já foi dado — mas os valores que você defende continuam seus. Não importa quem esteja no poder: eles não pedem palanque, pedem prática.</div></footer>
