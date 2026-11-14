@@ -508,122 +508,204 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
 .regua-panel.active{display:block}
 @keyframes reguaFade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
-/* Espelho Deslizante (Régua) */
-.compare-wrap {
-  position: relative;
-  display: flex;
-  background: var(--soft);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  overflow: hidden;
-  min-height: 280px;
-  user-select: none;
-}
-.compare-side {
-  padding: 24px;
-  width: var(--pct, 50%);
+/* Balança da Régua (Física) */
+.scale-wrap {
   display: flex;
   flex-direction: column;
-  background: var(--card);
-  transition: opacity 0.3s ease, filter 0.3s ease;
-}
-.compare-side.left {
-  border-right: 1px solid var(--line);
-}
-.compare-side.right {
-  width: calc(100% - var(--pct, 50%));
-}
-.compare-side.dimmed {
-  opacity: 0.35;
-  filter: grayscale(0.7);
-}
-.compare-content {
-  flex: 1;
-  min-width: 0;
-}
-.compare-label {
-  font: 700 10.5px/1 "IBM Plex Sans",sans-serif;
-  color: var(--mute);
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  margin-bottom: 12px;
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-.compare-label .st { font-size: 9px; padding: 2px 6px; letter-spacing: .04em; }
-.compare-title {
-  font: 700 18px/1.25 Newsreader,Georgia,serif;
-  color: var(--ink);
-  margin: 0 0 12px;
-}
-.compare-text {
-  font: 400 14px/1.6 Newsreader,Georgia,serif;
-  color: var(--ink);
-  margin: 0;
+  position: relative;
+  padding: 50px 0 20px;
 }
 
-/* O Slider Invisível */
-.compare-range {
+/* A Viga de Metal (Estilo Régua de Precisão) */
+.scale-beam-visual {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  z-index: 20;
-  cursor: ew-resize;
-  margin: 0;
-  -webkit-appearance: none;
-  background: transparent;
+  top: 20px;
+  left: 5%;
+  width: 90%;
+  height: 18px;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 -2px 0 rgba(0,0,0,0.05);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center;
+  z-index: 1;
+  /* Marcações da régua (mais escuras e nítidas) */
+  background-image: 
+    linear-gradient(to right, var(--ink) 1.5px, transparent 1.5px),
+    linear-gradient(to right, var(--mute) 1px, transparent 1px);
+  background-size: 10% 12px, 2% 6px;
+  background-position: center bottom, center bottom;
+  background-repeat: repeat-x;
 }
 
-/* A Linha e o Puxador Visual */
-.compare-handle-wrap {
+/* O Pivô Central (Agora perfeitamente alinhado) */
+.scale-pivot {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--pct, 50%);
-  width: 2px;
-  background: var(--V);
-  z-index: 10;
+  top: 38px;
+  left: 50%;
   transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 40px solid var(--line);
+  z-index: 2;
+}
+.scale-pivot::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 22px;
+  background: var(--ink);
+  border-radius: 50%;
+  border: 3px solid var(--card);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* Estados de Inclinação */
+.scale-wrap.tilt-left .scale-beam-visual { transform: rotate(-3deg); }
+.scale-wrap.tilt-right .scale-beam-visual { transform: rotate(3deg); }
+
+/* Os Pratos */
+.scale-pans {
+  display: flex;
+  width: 100%;
+  gap: 32px;
+  position: relative;
+  z-index: 3;
+  margin-top: 30px; /* Aumentei para dar espaço para a régua mais grossa */
+}
+.scale-pan {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Remove the buggy connecting line */
+.scale-pan::before { display: none; }
+
+/* Movimento de subida e descida */
+.scale-wrap.tilt-left .pan-left { transform: translateY(24px); }
+.scale-wrap.tilt-left .pan-right { transform: translateY(-24px); }
+.scale-wrap.tilt-right .pan-left { transform: translateY(-24px); }
+.scale-wrap.tilt-right .pan-right { transform: translateY(24px); }
+
+/* Cartões */
+.scale-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--line);
+  border-radius: 8px;
+  padding: 24px;
+  transition: all 0.4s ease;
+  position: relative;
+  flex: 1;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+.scale-card.weighed {
+  border-color: var(--V);
+  border-top-color: var(--V);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--V) 12%, transparent);
+  background: color-mix(in srgb, var(--V) 2%, var(--card));
+}
+.scale-card.dimmed {
+  opacity: 0.35;
+  filter: grayscale(1) blur(0.5px);
   pointer-events: none;
 }
-.compare-handle-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--V);
-  color: #fff;
+
+/* Nota de Auditoria (O texto que aparece ao pesar) */
+.audit-note {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+  font: 400 13px/1.5 "IBM Plex Sans", sans-serif;
+  color: var(--mute);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+.scale-card.weighed .audit-note {
+  max-height: 200px;
+  opacity: 1;
+}
+.audit-note strong {
+  color: var(--V);
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Botão */
+.btn-weigh {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--soft);
+  border: 1px dashed var(--mute);
+  border-radius: 8px;
+  cursor: pointer;
+  font: 600 12px/1 "IBM Plex Sans", sans-serif;
+  color: var(--mute);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: all 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 16px rgba(153,27,27,0.4);
-  font-size: 20px;
-  border: 3px solid var(--card);
+  gap: 8px;
+  width: 100%;
 }
-.regua-foot-note {
-  margin-top: 16px;
-  padding: 16px;
-  background: var(--soft);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  text-align: center;
+.btn-weigh:hover { background: var(--card); color: var(--ink); border-color: var(--ink); }
+.btn-weigh.active {
+  background: var(--V);
+  color: #fff;
+  border: 1px solid var(--V);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--V) 30%, transparent);
 }
-.regua-foot-note p {
-  font: italic 400 13px/1.5 Newsreader,Georgia,serif;
-  color: var(--mute);
+
+/* Veredito */
+.scale-verdict {
+  margin-top: 40px;
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--V);
+  border-left: 4px solid var(--V);
+  border-radius: 0 8px 8px 0;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+  pointer-events: none;
+  width: 100%;
+}
+.scale-verdict.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.scale-verdict p {
+  font: italic 400 14.5px/1.5 Newsreader, Georgia, serif;
+  color: var(--ink);
   margin: 0;
 }
-.regua-foot-note strong {
-  font-style: normal;
-  font-weight: 700;
-  color: var(--ink);
+.scale-verdict strong { font-style: normal; font-weight: 700; color: var(--V); }
+
+@media (max-width: 768px) {
+  .scale-beam-visual, .scale-pivot, .scale-pan::before { display: none; }
+  .scale-pans { flex-direction: column; gap: 32px; }
+  .scale-pan { transform: none !important; }
+  .scale-wrap { padding-top: 0; }
 }
 
 /* ==================== SEÇÃO PONTE ==================== */
@@ -807,76 +889,112 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
   <div class="regua-content">
     <!-- Painel Meritocracia -->
     <div class="regua-panel active" id="panel-meritocracia">
-      <div class="compare-wrap" style="--pct: 50%;">
-        <div class="compare-side left">
-          <div class="compare-label">Caso A <span class="st sd">Documentado</span></div>
-          <div class="compare-content">
-            <h4 class="compare-title">O que a pessoa tem, ela conquistou?</h4>
-            <p class="compare-text">Aos 19 anos, ganhou cargo de 40h em Brasília do partido do pai enquanto cursava faculdade no Rio. Patrimônio saltou de R$ 1,7 mi para R$ 8,2 mi.</p>
+      <div class="scale-wrap">
+        <div class="scale-beam-visual"></div>
+        <div class="scale-pivot"></div>
+        <div class="scale-pans">
+          <div class="scale-pan pan-left">
+            <div class="scale-card">
+              <div class="compare-label">Caso A <span class="st sd">Documentado</span></div>
+              <h4 class="compare-title">O que a pessoa tem, ela conquistou?</h4>
+              <p class="compare-text">Aos 19 anos, ganhou cargo de 40h em Brasília do partido do pai enquanto cursava faculdade no Rio. Patrimônio saltou de R$ 1,7 mi para R$ 8,2 mi.</p>
+              <div class="audit-note">
+                <strong>Nota da Régua</strong>
+                O cargo era no partido do pai, a 1.000 km da faculdade. O patrimônio declarado saltou 382% em oito anos.
+              </div>
+            </div>
+            <button class="btn-weigh">⚖️ Pesar este fato</button>
+          </div>
+          <div class="scale-pan pan-right">
+            <div class="scale-card">
+              <div class="compare-label">Caso B <span class="st sd">Documentado</span></div>
+              <h4 class="compare-title">O que a pessoa tem, ela conquistou?</h4>
+              <p class="compare-text">Saiu do ABC para a presidência. O filho, sem cargo público, movimentou R$ 19,5 milhões em três anos — e é alvo de três inquéritos no STF.</p>
+              <div class="audit-note">
+                <strong>Nota da Régua</strong>
+                O filho não tem cargo, mas movimentou R$ 19,5 mi em três anos e responde a três inquéritos. O pai pediu que ele volte ao Brasil.
+              </div>
+            </div>
+            <button class="btn-weigh">⚖️ Pesar este fato</button>
           </div>
         </div>
-        <div class="compare-side right">
-          <div class="compare-label">Caso B <span class="st sd">Documentado</span></div>
-          <div class="compare-content">
-            <h4 class="compare-title">O que a pessoa tem, ela conquistou?</h4>
-            <p class="compare-text">Saiu do ABC para a presidência. O filho, sem cargo público, movimentou R$ 19,5 milhões em três anos — e é alvo de três inquéritos no STF.</p>
-          </div>
+        <div class="scale-verdict">
+          <p>Se fosse o <strong>filho de um político que você não apoia</strong>, você chamaria isso de quê?</p>
         </div>
-        <input type="range" min="30" max="70" value="50" class="compare-range" aria-label="Deslizar para comparar">
-        <div class="compare-handle-wrap"><div class="compare-handle-icon">↔</div></div>
-      </div>
-      <div class="regua-foot-note">
-        <p>Se fosse o <strong>filho de um político que você não apoia</strong>, você chamaria isso de quê?</p>
       </div>
     </div>
 
     <!-- Painel Corrupção -->
     <div class="regua-panel" id="panel-corrupcao">
-      <div class="compare-wrap" style="--pct: 50%;">
-        <div class="compare-side left">
-          <div class="compare-label">Caso A <span class="st sd">Documentado</span></div>
-          <div class="compare-content">
-            <h4 class="compare-title">Corrupção não tem lado?</h4>
-            <p class="compare-text">Negociou US$ 24 milhões com Daniel Vorcaro (Banco Master) para financiar um filme. Relatório da PF aponta "usuário master" da conta de Willer Tomaz.</p>
+      <div class="scale-wrap">
+        <div class="scale-beam-visual"></div>
+        <div class="scale-pivot"></div>
+        <div class="scale-pans">
+          <div class="scale-pan pan-left">
+            <div class="scale-card">
+              <div class="compare-label">Caso A <span class="st sd">Documentado</span></div>
+              <h4 class="compare-title">Corrupção não tem lado?</h4>
+              <p class="compare-text">Negociou US$ 24 milhões com Daniel Vorcaro (Banco Master) para financiar um filme. Relatório da PF aponta "usuário master" da conta de Willer Tomaz.</p>
+              <div class="audit-note">
+                <strong>Nota da Régua</strong>
+                O banco de Vorcaro quebrou com R$ 40 bi em dívidas. A PF investiga a conta de Willer, amigo do senador, no esquema do INSS.
+              </div>
+            </div>
+            <button class="btn-weigh">⚖️ Pesar este fato</button>
+          </div>
+          <div class="scale-pan pan-right">
+            <div class="scale-card">
+              <div class="compare-label">Caso B <span class="st sd">Documentado</span></div>
+              <h4 class="compare-title">Corrupção não tem lado?</h4>
+              <p class="compare-text">Condenado no caso do triplex, preso por 580 dias, e depois anulado pelo STF por suspeição do juiz — não por inocência. PGR o acusou no Petrolão, mas denúncia não foi aceita.</p>
+              <div class="audit-note">
+                <strong>Nota da Régua</strong>
+                A anulação foi por suspeição de Moro, não por inocência. No Petrolão, Janot o denunciou, mas o STF rejeitou a acusação.
+              </div>
+            </div>
+            <button class="btn-weigh">⚖️ Pesar este fato</button>
           </div>
         </div>
-        <div class="compare-side right">
-          <div class="compare-label">Caso B <span class="st sd">Documentado</span></div>
-          <div class="compare-content">
-            <h4 class="compare-title">Corrupção não tem lado?</h4>
-            <p class="compare-text">Condenado no caso do triplex, preso por 580 dias, e depois anulado pelo STF por suspeição do juiz — não por inocência. PGR o acusou no Petrolão, mas denúncia não foi aceita.</p>
-          </div>
+        <div class="scale-verdict">
+          <p>Se um político que você não apoia tivesse sido <strong>condenado, preso e depois anulado</strong>, você chamaria isso de justiça ou de impunidade?</p>
         </div>
-        <input type="range" min="30" max="70" value="50" class="compare-range" aria-label="Deslizar para comparar">
-        <div class="compare-handle-wrap"><div class="compare-handle-icon">↔</div></div>
-      </div>
-      <div class="regua-foot-note">
-        <p>Se um político que você não apoia tivesse sido <strong>condenado, preso e depois anulado</strong>, você chamaria isso de justiça ou de impunidade?</p>
       </div>
     </div>
 
     <!-- Painel Família -->
     <div class="regua-panel" id="panel-familia">
-      <div class="compare-wrap" style="--pct: 50%;">
-        <div class="compare-side left">
-          <div class="compare-label">Caso A <span class="st sd">Documentado</span></div>
-          <div class="compare-content">
-            <h4 class="compare-title">A família é a base de tudo?</h4>
-            <p class="compare-text">Pôs a mãe como suplente de aliado depois preso pela PF. O irmão condenado pelo STF a 4 anos por coação. O cunhado preso como operador do banco.</p>
+      <div class="scale-wrap">
+        <div class="scale-beam-visual"></div>
+        <div class="scale-pivot"></div>
+        <div class="scale-pans">
+          <div class="scale-pan pan-left">
+            <div class="scale-card">
+              <div class="compare-label">Caso A <span class="st sd">Documentado</span></div>
+              <h4 class="compare-title">A família é a base de tudo?</h4>
+              <p class="compare-text">Pôs a mãe como suplente de aliado depois preso pela PF. O irmão condenado pelo STF a 4 anos por coação. O cunhado preso como operador do banco.</p>
+              <div class="audit-note">
+                <strong>Nota da Régua</strong>
+                A mãe foi retirada da chapa após a prisão. O irmão foi condenado. O cunhado foi preso na mesma operação que investiga o banco.
+              </div>
+            </div>
+            <button class="btn-weigh">⚖️ Pesar este fato</button>
+          </div>
+          <div class="scale-pan pan-right">
+            <div class="scale-card">
+              <div class="compare-label">Caso B <span class="st sd">Documentado</span></div>
+              <h4 class="compare-title">A família é a base de tudo?</h4>
+              <p class="compare-text">O filho, sem cargo público, é alvo de três inquéritos no STF por suspeita de tráfico de influência. Em 2024, viajou a Portugal com o Careca do INSS. O pai diz que o caso será tratado com seriedade.</p>
+              <div class="audit-note">
+                <strong>Nota da Régua</strong>
+                A viagem a Portugal ocorreu antes de a investigação vir a público. O filho nega irregularidades. O pai prometeu tratar o caso com seriedade.
+              </div>
+            </div>
+            <button class="btn-weigh">⚖️ Pesar este fato</button>
           </div>
         </div>
-        <div class="compare-side right">
-          <div class="compare-label">Caso B <span class="st sd">Documentado</span></div>
-          <div class="compare-content">
-            <h4 class="compare-title">A família é a base de tudo?</h4>
-            <p class="compare-text">O filho, sem cargo público, é alvo de três inquéritos no STF por suspeita de tráfico de influência. Em 2024, viajou a Portugal com o Careca do INSS. O pai diz que o caso será tratado com seriedade.</p>
-          </div>
+        <div class="scale-verdict">
+          <p>Se fosse a <strong>família de um político que você não apoia</strong>, você chamaria isso de quê?</p>
         </div>
-        <input type="range" min="30" max="70" value="50" class="compare-range" aria-label="Deslizar para comparar">
-        <div class="compare-handle-wrap"><div class="compare-handle-icon">↔</div></div>
-      </div>
-      <div class="regua-foot-note">
-        <p>Se fosse a <strong>família de um político que você não apoia</strong>, você chamaria isso de quê?</p>
       </div>
     </div>
   </div>
@@ -1418,25 +1536,49 @@ document.querySelectorAll('.regua-tab').forEach(function(tab){
   });
 });
 
-// Lógica do Espelho Deslizante (Slider)
-document.querySelectorAll('.compare-range').forEach(function(range) {
-  range.addEventListener('input', function() {
-    var val = this.value;
-    var wrap = this.closest('.compare-wrap');
-    wrap.style.setProperty('--pct', val + '%');
+// Lógica da Balança da Régua (Corrigida)
+document.querySelectorAll('.scale-pan').forEach(function(pan) {
+  var btn = pan.querySelector('.btn-weigh');
+  var card = pan.querySelector('.scale-card');
+  var wrap = pan.closest('.scale-wrap');
+  var verdict = wrap.querySelector('.scale-verdict');
+
+  btn.addEventListener('click', function() {
+    var leftBtn = wrap.querySelector('.pan-left .btn-weigh');
+    var rightBtn = wrap.querySelector('.pan-right .btn-weigh');
+    var leftCard = wrap.querySelector('.pan-left .scale-card');
+    var rightCard = wrap.querySelector('.pan-right .scale-card');
+
+    // Toggle do botão e do card clicado
+    btn.classList.toggle('active');
+    card.classList.toggle('weighed');
     
-    var sideA = wrap.querySelector('.left');
-    var sideB = wrap.querySelector('.right');
-    
-    if (val > 55) {
-      sideA.classList.remove('dimmed');
-      sideB.classList.add('dimmed');
-    } else if (val < 45) {
-      sideA.classList.add('dimmed');
-      sideB.classList.remove('dimmed');
+    // Atualiza o texto do botão
+    if (btn.classList.contains('active')) {
+      btn.innerHTML = '⚖️ Fato pesado (remover)';
     } else {
-      sideA.classList.remove('dimmed');
-      sideB.classList.remove('dimmed');
+      btn.innerHTML = '⚖️ Pesar este fato';
+    }
+
+    var leftWeighed = leftBtn.classList.contains('active');
+    var rightWeighed = rightBtn.classList.contains('active');
+
+    // Reset
+    wrap.classList.remove('tilt-left', 'tilt-right');
+    leftCard.classList.remove('dimmed');
+    rightCard.classList.remove('dimmed');
+    verdict.classList.remove('show');
+
+    // Aplicar estado
+    if (leftWeighed && rightWeighed) {
+      // Equilibrado
+      verdict.classList.add('show');
+    } else if (leftWeighed) {
+      wrap.classList.add('tilt-left');
+      rightCard.classList.add('dimmed');
+    } else if (rightWeighed) {
+      wrap.classList.add('tilt-right');
+      leftCard.classList.add('dimmed');
     }
   });
 });
