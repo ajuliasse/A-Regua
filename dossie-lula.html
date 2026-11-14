@@ -508,28 +508,123 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
 .regua-panel.active{display:block}
 @keyframes reguaFade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
-.regua-grid{display:grid;grid-template-columns:1fr;gap:16px}
-@media(min-width:768px){.regua-grid{grid-template-columns:1fr 1fr}}
+/* Espelho Deslizante (Régua) */
+.compare-wrap {
+  position: relative;
+  display: flex;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 280px;
+  user-select: none;
+}
+.compare-side {
+  padding: 24px;
+  width: var(--pct, 50%);
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+.compare-side.left {
+  border-right: 1px solid var(--line);
+}
+.compare-side.right {
+  width: calc(100% - var(--pct, 50%));
+}
+.compare-side.dimmed {
+  opacity: 0.35;
+  filter: grayscale(0.7);
+}
+.compare-content {
+  flex: 1;
+  min-width: 0;
+}
+.compare-label {
+  font: 700 10.5px/1 "IBM Plex Sans",sans-serif;
+  color: var(--mute);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.compare-label .st { font-size: 9px; padding: 2px 6px; letter-spacing: .04em; }
+.compare-title {
+  font: 700 18px/1.25 Newsreader,Georgia,serif;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+.compare-text {
+  font: 400 14px/1.6 Newsreader,Georgia,serif;
+  color: var(--ink);
+  margin: 0;
+}
 
-.regua-col{background:var(--soft);border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative;display:flex;flex-direction:column}
-.regua-col::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--rc)}
-.regua-col.meritocracia{--rc:var(--lente-meritocracia)}
-.regua-col.corrupcao{--rc:var(--lente-corrupcao)}
-.regua-col.familia{--rc:var(--lente-familia)}
+/* O Slider Invisível */
+.compare-range {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 20;
+  cursor: ew-resize;
+  margin: 0;
+  -webkit-appearance: none;
+  background: transparent;
+}
 
-.regua-col-head{padding:20px 20px 16px;border-bottom:1px solid var(--line);text-align:center}
-.regua-col-title{font:700 18px/1.2 Newsreader,Georgia,serif;color:var(--ink);margin:0}
-.regua-col-subtitle{font:500 11px/1.4 "IBM Plex Sans",sans-serif;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;margin-top:4px;display:block}
-
-.regua-cards{padding:16px;display:flex;flex-direction:column;gap:16px;flex:1}
-.regua-card{position:relative;padding-left:14px;border-left:2px solid color-mix(in srgb,var(--rc) 30%,transparent)}
-.regua-card-label{font:700 10px/1 "IBM Plex Sans",sans-serif;color:var(--rc);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}
-.regua-card-label .st{font-size:9px;padding:2px 6px;letter-spacing:.04em}
-.regua-card-text{font:400 13.5px/1.55 Newsreader,Georgia,serif;color:var(--ink);margin:0}
-
-.regua-col-foot{padding:12px 16px;background:var(--soft);border-top:1px solid var(--line);text-align:center}
-.regua-col-foot p{font:italic 400 12.5px/1.5 Newsreader,Georgia,serif;color:var(--mute);margin:0}
-.regua-col-foot strong{font-style:normal;font-weight:700;color:var(--ink)}
+/* A Linha e o Puxador Visual */
+.compare-handle-wrap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pct, 50%);
+  width: 2px;
+  background: var(--V);
+  z-index: 10;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.compare-handle-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--V);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(153,27,27,0.4);
+  font-size: 20px;
+  border: 3px solid var(--card);
+}
+.regua-foot-note {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  text-align: center;
+}
+.regua-foot-note p {
+  font: italic 400 13px/1.5 Newsreader,Georgia,serif;
+  color: var(--mute);
+  margin: 0;
+}
+.regua-foot-note strong {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--ink);
+}
 
 /* ==================== SEÇÃO PONTE ==================== */
 .ponte-section{margin:56px 0;padding:32px 24px;background:color-mix(in srgb,var(--lane-inssMaster) 4%,var(--card));border:1px solid var(--line);border-top:4px solid var(--lane-inssMaster);border-radius:0 0 12px 12px;position:relative;box-shadow:0 2px 12px color-mix(in srgb,var(--lane-inssMaster) 8%,transparent)}
@@ -712,73 +807,76 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
   <div class="regua-content">
     <!-- Painel Meritocracia -->
     <div class="regua-panel active" id="panel-meritocracia">
-      <div class="regua-grid">
-        <div class="regua-col meritocracia" style="--rc:var(--lente-meritocracia)">
-          <div class="regua-col-head">
-            <h3 class="regua-col-title">O que a pessoa tem, ela conquistou?</h3>
-          </div>
-          <div class="regua-cards">
-            <div class="regua-card">
-              <div class="regua-card-label">Caso A <span class="st sd">Documentado</span></div>
-              <p class="regua-card-text">Aos 19 anos, ganhou cargo de 40h em Brasília do partido do pai enquanto cursava faculdade no Rio. Patrimônio saltou de R$ 1,7 mi para R$ 8,2 mi.</p>
-            </div>
-            <div class="regua-card">
-              <div class="regua-card-label">Caso B <span class="st sd">Documentado</span></div>
-              <p class="regua-card-text">Saiu do ABC para a presidência. O filho, sem cargo público, movimentou R$ 19,5 milhões em três anos — e é alvo de três inquéritos no STF.</p>
-            </div>
-          </div>
-          <div class="regua-col-foot">
-            <p>Se fosse o <strong>filho de um político que você não apoia</strong>, você chamaria isso de quê?</p>
+      <div class="compare-wrap" style="--pct: 50%;">
+        <div class="compare-side left">
+          <div class="compare-label">Caso A <span class="st sd">Documentado</span></div>
+          <div class="compare-content">
+            <h4 class="compare-title">O que a pessoa tem, ela conquistou?</h4>
+            <p class="compare-text">Aos 19 anos, ganhou cargo de 40h em Brasília do partido do pai enquanto cursava faculdade no Rio. Patrimônio saltou de R$ 1,7 mi para R$ 8,2 mi.</p>
           </div>
         </div>
+        <div class="compare-side right">
+          <div class="compare-label">Caso B <span class="st sd">Documentado</span></div>
+          <div class="compare-content">
+            <h4 class="compare-title">O que a pessoa tem, ela conquistou?</h4>
+            <p class="compare-text">Saiu do ABC para a presidência. O filho, sem cargo público, movimentou R$ 19,5 milhões em três anos — e é alvo de três inquéritos no STF.</p>
+          </div>
+        </div>
+        <input type="range" min="30" max="70" value="50" class="compare-range" aria-label="Deslizar para comparar">
+        <div class="compare-handle-wrap"><div class="compare-handle-icon">↔</div></div>
+      </div>
+      <div class="regua-foot-note">
+        <p>Se fosse o <strong>filho de um político que você não apoia</strong>, você chamaria isso de quê?</p>
       </div>
     </div>
 
     <!-- Painel Corrupção -->
     <div class="regua-panel" id="panel-corrupcao">
-      <div class="regua-grid">
-        <div class="regua-col corrupcao" style="--rc:var(--lente-corrupcao)">
-          <div class="regua-col-head">
-            <h3 class="regua-col-title">Corrupção não tem lado?</h3>
-          </div>
-          <div class="regua-cards">
-            <div class="regua-card">
-              <div class="regua-card-label">Caso A <span class="st sd">Documentado</span></div>
-              <p class="regua-card-text">Negociou US$ 24 milhões com Daniel Vorcaro (Banco Master) para financiar um filme. Relatório da PF aponta "usuário master" da conta de Willer Tomaz.</p>
-            </div>
-            <div class="regua-card">
-              <div class="regua-card-label">Caso B <span class="st sd">Documentado</span></div>
-              <p class="regua-card-text">Condenado no caso do triplex, preso por 580 dias, e depois anulado pelo STF por suspeição do juiz — não por inocência. PGR o acusou no Petrolão, mas denúncia não foi aceita.</p>
-            </div>
-          </div>
-          <div class="regua-col-foot">
-            <p>Se um político que você não apoia tivesse sido <strong>condenado, preso e depois anulado</strong>, você chamaria isso de justiça ou de impunidade?</p>
+      <div class="compare-wrap" style="--pct: 50%;">
+        <div class="compare-side left">
+          <div class="compare-label">Caso A <span class="st sd">Documentado</span></div>
+          <div class="compare-content">
+            <h4 class="compare-title">Corrupção não tem lado?</h4>
+            <p class="compare-text">Negociou US$ 24 milhões com Daniel Vorcaro (Banco Master) para financiar um filme. Relatório da PF aponta "usuário master" da conta de Willer Tomaz.</p>
           </div>
         </div>
+        <div class="compare-side right">
+          <div class="compare-label">Caso B <span class="st sd">Documentado</span></div>
+          <div class="compare-content">
+            <h4 class="compare-title">Corrupção não tem lado?</h4>
+            <p class="compare-text">Condenado no caso do triplex, preso por 580 dias, e depois anulado pelo STF por suspeição do juiz — não por inocência. PGR o acusou no Petrolão, mas denúncia não foi aceita.</p>
+          </div>
+        </div>
+        <input type="range" min="30" max="70" value="50" class="compare-range" aria-label="Deslizar para comparar">
+        <div class="compare-handle-wrap"><div class="compare-handle-icon">↔</div></div>
+      </div>
+      <div class="regua-foot-note">
+        <p>Se um político que você não apoia tivesse sido <strong>condenado, preso e depois anulado</strong>, você chamaria isso de justiça ou de impunidade?</p>
       </div>
     </div>
 
     <!-- Painel Família -->
     <div class="regua-panel" id="panel-familia">
-      <div class="regua-grid">
-        <div class="regua-col familia" style="--rc:var(--lente-familia)">
-          <div class="regua-col-head">
-            <h3 class="regua-col-title">A família é a base de tudo?</h3>
-          </div>
-          <div class="regua-cards">
-            <div class="regua-card">
-              <div class="regua-card-label">Caso A <span class="st sd">Documentado</span></div>
-              <p class="regua-card-text">Pôs a mãe como suplente de aliado depois preso pela PF. O irmão condenado pelo STF a 4 anos por coação. O cunhado preso como operador do banco.</p>
-            </div>
-            <div class="regua-card">
-              <div class="regua-card-label">Caso B <span class="st sd">Documentado</span></div>
-              <p class="regua-card-text">O filho, sem cargo público, é alvo de três inquéritos no STF por suspeita de tráfico de influência. Em 2024, viajou a Portugal com o Careca do INSS. O pai diz que o caso será tratado com seriedade.</p>
-            </div>
-          </div>
-          <div class="regua-col-foot">
-            <p>Se fosse a <strong>família de um político que você não apoia</strong>, você chamaria isso de quê?</p>
+      <div class="compare-wrap" style="--pct: 50%;">
+        <div class="compare-side left">
+          <div class="compare-label">Caso A <span class="st sd">Documentado</span></div>
+          <div class="compare-content">
+            <h4 class="compare-title">A família é a base de tudo?</h4>
+            <p class="compare-text">Pôs a mãe como suplente de aliado depois preso pela PF. O irmão condenado pelo STF a 4 anos por coação. O cunhado preso como operador do banco.</p>
           </div>
         </div>
+        <div class="compare-side right">
+          <div class="compare-label">Caso B <span class="st sd">Documentado</span></div>
+          <div class="compare-content">
+            <h4 class="compare-title">A família é a base de tudo?</h4>
+            <p class="compare-text">O filho, sem cargo público, é alvo de três inquéritos no STF por suspeita de tráfico de influência. Em 2024, viajou a Portugal com o Careca do INSS. O pai diz que o caso será tratado com seriedade.</p>
+          </div>
+        </div>
+        <input type="range" min="30" max="70" value="50" class="compare-range" aria-label="Deslizar para comparar">
+        <div class="compare-handle-wrap"><div class="compare-handle-icon">↔</div></div>
+      </div>
+      <div class="regua-foot-note">
+        <p>Se fosse a <strong>família de um político que você não apoia</strong>, você chamaria isso de quê?</p>
       </div>
     </div>
   </div>
@@ -1311,16 +1409,34 @@ handleHash();
 // Lógica das Abas da Régua (Fichário)
 document.querySelectorAll('.regua-tab').forEach(function(tab){
   tab.addEventListener('click', function(){
-    // Remove active de todas as abas e painéis
     document.querySelectorAll('.regua-tab').forEach(function(t){ t.classList.remove('active'); });
     document.querySelectorAll('.regua-panel').forEach(function(p){ p.classList.remove('active'); });
-    
-    // Adiciona active na aba clicada e no painel correspondente
     this.classList.add('active');
     var targetId = this.getAttribute('data-target');
     var targetPanel = document.getElementById(targetId);
-    if(targetPanel){
-      targetPanel.classList.add('active');
+    if(targetPanel){ targetPanel.classList.add('active'); }
+  });
+});
+
+// Lógica do Espelho Deslizante (Slider)
+document.querySelectorAll('.compare-range').forEach(function(range) {
+  range.addEventListener('input', function() {
+    var val = this.value;
+    var wrap = this.closest('.compare-wrap');
+    wrap.style.setProperty('--pct', val + '%');
+    
+    var sideA = wrap.querySelector('.left');
+    var sideB = wrap.querySelector('.right');
+    
+    if (val > 55) {
+      sideA.classList.remove('dimmed');
+      sideB.classList.add('dimmed');
+    } else if (val < 45) {
+      sideA.classList.add('dimmed');
+      sideB.classList.remove('dimmed');
+    } else {
+      sideA.classList.remove('dimmed');
+      sideB.classList.remove('dimmed');
     }
   });
 });
