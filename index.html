@@ -470,10 +470,12 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
 }
 @media (max-width:520px){
   .btn-voltar-resumo{
-    top:70px;
-    right:12px;
-    padding:10px 16px;
-    font-size:13px;
+    top: auto;
+    bottom: 80px;
+    right: 12px;
+    padding:8px 14px;
+    font-size:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,.25);
   }
 }
 
@@ -702,10 +704,38 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
 .scale-verdict strong { font-style: normal; font-weight: 700; color: var(--V); }
 
 @media (max-width: 768px) {
-  .scale-beam-visual, .scale-pivot, .scale-pan::before { display: none; }
-  .scale-pans { flex-direction: column; gap: 32px; }
-  .scale-pan { transform: none !important; }
-  .scale-wrap { padding-top: 0; }
+  /* Mantém a régua visível, mas menor */
+  .scale-beam-visual {
+    display: block;
+    top: 10px;
+    height: 12px;
+    border-width: 1px;
+  }
+  .scale-pivot {
+    display: block;
+    top: 18px;
+    border-left-width: 12px;
+    border-right-width: 12px;
+    border-bottom-width: 24px;
+  }
+  .scale-pivot::after {
+    top: -8px;
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+  }
+  /* Empilha os cards, mas mantém o movimento de gangorra */
+  .scale-pans {
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .scale-wrap.tilt-left .pan-left { transform: translateY(10px); }
+  .scale-wrap.tilt-left .pan-right { transform: translateY(-10px); }
+  .scale-wrap.tilt-right .pan-left { transform: translateY(-10px); }
+  .scale-wrap.tilt-right .pan-right { transform: translateY(10px); }
+  
+  .scale-wrap { padding-top: 10px; padding-bottom: 20px; }
 }
 
 /* ==================== SEÇÃO PONTE ==================== */
