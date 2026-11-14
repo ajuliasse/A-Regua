@@ -727,7 +727,7 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
   .compare-title { font-size: 13.5px !important; margin-bottom: 8px !important; line-height: 1.3 !important; }
   .compare-text { font-size: 12.5px !important; line-height: 1.5 !important; word-wrap: break-word; }
   .audit-note { font-size: 11.5px !important; padding-top: 8px !important; margin-top: 8px !important; }
-  .btn-weigh { padding: 8px 2px !important; font-size: 9.5px !important; letter-spacing: 0 !important; }
+  .btn-weigh { padding: 12px 4px !important; font-size: 11px !important; letter-spacing: 0 !important; min-height: 44px; display: flex; align-items: center; justify-content: center; }
   
   /* Gangorra mais visível */
   .scale-wrap.tilt-left .pan-left { transform: translateY(12px); }
@@ -848,6 +848,7 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
       <p>O dossiê completo tem 30 eventos, cada um com data, status e as matérias originais. Leva mais tempo. Mas cada linha é verificável.</p>
       <div class="cta-dossie-botoes">
         <button class="btn-dossie" onclick="showView('completo')">Ler o dossiê completo (30 eventos) →</button>
+        <button class="btn-dossie" style="background:var(--ink);" onclick="goToRegua()">Testar na Balança (Interativo) ⚖️</button>
       </div>
     </section>
 
@@ -1048,6 +1049,9 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
         </div>
       </div>
     </div>
+  </div>
+  <div style="text-align:center; margin-top:24px; border-top:1px dashed var(--line); padding-top:20px;">
+    <button id="reset-scale" class="btn-pill" style="font-size:12px; padding:8px 16px;">Limpar Régua (Recomeçar)</button>
   </div>
 </section>
 
@@ -1585,6 +1589,41 @@ document.querySelectorAll('.regua-tab').forEach(function(tab){
     var targetId = this.getAttribute('data-target');
     var targetPanel = document.getElementById(targetId);
     if(targetPanel){ targetPanel.classList.add('active'); }
+  });
+});
+
+// Função para ir direto à Balança vindo do Resumo
+function goToRegua() {
+  showView('completo');
+  setTimeout(function() {
+    var regua = document.getElementById('regua');
+    if(regua) regua.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+// Lógica do botão Resetar Balança
+document.getElementById('reset-scale').addEventListener('click', function() {
+  document.querySelectorAll('.regua-panel').forEach(function(panel) {
+    if(panel.classList.contains('active')) {
+      var wrap = panel.querySelector('.scale-wrap');
+      var leftBtn = wrap.querySelector('.pan-left .btn-weigh');
+      var rightBtn = wrap.querySelector('.pan-right .btn-weigh');
+      var leftCard = wrap.querySelector('.pan-left .scale-card');
+      var rightCard = wrap.querySelector('.pan-right .scale-card');
+      var verdict = wrap.querySelector('.scale-verdict');
+
+      // Reset de classes
+      wrap.classList.remove('tilt-left', 'tilt-right');
+      leftCard.classList.remove('dimmed', 'weighed');
+      rightCard.classList.remove('dimmed', 'weighed');
+      leftBtn.classList.remove('active');
+      rightBtn.classList.remove('active');
+      verdict.classList.remove('show');
+
+      // Reset de textos
+      leftBtn.innerHTML = '⚖️ Pesar este fato';
+      rightBtn.innerHTML = '⚖️ Pesar este fato';
+    }
   });
 });
 
