@@ -635,6 +635,10 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
   overflow: hidden;
   transition: all 0.4s ease;
 }
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .audit-note { color: #cbd5e1; }
+}
+:root[data-theme="dark"] .audit-note { color: #cbd5e1; }
 .scale-card.weighed .audit-note {
   max-height: 200px;
   opacity: 1;
@@ -1001,14 +1005,14 @@ footer:before{content:"NOTA EDITORIAL";display:block;font-size:11px;font-weight:
               <p class="compare-text">Condenado no caso do triplex, preso por 580 dias, e depois anulado pelo STF por suspeição do juiz — não por inocência. PGR o acusou no Petrolão, mas denúncia não foi aceita.</p>
               <div class="audit-note">
                 <strong>Nota da Régua</strong>
-                A anulação foi por suspeição de Moro, não por inocência. No Petrolão, Janot o denunciou, mas o STF rejeitou a acusação.
+                A anulação não foi um julgamento de mérito (inocência). O STF anulou por vício processual (suspeição do juiz). O mérito das provas nunca foi julgado.
               </div>
             </div>
             <button class="btn-weigh">⚖️ Pesar este fato</button>
           </div>
         </div>
         <div class="scale-verdict">
-          <p>Se um político que você não apoia tivesse sido <strong>condenado, preso e depois anulado</strong>, você chamaria isso de justiça ou de impunidade?</p>
+          <p>Se o STF anulasse a condenação de um político <strong>do seu campo</strong>, por suspeição do juiz, você chamaria isso de justiça ou de perseguição?</p>
         </div>
       </div>
     </div>
